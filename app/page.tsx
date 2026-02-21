@@ -8,6 +8,7 @@ import Timeline from '@/components/Timeline';
 import FilterPanel from '@/components/FilterPanel';
 import ConflictDetailPanel from '@/components/ConflictDetailPanel';
 import ConflictList from '@/components/ConflictList';
+import Navigation from '@/components/Navigation';
 
 // Dynamically import map to avoid SSR issues with react-simple-maps
 const ConflictMap = dynamic(() => import('@/components/ConflictMap'), {
@@ -59,8 +60,11 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Filter toggle in header */}
-        <div className="relative">
+        {/* Right side: nav + filters */}
+        <div className="flex items-center gap-2">
+          <Navigation />
+          <div className="h-4 w-px bg-[#30363d]" />
+          <div className="relative">
           <FilterPanel
             isOpen={filterOpen}
             onToggle={() => setFilterOpen((o) => !o)}
@@ -71,6 +75,7 @@ export default function HomePage() {
             onReset={resetFilters}
             hasActiveFilters={hasActiveFilters}
           />
+          </div>
         </div>
       </header>
 
