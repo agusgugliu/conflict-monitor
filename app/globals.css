@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --surface: #161b22;
+  --surface-2: #21262d;
+  --border: #30363d;
+  --accent: #e05252;
+  --accent-glow: rgba(224, 82, 82, 0.3);
+  --text-muted: #8b949e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Timeline slider */
+.timeline-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+.timeline-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  box-shadow: 0 0 12px var(--accent-glow);
+  transition: box-shadow 0.2s ease;
+}
+
+.timeline-slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.timeline-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* Map container */
+.rsm-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Conflict marker pulse animation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.conflict-marker-pulse {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Glass morphism panel */
+.glass-panel {
+  background: rgba(22, 27, 34, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+}
+
+/* Filter chip */
+.filter-chip {
+  transition: all 0.15s ease;
+}
+.filter-chip:hover {
+  transform: translateY(-1px);
+}
+
+/* Impact colors */
+.impact-high {
+  color: #e05252;
+}
+.impact-medium {
+  color: #f0a500;
+}
+.impact-low {
+  color: #3fb950;
+}
+
+.impact-bg-high {
+  background: rgba(224, 82, 82, 0.15);
+  border-color: rgba(224, 82, 82, 0.4);
+  color: #e05252;
+}
+.impact-bg-medium {
+  background: rgba(240, 165, 0, 0.15);
+  border-color: rgba(240, 165, 0, 0.4);
+  color: #f0a500;
+}
+.impact-bg-low {
+  background: rgba(63, 185, 80, 0.15);
+  border-color: rgba(63, 185, 80, 0.4);
+  color: #3fb950;
+}
