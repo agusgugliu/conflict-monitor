@@ -26,6 +26,8 @@ export function useConflictStore() {
   const [selectedBattle, setSelectedBattle] = useState<Battle | null>(null);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [playSpeed, setPlaySpeed] = useState(1);
+  const [viewMinYear, setViewMinYearState] = useState(MIN_YEAR);
+  const [viewMaxYear, setViewMaxYearState] = useState(MAX_YEAR);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── Derived ──────────────────────────────────────────────────────────────
@@ -56,16 +58,16 @@ export function useConflictStore() {
   }, []);
 
   // Keep a ref to current state so the interval tick always reads fresh values
-  const stateRef = useRef({ activeYear, activeMonth, playSpeed });
-  stateRef.current = { activeYear, activeMonth, playSpeed };
+  const stateRef = useRef({ activeYear, activeMonth, playSpeed, viewMinYear, viewMaxYear });
+  stateRef.current = { activeYear, activeMonth, playSpeed, viewMinYear, viewMaxYear };
 
   const tick = useCallback(() => {
-    const { activeYear: yr, activeMonth: mo } = stateRef.current;
+    const { activeYear: yr, activeMonth: mo, viewMaxYear: maxYr } = stateRef.current;
     if (isDeepDiveYear(yr)) {
       // Month-by-month inside a deep-dive war
       if (mo >= 12) {
         const next = yr + 1;
-        if (next > MAX_YEAR) { stopPlay(); return; }
+        if (next > maxYr) { stopPlay(); return; }
         setActiveYear(next);
         setActiveMonth(1);
       } else {
@@ -73,7 +75,7 @@ export function useConflictStore() {
       }
     } else {
       // Year-by-year everywhere else
-      if (yr >= MAX_YEAR) { stopPlay(); return; }
+      if (yr >= maxYr) { stopPlay(); return; }
       setActiveYear(yr + 1);
     }
   }, [stopPlay]);
@@ -88,7 +90,8 @@ export function useConflictStore() {
     if (isPlaying) {
       stopPlay();
     } else {
-      if (activeYear >= MAX_YEAR) setActiveYear(MIN_YEAR);
+      const { viewMinYear: minYr, viewMaxYear: maxYr } = stateRef.current;
+      if (activeYear >= maxYr) setActiveYear(minYr);
       startPlay();
     }
   }, [isPlaying, activeYear, startPlay, stopPlay]);
@@ -113,6 +116,15 @@ export function useConflictStore() {
     if (!wasDeep && nowDeep) setActiveMonth(1);
     prevYearRef.current = activeYear;
   }, [activeYear]);
+
+  // ── View Range ────────────────────────────────────────────────────────────
+
+  const setViewRange = useCallback((min: number, max: number) => {
+    setViewMinYearState(min);
+    setViewMaxYearState(max);
+    // Clamp active year to the new range
+    setActiveYear((prev) => Math.max(min, Math.min(max, prev)));
+  }, []);
 
   // ── Filters ───────────────────────────────────────────────────────────────
 
@@ -155,5 +167,8 @@ export function useConflictStore() {
     activeConflicts,
     activeBattles,
     activeTheaterLabels,
+    viewMinYear,
+    viewMaxYear,
+    setViewRange,
   };
 }

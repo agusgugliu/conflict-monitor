@@ -3,7 +3,9 @@ export type ConflictType =
   | 'Civil War'
   | 'Independence'
   | 'Conquest'
-  | 'Rebellion';
+  | 'Rebellion'
+  | 'Coup'
+  | 'Event';
 
 export type ImpactLevel = 'high' | 'medium' | 'low';
 export type Region = 'Europe' | 'Americas' | 'Asia' | 'Africa' | 'Middle East' | 'Oceania';

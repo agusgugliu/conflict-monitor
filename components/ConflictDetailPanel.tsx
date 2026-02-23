@@ -25,6 +25,8 @@ const TYPE_LABELS: Record<string, string> = {
   Independence: 'War of Independence',
   Conquest:    'War of Conquest',
   Rebellion:   'Rebellion / Uprising',
+  Coup:        "Coup d\u2019\u00e9tat",
+  Event:       'Historical Event',
 };
 
 const IMPACT_CONFIG: Record<string, { label: string; className: string }> = {
@@ -53,7 +55,7 @@ function ConflictDetailPanel({
     <AnimatePresence>
       {conflict && (
         <motion.div
-          className="absolute top-4 right-4 z-40 glass-panel rounded-xl w-80 max-h-[calc(100vh-120px)] flex flex-col shadow-2xl overflow-hidden"
+          className="absolute z-40 glass-panel rounded-xl flex flex-col shadow-2xl overflow-hidden inset-x-2 bottom-2 max-h-[55vh] sm:inset-auto sm:top-4 sm:right-4 sm:w-80 sm:max-h-[calc(100vh-120px)]"
           initial={{ opacity: 0, x: 40, scale: 0.97 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: 40, scale: 0.97 }}

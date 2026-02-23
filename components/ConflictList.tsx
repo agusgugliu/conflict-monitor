@@ -45,7 +45,7 @@ function ConflictList({ conflicts, selectedConflict, onSelect, activeYear }: Con
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute bottom-12 left-0 glass-panel rounded-xl w-72 max-h-80 overflow-hidden flex flex-col shadow-2xl"
+            className="absolute bottom-12 left-0 glass-panel rounded-xl w-[calc(100vw-2rem)] max-w-xs sm:w-72 max-h-64 sm:max-h-80 overflow-hidden flex flex-col shadow-2xl"
             initial={{ opacity: 0, y: 10, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.97 }}

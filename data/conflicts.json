@@ -1225,5 +1225,438 @@
       "Saudi Arabia",
       "Yemen"
     ]
+  },
+  {
+    "id": "assassination-franz-ferdinand",
+    "name": "Assassination of Archduke Franz Ferdinand",
+    "start_date": "1914-06-28",
+    "end_date": "1914-06-28",
+    "start_year": 1914,
+    "end_year": 1914,
+    "coordinates": {
+      "lat": 43.8563,
+      "lng": 18.4131
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Archduke Franz Ferdinand (Austria-Hungary)",
+      "Gavrilo Princip (Black Hand / Young Bosnia)"
+    ],
+    "casualties": "2 killed (Franz Ferdinand and Sophie)",
+    "summary": "The assassination of Austro-Hungarian Archduke Franz Ferdinand and his wife Sophie by Bosnian-Serb nationalist Gavrilo Princip in Sarajevo on June 28, 1914, set off a chain of ultimatums and mobilizations that plunged Europe into World War I within six weeks.\n\nThe killing provided Austria-Hungary with a pretext to issue an ultimatum to Serbia, triggering the alliance system that drew Germany, Russia, France, and Britain into the deadliest conflict the world had yet seen.",
+    "affected_countries": [
+      "Austria",
+      "Hungary",
+      "Serbia",
+      "Bosnia"
+    ]
+  },
+  {
+    "id": "bolshevik-revolution",
+    "name": "Bolshevik Revolution (October Revolution)",
+    "start_date": "1917-11-07",
+    "end_date": "1917-11-08",
+    "start_year": 1917,
+    "end_year": 1917,
+    "coordinates": {
+      "lat": 59.9311,
+      "lng": 30.3609
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Bolshevik Party (Lenin)",
+      "Russian Provisional Government (Kerensky)"
+    ],
+    "casualties": "~6 killed during the storming of the Winter Palace",
+    "summary": "On the night of November 7–8, 1917, Vladimir Lenin's Bolshevik Party seized power from the Provisional Government in Petrograd, overthrowing the last vestiges of the Russian imperial state and establishing the world's first communist government.\n\nThe revolution triggered a brutal civil war, the formation of the Soviet Union, and unleashed ideological shockwaves that reshaped global politics for the rest of the 20th century.",
+    "affected_countries": [
+      "Russia",
+      "Ukraine",
+      "Belarus",
+      "Latvia",
+      "Estonia",
+      "Lithuania",
+      "Finland",
+      "Poland"
+    ]
+  },
+  {
+    "id": "jfk-assassination",
+    "name": "Assassination of President John F. Kennedy",
+    "start_date": "1963-11-22",
+    "end_date": "1963-11-22",
+    "start_year": 1963,
+    "end_year": 1963,
+    "coordinates": {
+      "lat": 32.7797,
+      "lng": -96.8086
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Lee Harvey Oswald (alleged)",
+      "U.S. President John F. Kennedy"
+    ],
+    "casualties": "1 killed (President Kennedy), 1 wounded (Governor Connally)",
+    "summary": "President John F. Kennedy was shot and killed while riding in a presidential motorcade through Dealey Plaza in Dallas, Texas, on November 22, 1963. Texas Governor John Connally was also wounded. Lee Harvey Oswald was arrested as the prime suspect but was murdered two days later by Jack Ruby before standing trial.\n\nThe Warren Commission concluded Oswald acted alone, but conspiracy theories have persisted for decades. Kennedy's death ended the era of 'Camelot' and marked a cultural and political turning point in American history, accelerating the political crises of the 1960s.",
+    "affected_countries": [
+      "United States"
+    ]
+  },
+  {
+    "id": "cuban-missile-crisis",
+    "name": "Cuban Missile Crisis",
+    "start_date": "1962-10-16",
+    "end_date": "1962-10-28",
+    "start_year": 1962,
+    "end_year": 1962,
+    "coordinates": {
+      "lat": 23.1136,
+      "lng": -82.3666
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "United States (Kennedy)",
+      "Soviet Union (Khrushchev)",
+      "Cuba (Castro)"
+    ],
+    "casualties": "0 direct casualties (nuclear war averted)",
+    "summary": "For 13 days in October 1962, the United States and Soviet Union stood on the brink of nuclear war after American U-2 spy planes photographed Soviet ballistic missile installations under construction in Cuba. President Kennedy imposed a naval blockade and demanded their removal.\n\nAfter a tense standoff—the closest the Cold War came to direct nuclear exchange—Khrushchev agreed to dismantle the missiles in exchange for a U.S. pledge not to invade Cuba and a secret agreement to remove U.S. Jupiter missiles from Turkey. The crisis led to the establishment of the Moscow–Washington hotline.",
+    "affected_countries": [
+      "United States",
+      "Cuba",
+      "Russia"
+    ]
+  },
+  {
+    "id": "mlk-assassination",
+    "name": "Assassination of Martin Luther King Jr.",
+    "start_date": "1968-04-04",
+    "end_date": "1968-04-04",
+    "start_year": 1968,
+    "end_year": 1968,
+    "coordinates": {
+      "lat": 35.1341,
+      "lng": -90.0568
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "James Earl Ray",
+      "Dr. Martin Luther King Jr."
+    ],
+    "casualties": "1 killed (Dr. King)",
+    "summary": "Civil rights leader Reverend Martin Luther King Jr. was shot and killed on April 4, 1968, while standing on the balcony of the Lorraine Motel in Memphis, Tennessee. James Earl Ray was convicted of the murder and sentenced to 99 years in prison.\n\nKing's assassination triggered riots in over 100 American cities and dealt a devastating blow to the civil rights movement. His death galvanized the passage of the Civil Rights Act of 1968 (Fair Housing Act) just days later.",
+    "affected_countries": [
+      "United States"
+    ]
+  },
+  {
+    "id": "iranian-revolution",
+    "name": "Iranian Revolution",
+    "start_date": "1979-01-16",
+    "end_date": "1979-04-01",
+    "start_year": 1979,
+    "end_year": 1979,
+    "coordinates": {
+      "lat": 35.6892,
+      "lng": 51.389
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Middle East",
+    "belligerents": [
+      "Ayatollah Khomeini / Revolutionary Forces",
+      "Shah Mohammad Reza Pahlavi"
+    ],
+    "casualties": "~3,000–10,000 killed during the revolution",
+    "summary": "A popular uprising overthrew Shah Mohammad Reza Pahlavi's monarchy and established an Islamic Republic under Ayatollah Ruhollah Khomeini on April 1, 1979. The revolution ended 2,500 years of Persian monarchy and fundamentally reshaped Middle Eastern geopolitics.\n\nThe new theocratic government led to the Iran hostage crisis, the Iran–Iraq War, and decades of confrontation with the United States and Israel. It inspired Islamist movements worldwide and remains one of the most consequential geopolitical events of the 20th century.",
+    "affected_countries": [
+      "Iran",
+      "Iraq",
+      "Israel",
+      "United States",
+      "Saudi Arabia"
+    ]
+  },
+  {
+    "id": "chernobyl-disaster",
+    "name": "Chernobyl Nuclear Disaster",
+    "start_date": "1986-04-26",
+    "end_date": "1986-05-14",
+    "start_year": 1986,
+    "end_year": 1986,
+    "coordinates": {
+      "lat": 51.389,
+      "lng": 30.0993
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Soviet nuclear establishment",
+      "Reactor No. 4 operators"
+    ],
+    "casualties": "31 direct deaths; est. 4,000–60,000 long-term cancer deaths",
+    "summary": "On April 26, 1986, Reactor No. 4 at the Chernobyl Nuclear Power Plant in Soviet Ukraine exploded during a safety test, causing the worst nuclear accident in history. A massive plume of radioactive material spread across Europe, contaminating vast areas of Ukraine, Belarus, and Russia.\n\nOver 350,000 people were evacuated from the Exclusion Zone. The accident became a symbol of Soviet systemic failure, accelerating glasnost and perestroika under Gorbachev, and is widely credited with hastening the collapse of the Soviet Union.",
+    "affected_countries": [
+      "Ukraine",
+      "Belarus",
+      "Russia",
+      "Sweden",
+      "Germany",
+      "Poland"
+    ]
+  },
+  {
+    "id": "tiananmen-square",
+    "name": "Tiananmen Square Massacre",
+    "start_date": "1989-06-04",
+    "end_date": "1989-06-04",
+    "start_year": 1989,
+    "end_year": 1989,
+    "coordinates": {
+      "lat": 39.9042,
+      "lng": 116.3912
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "Chinese Communist Party / PLA",
+      "Pro-democracy student protesters"
+    ],
+    "casualties": "Estimated 200–10,000+ (official figure suppressed)",
+    "summary": "On June 3–4, 1989, the Chinese government ordered the People's Liberation Army to clear Tiananmen Square in Beijing, where hundreds of thousands of pro-democracy protesters had gathered for weeks. Tanks rolled in and troops opened fire, killing an unknown number of civilians.\n\nThe iconic 'Tank Man' photograph became one of the most recognizable images of the 20th century. The massacre ended China's nascent democracy movement and shaped the Communist Party's authoritarian trajectory for decades.",
+    "affected_countries": [
+      "China"
+    ]
+  },
+  {
+    "id": "fall-of-berlin-wall",
+    "name": "Fall of the Berlin Wall",
+    "start_date": "1989-11-09",
+    "end_date": "1989-11-10",
+    "start_year": 1989,
+    "end_year": 1989,
+    "coordinates": {
+      "lat": 52.5163,
+      "lng": 13.3777
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "East Germany / Soviet Bloc",
+      "West Germany / NATO"
+    ],
+    "casualties": "0 on the night of November 9 (at least 140 killed at the Wall over its history)",
+    "summary": "On the night of November 9, 1989, following a confused announcement by East German authorities, crowds of jubilant Berliners began tearing down the Wall that had divided the city since 1961. The fall marked the symbolic end of the Cold War and the beginning of German reunification.\n\nThe event triggered a domino effect across Eastern Europe, with communist regimes collapsing in Poland, Czechoslovakia, Romania, and Bulgaria within months. Germany was officially reunified on October 3, 1990.",
+    "affected_countries": [
+      "Germany",
+      "Poland",
+      "Czechoslovakia",
+      "Hungary",
+      "Romania",
+      "Bulgaria",
+      "Russia"
+    ]
+  },
+  {
+    "id": "dissolution-soviet-union",
+    "name": "Dissolution of the Soviet Union",
+    "start_date": "1991-12-26",
+    "end_date": "1991-12-26",
+    "start_year": 1991,
+    "end_year": 1991,
+    "coordinates": {
+      "lat": 55.7558,
+      "lng": 37.6176
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Soviet central government (Gorbachev)",
+      "Independence movements across 15 republics"
+    ],
+    "casualties": "Minimal direct casualties; long-term regional conflicts followed",
+    "summary": "On December 25, 1991, Mikhail Gorbachev resigned as President of the Soviet Union, and the following day the Supreme Soviet formally dissolved the USSR. Fifteen sovereign states emerged, ending 69 years of communist rule and the Cold War bipolar world order.\n\nThe collapse transformed global geopolitics, expanded NATO, and left a power vacuum that continues to generate instability across Eurasia. Russia inherited the Soviet nuclear arsenal, seat on the UN Security Council, and deep economic and social challenges.",
+    "affected_countries": [
+      "Russia",
+      "Ukraine",
+      "Belarus",
+      "Kazakhstan",
+      "Georgia",
+      "Armenia",
+      "Azerbaijan",
+      "Latvia",
+      "Lithuania",
+      "Estonia",
+      "Moldova",
+      "Uzbekistan",
+      "Tajikistan",
+      "Kyrgyzstan",
+      "Turkmenistan"
+    ]
+  },
+  {
+    "id": "september-11-attacks",
+    "name": "September 11 Attacks",
+    "start_date": "2001-09-11",
+    "end_date": "2001-09-11",
+    "start_year": 2001,
+    "end_year": 2001,
+    "coordinates": {
+      "lat": 40.7115,
+      "lng": -74.013
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Al-Qaeda (Osama bin Laden)",
+      "United States"
+    ],
+    "casualties": "2,977 killed; 6,000+ injured",
+    "summary": "On September 11, 2001, 19 Al-Qaeda terrorists hijacked four commercial airliners. Two planes were flown into the Twin Towers of the World Trade Center in New York City, one into the Pentagon in Arlington, Virginia, and a fourth crashed in a Pennsylvania field after passengers attempted to overwhelm the hijackers.\n\nThe deadliest foreign attack on American soil triggered the U.S. invasion of Afghanistan, the Iraq War, the creation of the Department of Homeland Security, and the global 'War on Terror'—reshaping international security, civil liberties, and geopolitics for generations.",
+    "affected_countries": [
+      "United States",
+      "Afghanistan",
+      "Iraq"
+    ]
+  },
+  {
+    "id": "hiroshima-bombing",
+    "name": "Atomic Bombing of Hiroshima",
+    "start_date": "1945-08-06",
+    "end_date": "1945-08-06",
+    "start_year": 1945,
+    "end_year": 1945,
+    "coordinates": {
+      "lat": 34.3853,
+      "lng": 132.4553
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "United States (Enola Gay crew)",
+      "Japan"
+    ],
+    "casualties": "70,000–80,000 killed instantly; 90,000–166,000 dead by end of 1945",
+    "summary": "On August 6, 1945, the United States dropped the first atomic bomb ever used in warfare on Hiroshima, Japan. The B-29 Superfortress Enola Gay released 'Little Boy,' a uranium gun-type bomb, which detonated at 1,900 feet above the city center with a yield equivalent to 15,000 tons of TNT.\n\nThree days later, a second bomb was dropped on Nagasaki. Japan surrendered on August 15, ending World War II. The bombings inaugurated the nuclear age and sparked an arms race and proliferation debates that persist to this day.",
+    "affected_countries": [
+      "Japan",
+      "United States"
+    ]
+  },
+  {
+    "id": "argentine-coup-1955",
+    "name": "Argentine Coup — Revolución Libertadora",
+    "start_date": "1955-09-16",
+    "end_date": "1958-05-01",
+    "start_year": 1955,
+    "end_year": 1958,
+    "coordinates": {
+      "lat": -34.6037,
+      "lng": -58.3816
+    },
+    "type": "Coup",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "Military factions (Gen. Lonardi / Aramburu)",
+      "President Juan Perón"
+    ],
+    "casualties": "~3,000+ killed during the preceding naval bombardment of Buenos Aires (June 1955 attempt) and September revolt",
+    "summary": "On September 16, 1955, a military uprising known as the 'Revolución Libertadora' overthrew President Juan Perón, who had dominated Argentine politics since 1946. Perón went into exile in Paraguay and later Spain. General Eduardo Lonardi briefly took power before being replaced by the harder-line General Pedro Aramburu.\n\nThe coup banned Peronism for nearly two decades, driving it underground and transforming it into a powerful resistance movement that continued to shape Argentine politics for the rest of the 20th century.",
+    "affected_countries": [
+      "Argentina"
+    ]
+  },
+  {
+    "id": "argentine-coup-1966",
+    "name": "Argentine Coup — Revolución Argentina",
+    "start_date": "1966-06-28",
+    "end_date": "1973-05-25",
+    "start_year": 1966,
+    "end_year": 1973,
+    "coordinates": {
+      "lat": -34.6037,
+      "lng": -58.3816
+    },
+    "type": "Coup",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "Military junta (Gen. Onganía)",
+      "President Arturo Illia"
+    ],
+    "casualties": "Hundreds killed; widespread political repression",
+    "summary": "On June 28, 1966, General Juan Carlos Onganía ousted President Arturo Illia in a bloodless coup, inaugurating the so-called 'Revolución Argentina.' The military junta dissolved Congress, banned political parties, and ruled by decree, imposing a corporatist authoritarian state.\n\nThe regime's harsh suppression of student and worker movements sparked the 'Cordobazo' uprising of 1969 and the emergence of urban guerrilla groups. Political instability forced the military to allow Perón's return from exile in 1973.",
+    "affected_countries": [
+      "Argentina"
+    ]
+  },
+  {
+    "id": "chilean-coup-1973",
+    "name": "Chilean Military Coup — Pinochet",
+    "start_date": "1973-09-11",
+    "end_date": "1990-03-11",
+    "start_year": 1973,
+    "end_year": 1990,
+    "coordinates": {
+      "lat": -33.4489,
+      "lng": -70.6693
+    },
+    "type": "Coup",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Military junta (Gen. Pinochet)",
+      "President Salvador Allende"
+    ],
+    "casualties": "3,000+ killed or disappeared; 27,000+ tortured; 200,000+ exiled",
+    "summary": "On September 11, 1973, the Chilean military—backed by the CIA and U.S. government—launched a coup against democratically elected socialist President Salvador Allende, who died during the assault on La Moneda Palace. General Augusto Pinochet assumed power and ruled as dictator until 1990.\n\nThe Pinochet regime conducted systematic torture, disappearances, and executions through the DINA secret police. Economically, it imposed radical free-market 'Chicago Boys' reforms that became a template for neoliberalism worldwide. Pinochet was finally indicted for crimes against humanity in 1998.",
+    "affected_countries": [
+      "Chile",
+      "Argentina",
+      "Brazil",
+      "Uruguay",
+      "United States"
+    ]
+  },
+  {
+    "id": "argentine-coup-1976",
+    "name": "Argentine Coup — El Proceso (Dirty War)",
+    "start_date": "1976-03-24",
+    "end_date": "1983-12-10",
+    "start_year": 1976,
+    "end_year": 1983,
+    "coordinates": {
+      "lat": -34.6037,
+      "lng": -58.3816
+    },
+    "type": "Coup",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Military junta (Videla, Massera, Agosti)",
+      "President Isabel Perón"
+    ],
+    "casualties": "9,000–30,000 'disappeared'; 500+ children stolen from political prisoners",
+    "summary": "On March 24, 1976, a military junta led by General Jorge Rafael Videla, Admiral Emilio Massera, and Brigadier Orlando Agosti overthrew President Isabel Perón and established a brutal dictatorship known as the 'Proceso de Reorganización Nacional' (National Reorganization Process).\n\nThe regime conducted systematic state terrorism—operating 500+ clandestine detention centers, abducting 'los desaparecidos,' and stealing the children of political prisoners. The Mothers of the Plaza de Mayo became a global symbol of resistance. The junta's defeat in the Falklands War accelerated its collapse, leading to democratic elections in 1983.",
+    "affected_countries": [
+      "Argentina"
+    ]
   }
 ]

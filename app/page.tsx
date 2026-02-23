@@ -51,6 +51,9 @@ export default function HomePage() {
     activeConflicts,
     activeBattles,
     activeTheaterLabels,
+    viewMinYear,
+    viewMaxYear,
+    setViewRange,
   } = useConflictStore();
 
   return (
@@ -141,10 +144,13 @@ export default function HomePage() {
           activeWarId={activeWarId}
           isPlaying={isPlaying}
           playSpeed={playSpeed}
+          viewMinYear={viewMinYear}
+          viewMaxYear={viewMaxYear}
           onYearChange={setActiveYear}
           onMonthChange={setActiveMonth}
           onTogglePlay={togglePlay}
           onSpeedChange={setPlaySpeed}
+          onViewRangeChange={setViewRange}
         />
       </footer>
     </div>
