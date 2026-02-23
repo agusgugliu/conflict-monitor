@@ -94,7 +94,7 @@ function Timeline({
             transition={{ duration: 0.15 }}
           >
             <span className="text-4xl font-bold tracking-tight text-white tabular-nums">
-              {activeYear}
+              {activeYear < 0 ? `${Math.abs(activeYear)} BC` : activeYear}
             </span>
           </motion.div>
         </div>
@@ -107,11 +107,10 @@ function Timeline({
               <button
                 key={s}
                 onClick={() => onSpeedChange(s)}
-                className={`px-2 py-0.5 rounded text-xs font-medium transition-all ${
-                  playSpeed === s
+                className={`px-2 py-0.5 rounded text-xs font-medium transition-all ${playSpeed === s
                     ? 'bg-[#e05252] text-white'
                     : 'text-[#8b949e] hover:text-white hover:bg-[#21262d]'
-                }`}
+                  }`}
               >
                 {s}x
               </button>
@@ -124,16 +123,16 @@ function Timeline({
       <div className="relative">
         {/* Decade markers */}
         <div className="relative h-4 mb-1">
-          {DECADE_MARKERS.filter((y) => y % 50 === 0 || y === MIN_YEAR || y === MAX_YEAR).map(
+          {DECADE_MARKERS.filter((y) => y % 500 === 0 || y === MIN_YEAR || y === MAX_YEAR).map(
             (year) => {
               const pct = ((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
               return (
                 <span
                   key={year}
-                  className="absolute text-[10px] text-[#8b949e] transform -translate-x-1/2"
+                  className="absolute text-[10px] text-[#8b949e] transform -translate-x-1/2 whitespace-nowrap"
                   style={{ left: `${pct}%` }}
                 >
-                  {year}
+                  {year < 0 ? `${Math.abs(year)} BC` : year}
                 </span>
               );
             }
@@ -165,14 +164,14 @@ function Timeline({
         {/* Decade tick marks */}
         <div className="relative h-3 mt-1">
           {DECADE_MARKERS.map((year) => {
+            if (year % 50 !== 0) return null; // Don't render every decade, it's too thick
             const pct = ((year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100;
-            const isMajor = year % 50 === 0;
+            const isMajor = year % 100 === 0;
             return (
               <div
                 key={year}
-                className={`absolute transform -translate-x-1/2 ${
-                  isMajor ? 'h-2 bg-[#8b949e]' : 'h-1 bg-[#30363d]'
-                } w-px`}
+                className={`absolute transform -translate-x-1/2 ${isMajor ? 'h-2 bg-[#8b949e]' : 'h-1 bg-[#30363d]'
+                  } w-px`}
                 style={{ left: `${pct}%` }}
               />
             );

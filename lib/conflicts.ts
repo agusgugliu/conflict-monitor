@@ -3,7 +3,7 @@ import { Conflict, FilterState } from '@/types/conflict';
 
 export const allConflicts: Conflict[] = conflictsData as Conflict[];
 
-export const MIN_YEAR = 1800;
+export const MIN_YEAR = -1500;
 export const MAX_YEAR = 2026;
 
 export function getConflictsForYear(year: number, filters: FilterState): Conflict[] {

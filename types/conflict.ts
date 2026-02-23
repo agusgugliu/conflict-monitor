@@ -7,6 +7,12 @@ export interface Coordinates {
   lng: number;
 }
 
+export interface Battle {
+  name: string;
+  coordinates: Coordinates;
+  year?: number;
+}
+
 export interface Conflict {
   id: string;
   name: string;
@@ -19,6 +25,8 @@ export interface Conflict {
   belligerents: string[];
   casualties: string;
   summary: string;
+  affected_countries?: string[];
+  battles?: Battle[];
 }
 
 export interface FilterState {

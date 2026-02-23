@@ -11,7 +11,7 @@ const DEFAULT_FILTERS: FilterState = {
 };
 
 export function useConflictStore() {
-  const [activeYear, setActiveYear] = useState(1939);
+  const [activeYear, setActiveYear] = useState(MIN_YEAR);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedConflict, setSelectedConflict] = useState<Conflict | null>(null);
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
@@ -61,7 +61,7 @@ export function useConflictStore() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playSpeed]);
 
   // Cleanup on unmount

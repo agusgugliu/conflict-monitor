@@ -57,20 +57,37 @@ function ConflictMap({
         <ZoomableGroup zoom={1} minZoom={0.8} maxZoom={8}>
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#1c2333"
-                  stroke="#30363d"
-                  strokeWidth={0.5}
-                  style={{
-                    default: { outline: 'none' },
-                    hover: { fill: '#21262d', outline: 'none' },
-                    pressed: { outline: 'none' },
-                  }}
-                />
-              ))
+              geographies.map((geo) => {
+                const countryName = geo.properties.name as string;
+                const isSelected = selectedConflict?.affected_countries?.includes(countryName);
+                const isActiveAny = !selectedConflict && conflicts.some(c => c.affected_countries?.includes(countryName));
+
+                let fill = "#1c2333";
+                if (isSelected) {
+                  const impactColor = selectedConflict ? IMPACT_COLORS[selectedConflict.impact] : '#30363d';
+                  fill = '#2d3342';
+                  if (impactColor === '#e05252') fill = '#392629';
+                  if (impactColor === '#f0a500') fill = '#3a3224';
+                  if (impactColor === '#3fb950') fill = '#213324';
+                } else if (isActiveAny) {
+                  fill = "#222938";
+                }
+
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={fill}
+                    stroke="#30363d"
+                    strokeWidth={0.5}
+                    style={{
+                      default: { outline: 'none', transition: 'fill 0.3s ease' },
+                      hover: { fill: '#3b4354', outline: 'none', transition: 'fill 0.2s ease' },
+                      pressed: { outline: 'none' },
+                    }}
+                  />
+                );
+              })
             }
           </Geographies>
 
@@ -153,6 +170,46 @@ function ConflictMap({
                     }}
                     whileHover={{ scale: 1.3 }}
                     style={{ filter: isSelected ? `drop-shadow(0 0 6px ${color})` : undefined }}
+                  />
+                </Marker>
+              );
+            })}
+
+            {/* Individual Battle Markers */}
+            {selectedConflict?.battles?.map((battle, i) => {
+              const color = IMPACT_COLORS[selectedConflict.impact] ?? '#e05252';
+              const size = 6;
+              return (
+                <Marker
+                  key={`battle-${i}`}
+                  coordinates={[battle.coordinates.lng, battle.coordinates.lat]}
+                  onMouseEnter={(e) => {
+                    const rect = (e.target as SVGElement).closest('svg')?.getBoundingClientRect();
+                    if (rect) {
+                      setTooltip({
+                        conflict: { ...selectedConflict, name: battle.name, start_date: battle.year ? `${battle.year}` : selectedConflict.start_date, end_date: null } as any,
+                        x: (e as unknown as MouseEvent).clientX - rect.left,
+                        y: (e as unknown as MouseEvent).clientY - rect.top,
+                      });
+                    }
+                  }}
+                  onMouseLeave={() => setTooltip(null)}
+                >
+                  <circle r={size + 2} fill="#0d1117" />
+                  <circle r={size} fill={color} stroke="#fff" strokeWidth={1.5} />
+                  <motion.circle
+                    r={size * 1.5}
+                    fill="transparent"
+                    stroke={color}
+                    strokeWidth={1}
+                    initial={{ scale: 0.8, opacity: 1 }}
+                    animate={{ scale: 2, opacity: 0 }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: 'easeOut',
+                      delay: i * 0.2, // stagger the pulse
+                    }}
                   />
                 </Marker>
               );
