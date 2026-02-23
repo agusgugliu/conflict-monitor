@@ -86,10 +86,12 @@ function ConflictList({ conflicts, selectedConflict, onSelect, activeYear }: Con
                           {conflict.name}
                         </p>
                         <p className="text-[10px] text-[#8b949e]">
-                          {new Date(conflict.start_date).getFullYear()} –{' '}
-                          {conflict.end_date
-                            ? new Date(conflict.end_date).getFullYear()
-                            : 'Ongoing'}
+                          {conflict.start_year ?? (conflict.start_date ? new Date(conflict.start_date).getFullYear() : '?')} –{' '}
+                          {conflict.end_year != null
+                            ? conflict.end_year
+                            : conflict.end_date
+                              ? new Date(conflict.end_date).getFullYear()
+                              : 'Ongoing'}
                         </p>
                       </div>
                       <ChevronRight size={12} className="text-[#8b949e] flex-shrink-0" />

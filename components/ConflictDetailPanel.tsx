@@ -2,35 +2,53 @@
 
 import { memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  X,
-  Calendar,
-  MapPin,
-  Swords,
-  BarChart2,
-  Users,
-  Skull,
-} from 'lucide-react';
-import { Conflict } from '@/types/conflict';
+import { X, Calendar, MapPin, BarChart2, Users, Skull, Swords } from 'lucide-react';
+import type { Conflict } from '@/types/conflict';
+import type { Battle } from '@/types/battles';
+import BattleFeed from '@/components/BattleFeed';
 
 interface ConflictDetailPanelProps {
   conflict: Conflict | null;
   onClose: () => void;
+  // Deep-dive extras
+  isDeepDive?: boolean;
+  activeBattles?: Battle[];
+  selectedBattle?: Battle | null;
+  onSelectBattle?: (battle: Battle) => void;
+  activeYear?: number;
+  activeMonth?: number;
 }
 
 const TYPE_LABELS: Record<string, string> = {
-  Interstate: 'Interstate War',
+  Interstate:  'Interstate War',
   'Civil War': 'Civil War',
   Independence: 'War of Independence',
+  Conquest:    'War of Conquest',
+  Rebellion:   'Rebellion / Uprising',
 };
 
-const IMPACT_CONFIG: Record<string, { label: string; className: string; dot: string }> = {
-  high: { label: 'High Impact', className: 'impact-bg-high', dot: '#e05252' },
-  medium: { label: 'Medium Impact', className: 'impact-bg-medium', dot: '#f0a500' },
-  low: { label: 'Low Impact', className: 'impact-bg-low', dot: '#3fb950' },
+const IMPACT_CONFIG: Record<string, { label: string; className: string }> = {
+  high:   { label: 'High Impact',   className: 'impact-bg-high' },
+  medium: { label: 'Medium Impact', className: 'impact-bg-medium' },
+  low:    { label: 'Low Impact',    className: 'impact-bg-low' },
 };
 
-function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
+function ConflictDetailPanel({
+  conflict,
+  onClose,
+  isDeepDive = false,
+  activeBattles = [],
+  selectedBattle = null,
+  onSelectBattle,
+  activeYear = 1939,
+  activeMonth = 1,
+}: ConflictDetailPanelProps) {
+  const startYear = conflict?.start_year ?? (conflict?.start_date ? new Date(conflict.start_date).getFullYear() : null);
+  const endYear   = conflict?.end_year ?? (conflict?.end_date ? new Date(conflict.end_date).getFullYear() : null);
+
+  const isWWConflict = conflict?.id === 'world-war-1' || conflict?.id === 'world-war-2';
+  const showBattleFeed = isDeepDive && isWWConflict && activeBattles.length > 0;
+
   return (
     <AnimatePresence>
       {conflict && (
@@ -40,29 +58,22 @@ function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
           animate={{ opacity: 1, x: 0, scale: 1 }}
           exit={{ opacity: 0, x: 40, scale: 0.97 }}
           transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+          key={conflict.id}
         >
-          {/* Impact color stripe at top */}
+          {/* Impact stripe */}
           <div
             className="h-1 w-full"
             style={{
-              background:
-                conflict.impact === 'high'
-                  ? '#e05252'
-                  : conflict.impact === 'medium'
-                  ? '#f0a500'
-                  : '#3fb950',
+              background: conflict.impact === 'high' ? '#e05252' : conflict.impact === 'medium' ? '#f0a500' : '#3fb950',
             }}
           />
 
-          {/* Scrollable content */}
           <div className="overflow-y-auto flex-1 p-5">
-            {/* Close button */}
+            {/* Header */}
             <div className="flex items-start justify-between mb-3">
-              <div className="flex-1 pr-2">
-                <h2 className="text-base font-bold text-white leading-snug">
-                  {conflict.name}
-                </h2>
-              </div>
+              <h2 className="text-base font-bold text-white leading-snug flex-1 pr-2">
+                {conflict.name}
+              </h2>
               <button
                 onClick={onClose}
                 className="flex-shrink-0 p-1 rounded-md text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
@@ -71,15 +82,13 @@ function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
               </button>
             </div>
 
-            {/* Tags row */}
+            {/* Tags */}
             <div className="flex flex-wrap gap-1.5 mb-4">
               <span className="px-2 py-0.5 rounded-full bg-[#21262d] text-[#8b949e] text-xs border border-[#30363d]">
                 {TYPE_LABELS[conflict.type] ?? conflict.type}
               </span>
               {IMPACT_CONFIG[conflict.impact] && (
-                <span
-                  className={`px-2 py-0.5 rounded-full text-xs border ${IMPACT_CONFIG[conflict.impact].className}`}
-                >
+                <span className={`px-2 py-0.5 rounded-full text-xs border ${IMPACT_CONFIG[conflict.impact].className}`}>
                   ● {IMPACT_CONFIG[conflict.impact].label}
                 </span>
               )}
@@ -96,14 +105,11 @@ function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
                 <div>
                   <p className="text-xs text-[#8b949e]">Duration</p>
                   <p className="text-sm text-white">
-                    {new Date(conflict.start_date).getFullYear()} –{' '}
-                    {conflict.end_date
-                      ? new Date(conflict.end_date).getFullYear()
-                      : <span className="text-[#e05252] font-medium">Ongoing</span>}
+                    {startYear ?? '?'} –{' '}
+                    {endYear != null ? endYear : <span className="text-[#e05252] font-medium">Ongoing</span>}
                   </p>
                 </div>
               </div>
-
               {conflict.casualties && (
                 <div className="flex items-start gap-2.5">
                   <Skull size={14} className="text-[#8b949e] mt-0.5 flex-shrink-0" />
@@ -113,8 +119,7 @@ function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
                   </div>
                 </div>
               )}
-
-              {conflict.belligerents && conflict.belligerents.length > 0 && (
+              {conflict.belligerents?.length > 0 && (
                 <div className="flex items-start gap-2.5">
                   <Users size={14} className="text-[#8b949e] mt-0.5 flex-shrink-0" />
                   <div>
@@ -131,23 +136,38 @@ function ConflictDetailPanel({ conflict, onClose }: ConflictDetailPanelProps) {
               )}
             </div>
 
-            {/* Divider */}
             <div className="border-t border-[#30363d] my-3" />
 
             {/* Summary */}
             <div className="flex items-center gap-1.5 mb-2">
               <BarChart2 size={13} className="text-[#8b949e]" />
-              <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium">
-                Summary
-              </p>
+              <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium">Summary</p>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-4">
               {conflict.summary.split('\n\n').map((para, i) => (
-                <p key={i} className="text-xs text-[#c9d1d9] leading-relaxed">
-                  {para}
-                </p>
+                <p key={i} className="text-xs text-[#c9d1d9] leading-relaxed">{para}</p>
               ))}
             </div>
+
+            {/* ── Battle feed (deep-dive only for WWI/WWII) ── */}
+            {showBattleFeed && onSelectBattle && (
+              <>
+                <div className="border-t border-[#30363d] my-3" />
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Swords size={13} className="text-[#58a6ff]" />
+                  <p className="text-xs text-[#58a6ff] uppercase tracking-wider font-medium">
+                    Battles active this month
+                  </p>
+                </div>
+                <BattleFeed
+                  battles={activeBattles}
+                  selectedBattle={selectedBattle}
+                  onSelectBattle={onSelectBattle}
+                  activeYear={activeYear}
+                  activeMonth={activeMonth}
+                />
+              </>
+            )}
           </div>
         </motion.div>
       )}

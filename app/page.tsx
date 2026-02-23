@@ -9,6 +9,7 @@ import FilterPanel from '@/components/FilterPanel';
 import ConflictDetailPanel from '@/components/ConflictDetailPanel';
 import ConflictList from '@/components/ConflictList';
 import Navigation from '@/components/Navigation';
+import BattleDetailPanel from '@/components/BattleDetailPanel';
 
 // Dynamically import map to avoid SSR issues with react-simple-maps
 const ConflictMap = dynamic(() => import('@/components/ConflictMap'), {
@@ -29,12 +30,18 @@ export default function HomePage() {
   const {
     activeYear,
     setActiveYear,
+    activeMonth,
+    setActiveMonth,
+    isDeepDive,
+    activeWarId,
     isPlaying,
     togglePlay,
     playSpeed,
     setPlaySpeed,
     selectedConflict,
     setSelectedConflict,
+    selectedBattle,
+    setSelectedBattle,
     filters,
     toggleFilterType,
     toggleFilterImpact,
@@ -42,6 +49,8 @@ export default function HomePage() {
     resetFilters,
     hasActiveFilters,
     activeConflicts,
+    activeBattles,
+    activeTheaterLabels,
   } = useConflictStore();
 
   return (
@@ -65,16 +74,16 @@ export default function HomePage() {
           <Navigation />
           <div className="h-4 w-px bg-[#30363d]" />
           <div className="relative">
-          <FilterPanel
-            isOpen={filterOpen}
-            onToggle={() => setFilterOpen((o) => !o)}
-            filters={filters}
-            onToggleType={toggleFilterType}
-            onToggleImpact={toggleFilterImpact}
-            onToggleRegion={toggleFilterRegion}
-            onReset={resetFilters}
-            hasActiveFilters={hasActiveFilters}
-          />
+            <FilterPanel
+              isOpen={filterOpen}
+              onToggle={() => setFilterOpen((o) => !o)}
+              filters={filters}
+              onToggleType={toggleFilterType}
+              onToggleImpact={toggleFilterImpact}
+              onToggleRegion={toggleFilterRegion}
+              onReset={resetFilters}
+              hasActiveFilters={hasActiveFilters}
+            />
           </div>
         </div>
       </header>
@@ -86,12 +95,32 @@ export default function HomePage() {
           selectedConflict={selectedConflict}
           onSelectConflict={setSelectedConflict}
           activeYear={activeYear}
+          isDeepDive={isDeepDive}
+          activeMonth={activeMonth}
+          activeBattles={activeBattles}
+          selectedBattle={selectedBattle}
+          onSelectBattle={setSelectedBattle}
+          activeTheaterLabels={activeTheaterLabels}
         />
 
-        {/* Conflict detail panel (right side) */}
-        <ConflictDetailPanel
-          conflict={selectedConflict}
-          onClose={() => setSelectedConflict(null)}
+        {/* Conflict detail panel — shown when no battle is selected */}
+        {!selectedBattle && (
+          <ConflictDetailPanel
+            conflict={selectedConflict}
+            onClose={() => setSelectedConflict(null)}
+            isDeepDive={isDeepDive}
+            activeBattles={activeBattles}
+            selectedBattle={selectedBattle}
+            onSelectBattle={setSelectedBattle}
+            activeYear={activeYear}
+            activeMonth={activeMonth}
+          />
+        )}
+
+        {/* Battle detail panel — shown when a battle is selected */}
+        <BattleDetailPanel
+          battle={selectedBattle}
+          onClose={() => setSelectedBattle(null)}
         />
 
         {/* Conflict list (bottom-left) */}
@@ -107,9 +136,13 @@ export default function HomePage() {
       <footer className="flex-shrink-0 z-30">
         <Timeline
           activeYear={activeYear}
+          activeMonth={activeMonth}
+          isDeepDive={isDeepDive}
+          activeWarId={activeWarId}
           isPlaying={isPlaying}
           playSpeed={playSpeed}
           onYearChange={setActiveYear}
+          onMonthChange={setActiveMonth}
           onTogglePlay={togglePlay}
           onSpeedChange={setPlaySpeed}
         />
