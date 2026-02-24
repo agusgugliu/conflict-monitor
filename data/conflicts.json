@@ -1658,5 +1658,546 @@
     "affected_countries": [
       "Argentina"
     ]
+  },
+  {
+    "id": "us-declaration-independence",
+    "name": "U.S. Declaration of Independence",
+    "start_date": "1776-07-04",
+    "end_date": "1776-07-04",
+    "start_year": 1776,
+    "end_year": 1776,
+    "coordinates": {
+      "lat": 39.9485,
+      "lng": -75.1681
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Thirteen Colonies / Continental Congress",
+      "British Crown"
+    ],
+    "casualties": "Declaration itself was peaceful; Revolutionary War ongoing (1775–1783)",
+    "summary": "On July 4, 1776, the Second Continental Congress, meeting in Philadelphia, formally adopted the Declaration of Independence drafted primarily by Thomas Jefferson. The document declared the thirteen American colonies free and independent states, dissolving their political bonds with Great Britain.\n\nThe Declaration's assertion that 'all men are created equal' and endowed with inalienable rights became a foundational text of modern democratic theory and inspired independence movements worldwide for centuries.",
+    "affected_countries": [
+      "United States",
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "haitian-independence",
+    "name": "Haitian Declaration of Independence",
+    "start_date": "1804-01-01",
+    "end_date": "1804-01-01",
+    "start_year": 1804,
+    "end_year": 1804,
+    "coordinates": {
+      "lat": 19.4558,
+      "lng": -72.683
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Haitian revolutionary forces (Dessalines)",
+      "French colonial government / Napoleon"
+    ],
+    "casualties": "~300,000+ killed in the Haitian Revolution (1791–1804)",
+    "summary": "On January 1, 1804, Jean-Jacques Dessalines proclaimed Haitian independence in Gonaïves, renaming the colony Saint-Domingue to Haiti—its indigenous Taíno name. Haiti became the first Black republic in the world and the only nation born from a successful slave revolt.\n\nThe Haitian Revolution, which began in 1791, was the most successful uprising in the history of Atlantic slavery. France refused to recognize Haitian independence until 1825, extorting an indemnity of 150 million gold francs that left Haiti financially crippled for generations.",
+    "affected_countries": [
+      "Haiti",
+      "France"
+    ]
+  },
+  {
+    "id": "paraguayan-independence",
+    "name": "Paraguayan Independence",
+    "start_date": "1811-05-14",
+    "end_date": "1811-05-14",
+    "start_year": 1811,
+    "end_year": 1811,
+    "coordinates": {
+      "lat": -25.2867,
+      "lng": -57.647
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "Paraguayan creoles / junta",
+      "Spanish colonial government"
+    ],
+    "casualties": "Minimal — largely bloodless transition",
+    "summary": "On the night of May 14–15, 1811, Paraguayan creole leaders launched a bloodless coup in Asunción, deposing the Spanish governor Bernardo de Velasco and forming a governing junta. The formal Act of Independence was adopted on May 17, though Paraguay's independence was de facto from this night forward.\n\nParaguay's independence was unique in Spanish America for being largely peaceful and not directed by Buenos Aires — reflecting the country's strong regional identity that would later define its turbulent 19th-century history.",
+    "affected_countries": [
+      "Paraguay",
+      "Argentina"
+    ]
+  },
+  {
+    "id": "venezuelan-independence",
+    "name": "Venezuelan Declaration of Independence",
+    "start_date": "1811-07-05",
+    "end_date": "1811-07-05",
+    "start_year": 1811,
+    "end_year": 1811,
+    "coordinates": {
+      "lat": 10.4806,
+      "lng": -66.9036
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Venezuelan Congress / Patriot forces",
+      "Spanish Royalist forces"
+    ],
+    "casualties": "Independence war cost hundreds of thousands of lives (1811–1823)",
+    "summary": "On July 5, 1811, the Venezuelan Congress in Caracas became the first in South America to formally declare independence from Spain, issuing the Venezuelan Declaration of Independence signed by 37 delegates. Simón Bolívar, Francisco de Miranda, and other patriots had been the driving force behind the congress.\n\nVenezuela's independence sparked the broader Bolivarian liberation of South America, though Spain reconquered much of the territory before Bolívar's campaigns ultimately secured independence for Venezuela, Colombia, Ecuador, Peru, and Bolivia.",
+    "affected_countries": [
+      "Venezuela",
+      "Colombia",
+      "Ecuador"
+    ]
+  },
+  {
+    "id": "colombian-independence",
+    "name": "Colombian Declaration of Independence (Grito de Independencia)",
+    "start_date": "1810-07-20",
+    "end_date": "1810-07-20",
+    "start_year": 1810,
+    "end_year": 1810,
+    "coordinates": {
+      "lat": 4.711,
+      "lng": -74.0721
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "New Granadan creole leaders / junta",
+      "Spanish colonial Viceroy"
+    ],
+    "casualties": "Beginning of a long independence war (1810–1819)",
+    "summary": "On July 20, 1810, residents of Bogotá staged a planned confrontation with a Spanish merchant, which escalated into a revolt forcing the Spanish Viceroy to accept a governing junta. This date—celebrated as Colombia's Independence Day—marks the beginning of the country's struggle for independence.\n\nFull independence from Spain was achieved with Simón Bolívar's victory at the Battle of Boyacá on August 7, 1819, which secured the liberation of New Granada and led to the formation of Gran Colombia.",
+    "affected_countries": [
+      "Colombia",
+      "Venezuela",
+      "Ecuador",
+      "Panama"
+    ]
+  },
+  {
+    "id": "argentine-independence",
+    "name": "Argentine Declaration of Independence",
+    "start_date": "1816-07-09",
+    "end_date": "1816-07-09",
+    "start_year": 1816,
+    "end_year": 1816,
+    "coordinates": {
+      "lat": -26.8178,
+      "lng": -65.2178
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Congress of Tucumán / United Provinces",
+      "Spanish Crown"
+    ],
+    "casualties": "Part of the Río de la Plata independence wars (1810–1820s)",
+    "summary": "On July 9, 1816, the Congress of Tucumán, meeting in San Miguel de Tucumán, formally declared independence from Spain as the 'United Provinces of South America.' The declaration came during a critical period when royalist forces still threatened from Upper Peru (Bolivia) and the interior.\n\nGeneral José de San Martín would go on to use Tucumán as a base for his epic Andean crossing to liberate Chile and Peru. Argentina's independence was part of the broader collapse of Spanish colonial rule across South America.",
+    "affected_countries": [
+      "Argentina",
+      "Uruguay",
+      "Bolivia",
+      "Paraguay"
+    ]
+  },
+  {
+    "id": "chilean-independence",
+    "name": "Chilean Declaration of Independence",
+    "start_date": "1818-02-12",
+    "end_date": "1818-02-12",
+    "start_year": 1818,
+    "end_year": 1818,
+    "coordinates": {
+      "lat": -35.4264,
+      "lng": -71.6554
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Chilean Patriot forces / O'Higgins",
+      "Spanish Royalist forces"
+    ],
+    "casualties": "Wars of Chilean independence (1810–1826) killed tens of thousands",
+    "summary": "On February 12, 1818, in Talca, Chile's Supreme Director Bernardo O'Higgins formally proclaimed Chilean independence by signing the Act of Independence before assembled troops. The declaration followed the decisive Patriot victory at the Battle of Chacabuco in 1817, enabled by General José de San Martín's legendary Andean crossing.\n\nChile's independence was definitively secured at the Battle of Maipú on April 5, 1818. O'Higgins' declaration drew on Enlightenment principles and forged Chile's identity as a sovereign state distinct from the Spanish colonial order.",
+    "affected_countries": [
+      "Chile",
+      "Argentina"
+    ]
+  },
+  {
+    "id": "peruvian-independence",
+    "name": "Peruvian Declaration of Independence",
+    "start_date": "1821-07-28",
+    "end_date": "1821-07-28",
+    "start_year": 1821,
+    "end_year": 1821,
+    "coordinates": {
+      "lat": -12.0464,
+      "lng": -77.0428
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Argentine-Chilean Liberating Army (San Martín)",
+      "Spanish Viceroy José de la Serna"
+    ],
+    "casualties": "Liberation campaigns cost tens of thousands of lives",
+    "summary": "On July 28, 1821, General José de San Martín proclaimed Peru's independence in Lima's Plaza Mayor before a jubilant crowd, declaring: 'From this moment, Peru is free and independent, by the general will of the people.' Spain had ruled Peru since the 1530s, making it the heart of its South American empire.\n\nFull independence was not militarily secured until the Battle of Ayacucho on December 9, 1824—the last major battle of the Spanish-American wars of independence—when Simón Bolívar's forces decisively defeated the royalists, ending 300 years of Spanish colonial rule in mainland South America.",
+    "affected_countries": [
+      "Peru",
+      "Bolivia",
+      "Ecuador"
+    ]
+  },
+  {
+    "id": "mexican-independence",
+    "name": "Mexican Grito de Dolores (Start of Independence)",
+    "start_date": "1810-09-16",
+    "end_date": "1810-09-16",
+    "start_year": 1810,
+    "end_year": 1810,
+    "coordinates": {
+      "lat": 21.1483,
+      "lng": -100.932
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Mexican insurgents (Father Hidalgo)",
+      "Spanish colonial authorities"
+    ],
+    "casualties": "Mexican War of Independence (1810–1821) killed ~500,000",
+    "summary": "In the early morning of September 16, 1810, Father Miguel Hidalgo y Costilla rang the church bell of Dolores (now Dolores Hidalgo, Guanajuato) and delivered his 'Grito de Dolores'—a passionate call to arms that launched the Mexican War of Independence. His call rallied tens of thousands of mestizo and indigenous peasants to march on colonial cities.\n\nHidalgo was captured and executed in 1811, but the revolution continued under figures like José María Morelos. Mexico finally achieved independence on September 27, 1821, when Agustín de Iturbide's Army of the Three Guarantees entered Mexico City. September 16 is celebrated as Mexican Independence Day.",
+    "affected_countries": [
+      "Mexico"
+    ]
+  },
+  {
+    "id": "brazilian-independence",
+    "name": "Brazilian Independence — Grito do Ipiranga",
+    "start_date": "1822-09-07",
+    "end_date": "1822-09-07",
+    "start_year": 1822,
+    "end_year": 1822,
+    "coordinates": {
+      "lat": -23.5876,
+      "lng": -46.5828
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Prince Pedro I of Brazil",
+      "Portuguese Cortes (parliament)"
+    ],
+    "casualties": "Relatively peaceful transition; minor military skirmishes",
+    "summary": "On September 7, 1822, on the banks of the Ipiranga river near São Paulo, Prince Pedro—heir to the Portuguese throne and regent of Brazil—received letters from Lisbon demanding he return to Portugal and dissolve Brazilian autonomy. He tore off his Portuguese armband and cried: 'Independence or Death!' ('Independência ou Morte!'), proclaiming Brazilian independence.\n\nBrazil's independence was unique in Latin America for being declared by a European prince, resulting in a constitutional monarchy rather than a republic. It was also largely peaceful compared to the bloody independence wars elsewhere in the continent. Pedro I was crowned Emperor of Brazil on October 12, 1822.",
+    "affected_countries": [
+      "Brazil",
+      "Portugal"
+    ]
+  },
+  {
+    "id": "bolivian-independence",
+    "name": "Bolivian Declaration of Independence",
+    "start_date": "1825-08-06",
+    "end_date": "1825-08-06",
+    "start_year": 1825,
+    "end_year": 1825,
+    "coordinates": {
+      "lat": -19.0478,
+      "lng": -65.2596
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "Bolivarian liberation forces / Upper Peruvian assembly",
+      "Spanish Royalists"
+    ],
+    "casualties": "Part of the broader South American independence wars",
+    "summary": "On August 6, 1825, an assembly in Chuquisaca (present-day Sucre) declared independence from both Peru and the United Provinces of the Río de la Plata, naming the new nation Bolivia in honor of Simón Bolívar—who had liberated the region at the Battle of Ayacucho months earlier.\n\nBolivia took its name from the Venezuelan-born liberator, who briefly served as its first president. The country's formation marked the completion of the liberation of mainland Spanish South America.",
+    "affected_countries": [
+      "Bolivia",
+      "Peru",
+      "Argentina"
+    ]
+  },
+  {
+    "id": "uruguayan-independence",
+    "name": "Uruguayan Declaration of Independence",
+    "start_date": "1825-08-25",
+    "end_date": "1825-08-25",
+    "start_year": 1825,
+    "end_year": 1825,
+    "coordinates": {
+      "lat": -34.0993,
+      "lng": -56.2147
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [
+      "Uruguayan patriot forces (33 Orientales)",
+      "Brazilian / Portuguese Empire"
+    ],
+    "casualties": "Cisplatine War (1825–1828) with Brazil followed",
+    "summary": "On August 25, 1825, the Congress of Florida—meeting in the Uruguayan interior town of Florida—declared the reunion of the Banda Oriental (present-day Uruguay) with the United Provinces of the Río de la Plata and rejected Brazilian (Portuguese) sovereignty. The declaration was led by Juan Antonio Lavalleja and the legendary 'Treinta y Tres Orientales' (33 Easterners) who had crossed the Río de la Plata to liberate their homeland.\n\nFull sovereignty came with the Treaty of Montevideo in 1828, brokered by Britain, which created Uruguay as an independent buffer state between Argentina and Brazil.",
+    "affected_countries": [
+      "Uruguay",
+      "Argentina",
+      "Brazil"
+    ]
+  },
+  {
+    "id": "cuban-independence",
+    "name": "Cuban Independence — End of Spanish Rule",
+    "start_date": "1898-12-10",
+    "end_date": "1898-12-10",
+    "start_year": 1898,
+    "end_year": 1898,
+    "coordinates": {
+      "lat": 23.1136,
+      "lng": -82.3666
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Cuban independence forces / United States",
+      "Spain"
+    ],
+    "casualties": "~200,000+ Cuban civilians died (1895–1898); ~3,000 U.S. military casualties",
+    "summary": "The Treaty of Paris (December 10, 1898), signed after Spain's defeat in the Spanish-American War, ended 400 years of Spanish colonial rule in Cuba. Spain ceded Cuba to U.S. administration, along with Puerto Rico, Guam, and the Philippines.\n\nCuba did not gain full independence immediately—the island remained under U.S. occupation until 1902, when the Cuban Republic was formally established on May 20, though the Platt Amendment gave the U.S. the right to intervene in Cuban affairs until 1934. José Martí, who died in the 1895 uprising, is revered as the father of Cuban independence.",
+    "affected_countries": [
+      "Cuba",
+      "Spain",
+      "United States"
+    ]
+  },
+  {
+    "id": "ghanaian-independence",
+    "name": "Ghanaian Independence",
+    "start_date": "1957-03-06",
+    "end_date": "1957-03-06",
+    "start_year": 1957,
+    "end_year": 1957,
+    "coordinates": {
+      "lat": 5.6037,
+      "lng": -0.187
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Africa",
+    "belligerents": [
+      "Convention People's Party (Nkrumah)",
+      "British colonial administration"
+    ],
+    "casualties": "Achieved through peaceful political struggle",
+    "summary": "On March 6, 1957, Ghana became the first sub-Saharan African country to achieve independence from European colonial rule, ending 113 years of British administration as the Gold Coast. Prime Minister Kwame Nkrumah declared: 'Ghana, your beloved country is free forever!'\n\nGhana's independence had an enormous psychological and political impact across Africa, inspiring independence movements throughout the continent. By 1960—known as 'Africa Year'—seventeen African nations had gained independence. Nkrumah became a leading voice of pan-Africanism and anti-colonialism on the world stage.",
+    "affected_countries": [
+      "Ghana",
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "algerian-independence",
+    "name": "Algerian Independence",
+    "start_date": "1962-07-05",
+    "end_date": "1962-07-05",
+    "start_year": 1962,
+    "end_year": 1962,
+    "coordinates": {
+      "lat": 36.7372,
+      "lng": 3.0865
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Africa",
+    "belligerents": [
+      "National Liberation Front (FLN)",
+      "France / French settlers (pieds-noirs)"
+    ],
+    "casualties": "~400,000–1,500,000 Algerians killed in the independence war (1954–1962)",
+    "summary": "On July 5, 1962, Algeria declared independence from France after 132 years of colonization and an eight-year independence war that cost up to a million and a half Algerian lives. The Évian Accords, signed on March 19, 1962, ended the conflict and were ratified by French voters in a referendum.\n\nThe Algerian War profoundly scarred France—bringing down the Fourth Republic, nearly causing a military coup, and prompting the flight of 1 million French-Algerians (pieds-noirs). Frantz Fanon's 'The Wretched of the Earth,' written during the war, became a foundational text of postcolonial theory.",
+    "affected_countries": [
+      "Algeria",
+      "France"
+    ]
+  },
+  {
+    "id": "indonesian-independence",
+    "name": "Indonesian Declaration of Independence",
+    "start_date": "1945-08-17",
+    "end_date": "1945-08-17",
+    "start_year": 1945,
+    "end_year": 1945,
+    "coordinates": {
+      "lat": -6.2088,
+      "lng": 106.8456
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "Indonesian National Committee (Sukarno, Hatta)",
+      "Dutch colonial authority / Japan"
+    ],
+    "casualties": "Indonesian National Revolution (1945–1949) killed ~100,000+",
+    "summary": "On August 17, 1945—two days after Japan's surrender—Sukarno and Mohammad Hatta proclaimed Indonesian independence in Jakarta in a brief, powerful statement: 'We the people of Indonesia hereby declare the independence of Indonesia.' The declaration came after 350 years of Dutch colonial rule, interrupted by Japanese occupation from 1942–1945.\n\nThe Dutch refused to recognize independence and launched two military offensives ('police actions') in 1947 and 1948. International pressure, including a U.S. threat to cut off Marshall Plan aid to the Netherlands, finally compelled Dutch recognition of Indonesian sovereignty on December 27, 1949.",
+    "affected_countries": [
+      "Indonesia",
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "indian-independence",
+    "name": "Indian Independence",
+    "start_date": "1947-08-15",
+    "end_date": "1947-08-15",
+    "start_year": 1947,
+    "end_year": 1947,
+    "coordinates": {
+      "lat": 28.6139,
+      "lng": 77.209
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "Indian National Congress (Nehru, Gandhi)",
+      "British Crown / Indian Empire"
+    ],
+    "casualties": "Partition triggered ~200,000–2,000,000 deaths and displacement of 10–20 million people",
+    "summary": "At the stroke of midnight on August 15, 1947, India's first Prime Minister Jawaharlal Nehru delivered his iconic 'Tryst with Destiny' speech as India gained independence from nearly 200 years of British rule—ending the largest empire in history. The moment was accompanied by the traumatic Partition of British India into India and the new Muslim-majority state of Pakistan.\n\nThe partition triggered one of the largest and bloodiest mass migrations in human history, with up to two million people killed in communal violence between Hindus, Muslims, and Sikhs. Mahatma Gandhi's non-violent resistance movement had been the central force in winning independence.",
+    "affected_countries": [
+      "India",
+      "Pakistan",
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "pakistani-independence",
+    "name": "Pakistani Independence",
+    "start_date": "1947-08-14",
+    "end_date": "1947-08-14",
+    "start_year": 1947,
+    "end_year": 1947,
+    "coordinates": {
+      "lat": 24.8607,
+      "lng": 67.0011
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "All-India Muslim League (Jinnah)",
+      "British Crown"
+    ],
+    "casualties": "Partition violence killed an estimated 200,000–2,000,000; 10–20 million displaced",
+    "summary": "Pakistan gained independence on August 14, 1947, one day before India, as a new nation created for the Muslim-majority populations of British India under the leadership of Muhammad Ali Jinnah. Jinnah became Pakistan's first Governor-General, addressing the nation in Karachi.\n\nPakistan was created as two geographically separate wings: West Pakistan and East Pakistan (present-day Bangladesh), separated by 1,600 km of Indian territory. The traumatic Partition of British India accompanied independence, triggering massive communal violence and one of history's largest refugee migrations. East Pakistan later became Bangladesh in 1971.",
+    "affected_countries": [
+      "Pakistan",
+      "India",
+      "Bangladesh",
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "israeli-declaration-independence",
+    "name": "Israeli Declaration of Independence",
+    "start_date": "1948-05-14",
+    "end_date": "1948-05-14",
+    "start_year": 1948,
+    "end_year": 1948,
+    "coordinates": {
+      "lat": 32.0853,
+      "lng": 34.7818
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Middle East",
+    "belligerents": [
+      "Jewish Agency / Provisional Government (Ben-Gurion)",
+      "British Mandate authority"
+    ],
+    "casualties": "1948 Arab–Israeli War followed immediately, killing ~6,000 Israelis and ~5,000–15,000 Arabs",
+    "summary": "On May 14, 1948, hours before the British Mandate for Palestine expired, David Ben-Gurion proclaimed the establishment of the State of Israel in Tel Aviv. The United States recognized Israel within minutes; the Soviet Union followed days later.\n\nThe declaration was immediately followed by the Arab–Israeli War of 1948, as the armies of Egypt, Jordan, Syria, Iraq, and Lebanon invaded. Israel survived and expanded its territory beyond the UN partition plan. The war resulted in the displacement of approximately 700,000 Palestinian Arabs—an event Palestinians call the 'Nakba' (catastrophe).",
+    "affected_countries": [
+      "Israel",
+      "Palestine",
+      "Egypt",
+      "Jordan",
+      "Syria",
+      "Iraq"
+    ]
+  },
+  {
+    "id": "irish-independence",
+    "name": "Irish Declaration of Independence",
+    "start_date": "1919-01-21",
+    "end_date": "1919-01-21",
+    "start_year": 1919,
+    "end_year": 1919,
+    "coordinates": {
+      "lat": 53.3498,
+      "lng": -6.2603
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Europe",
+    "belligerents": [
+      "Sinn Féin / Irish Republican Army",
+      "British Crown"
+    ],
+    "casualties": "Irish War of Independence (1919–1921) killed ~2,000; Civil War (1922–1923) ~4,000",
+    "summary": "On January 21, 1919, the newly elected Irish republican members of parliament convened as the First Dáil in Dublin's Mansion House, ratifying the Irish Declaration of Independence and establishing an Irish Republic in defiance of British rule. The same day, the first shots of the Irish War of Independence were fired.\n\nThe Anglo-Irish Treaty of 1921 established the Irish Free State on December 6, 1922—ending 750 years of British rule over most of Ireland, though partitioning Northern Ireland (Ulster) which remained in the United Kingdom. The partition dispute fuelled the Troubles from the 1960s to the 1990s.",
+    "affected_countries": [
+      "Ireland",
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "philippine-independence",
+    "name": "Philippine Declaration of Independence",
+    "start_date": "1898-06-12",
+    "end_date": "1898-06-12",
+    "start_year": 1898,
+    "end_year": 1898,
+    "coordinates": {
+      "lat": 14.3294,
+      "lng": 120.9333
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Asia",
+    "belligerents": [
+      "Philippine revolutionary forces (Aguinaldo)",
+      "Spain / United States"
+    ],
+    "casualties": "Philippine–American War (1899–1902) killed ~250,000–1,000,000 Filipinos",
+    "summary": "On June 12, 1898, in Kawit, Cavite, General Emilio Aguinaldo proclaimed Philippine independence from Spain—the first declaration of independence in Asia. The declaration followed the Philippine Revolution that began in 1896 and Spain's weakening grip after the Spanish-American War.\n\nHowever, the Treaty of Paris (December 1898) saw Spain cede the Philippines to the United States for $20 million, without consulting Filipinos. This triggered the Philippine–American War (1899–1902), a brutal colonial conflict. The Philippines gained full independence from the U.S. on July 4, 1946.",
+    "affected_countries": [
+      "Philippines",
+      "Spain",
+      "United States"
+    ]
   }
 ]
