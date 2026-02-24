@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { Globe } from 'lucide-react';
 import { useConflictStore } from '@/store/useConflictStore';
+import AppLogo from '@/components/AppLogo';
 import Timeline from '@/components/Timeline';
 import FilterPanel from '@/components/FilterPanel';
 import ConflictDetailPanel from '@/components/ConflictDetailPanel';
@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="glass-panel border-b border-[#30363d] px-4 py-3 flex items-center justify-between z-30 flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <Globe size={20} className="text-[#e05252]" />
+          <AppLogo size={22} />
           <div>
             <h1 className="text-sm font-bold text-white tracking-tight leading-none">
               Historical Conflict Map

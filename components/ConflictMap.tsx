@@ -308,7 +308,7 @@ function ConflictMap({
       </AnimatePresence>
 
       {/* ── Legend (adapts for deep-dive) ── */}
-      <div className="absolute bottom-4 left-4 glass-panel rounded-lg p-3 space-y-1.5">
+      <div className="absolute bottom-4 right-4 glass-panel rounded-lg p-3 space-y-1.5">
         {isDeepDive ? (
           <>
             <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium mb-2">Battles</p>

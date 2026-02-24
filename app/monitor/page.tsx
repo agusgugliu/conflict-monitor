@@ -1,11 +1,13 @@
 'use client';
 
-import { Radio, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import Link from 'next/link';
 import { useMonitorStore } from '@/store/useMonitorStore';
 import Navigation from '@/components/Navigation';
+import AppLogo from '@/components/AppLogo';
 import MonitorSidebar from '@/components/monitor/MonitorSidebar';
 import ContinentAccordion from '@/components/monitor/ContinentAccordion';
+import LiveNewsFeed from '@/components/monitor/LiveNewsFeed';
 
 export default function MonitorPage() {
   const {
@@ -35,13 +37,13 @@ export default function MonitorPage() {
         {/* Brand + nav */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2.5">
-            <Radio size={18} className="text-[#e05252]" />
+            <AppLogo size={20} />
             <div>
               <h1 className="text-sm font-bold text-white tracking-tight leading-none">
                 Geopolitical Conflict Monitor
               </h1>
               <p className="text-[10px] text-[#8b949e] mt-0.5">
-                Real-time global tensions dashboard · Mock data
+                Real-time global tensions dashboard
               </p>
             </div>
           </div>
@@ -51,9 +53,6 @@ export default function MonitorPage() {
 
         {/* Right: last updated + quick link to map */}
         <div className="flex items-center gap-3">
-          <span className="text-[10px] text-[#8b949e] hidden sm:block">
-            Last updated: Feb 21, 2026
-          </span>
           <Link
             href="/"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-[#8b949e] hover:text-white border border-[#30363d] hover:border-[#8b949e]/50 transition-colors"
@@ -104,6 +103,9 @@ export default function MonitorPage() {
                 Filters available on larger screens
               </p>
             </div>
+
+            {/* Live news feed */}
+            <LiveNewsFeed />
 
             {/* Continent sections — NEVER a flat list */}
             {filteredSections.length === 0 ? (
