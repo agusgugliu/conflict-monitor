@@ -5,7 +5,7 @@ interface AppLogoProps {
   className?: string;
 }
 
-function AppLogo({ size = 20, className }: AppLogoProps) {
+function AppLogo({ size = 24, className }: AppLogoProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,21 +16,57 @@ function AppLogo({ size = 20, className }: AppLogoProps) {
       className={className}
       aria-hidden="true"
     >
-      {/* Globe outline */}
-      <circle cx="16" cy="16" r="12.5" stroke="#e05252" strokeWidth="1.5" />
-      {/* Meridian */}
-      <ellipse cx="16" cy="16" rx="6.5" ry="12.5" stroke="#e05252" strokeWidth="1" strokeOpacity="0.6" />
+      <defs>
+        <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#e05252" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#e05252" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Centre glow */}
+      <circle cx="16" cy="16" r="10" fill="url(#cg)" />
+
+      {/* Outer pulse ring */}
+      <circle cx="16" cy="16" r="14.5" stroke="#e05252" strokeWidth="0.5" strokeOpacity="0.18" strokeDasharray="1.5 2.5" />
+
+      {/* Globe */}
+      <circle cx="16" cy="16" r="10" stroke="#e05252" strokeWidth="1.5" />
+
       {/* Equator */}
-      <line x1="3.5" y1="16" x2="28.5" y2="16" stroke="#e05252" strokeWidth="1" strokeOpacity="0.6" />
-      {/* Tropic lines */}
-      <path d="M5.5 11 Q16 9.5 26.5 11" stroke="#e05252" strokeWidth="0.7" strokeOpacity="0.35" fill="none" />
-      <path d="M5.5 21 Q16 22.5 26.5 21" stroke="#e05252" strokeWidth="0.7" strokeOpacity="0.35" fill="none" />
-      {/* Crosshair ticks */}
-      <line x1="16" y1="1" x2="16" y2="5.5" stroke="#e05252" strokeWidth="2" strokeLinecap="round" />
-      <line x1="16" y1="26.5" x2="16" y2="31" stroke="#e05252" strokeWidth="2" strokeLinecap="round" />
-      <line x1="1" y1="16" x2="5.5" y2="16" stroke="#e05252" strokeWidth="2" strokeLinecap="round" />
-      <line x1="26.5" y1="16" x2="31" y2="16" stroke="#e05252" strokeWidth="2" strokeLinecap="round" />
-      {/* Center dot */}
+      <line x1="6" y1="16" x2="26" y2="16" stroke="#e05252" strokeWidth="0.7" strokeOpacity="0.32" />
+
+      {/* Prime meridian */}
+      <ellipse cx="16" cy="16" rx="5.5" ry="10" stroke="#e05252" strokeWidth="0.7" strokeOpacity="0.32" />
+
+      {/* Upper latitude */}
+      <path d="M8 11.5 Q16 9.5 24 11.5" stroke="#e05252" strokeWidth="0.55" strokeOpacity="0.2" fill="none" />
+
+      {/* Lower latitude */}
+      <path d="M8 20.5 Q16 22.5 24 20.5" stroke="#e05252" strokeWidth="0.55" strokeOpacity="0.2" fill="none" />
+
+      {/* Crosshair — faint through-lines */}
+      <line x1="5.5" y1="16" x2="26.5" y2="16" stroke="#e05252" strokeWidth="0.4" strokeOpacity="0.18" />
+      <line x1="16" y1="5.5" x2="16" y2="26.5" stroke="#e05252" strokeWidth="0.4" strokeOpacity="0.18" />
+
+      {/* Crosshair — bold arms (outside globe, 1 px gap) */}
+      <line x1="1.5" y1="16" x2="5" y2="16" stroke="#e05252" strokeWidth="1.6" strokeLinecap="round" />
+      <line x1="27" y1="16" x2="30.5" y2="16" stroke="#e05252" strokeWidth="1.6" strokeLinecap="round" />
+      <line x1="16" y1="1.5" x2="16" y2="5" stroke="#e05252" strokeWidth="1.6" strokeLinecap="round" />
+      <line x1="16" y1="27" x2="16" y2="30.5" stroke="#e05252" strokeWidth="1.6" strokeLinecap="round" />
+
+      {/* Corner brackets */}
+      <path d="M2 8 L2 2 L8 2" stroke="#e05252" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.65" />
+      <path d="M30 8 L30 2 L24 2" stroke="#e05252" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.65" />
+      <path d="M2 24 L2 30 L8 30" stroke="#e05252" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.65" />
+      <path d="M30 24 L30 30 L24 30" stroke="#e05252" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.65" />
+
+      {/* Conflict hotspot dots */}
+      <circle cx="20" cy="12" r="1.3" fill="#e05252" opacity="0.9" />
+      <circle cx="23" cy="16.5" r="0.9" fill="#e05252" opacity="0.65" />
+      <circle cx="11.5" cy="17.5" r="0.9" fill="#e05252" opacity="0.6" />
+
+      {/* Centre target ring + dot */}
+      <circle cx="16" cy="16" r="3" stroke="#e05252" strokeWidth="0.65" strokeOpacity="0.5" />
       <circle cx="16" cy="16" r="1.5" fill="#e05252" />
     </svg>
   );

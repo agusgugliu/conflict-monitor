@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   description:
     "An interactive atlas of global conflicts from 1800 to the present day. Explore wars and their evolution through an animated timeline.",
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', type: 'image/x-icon' },
+    ],
   },
 };
 
