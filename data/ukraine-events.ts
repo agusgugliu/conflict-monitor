@@ -450,7 +450,7 @@ export const ukraineEvents: Battle[] = [
     id: 'ukr-kharkiv-barrage',
     warId: 'ukraine',
     name: 'Russia launches massive missile and drone barrage on Kharkiv',
-    theater: 'Kharkiv',
+    theater: 'Kharkiv Region',
     date: '2025-07-03',
     coordinates: { lat: 49.99, lng: 36.23 },
     attackers: ['Russia'],
