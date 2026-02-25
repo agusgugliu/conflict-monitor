@@ -22,6 +22,7 @@ interface ConflictMapProps {
   activeYear: number;
   // Deep-dive props
   isDeepDive?: boolean;
+  isWeeklyDeepDive?: boolean;
   activeMonth?: number;
   activeBattles?: Battle[];
   selectedBattle?: Battle | null;
@@ -44,6 +45,7 @@ function ConflictMap({
   onSelectConflict,
   activeYear,
   isDeepDive = false,
+  isWeeklyDeepDive = false,
   activeMonth = 1,
   activeBattles = [],
   selectedBattle = null,
@@ -72,12 +74,12 @@ function ConflictMap({
           >
             <span className="w-2 h-2 rounded-full bg-[#e05252] animate-pulse" />
             <span className="text-xs font-bold text-[#e05252] tracking-widest uppercase">
-              Deep Dive
+              {isWeeklyDeepDive ? 'Modern Deep Dive' : 'Deep Dive'}
             </span>
             <span className="text-xs text-[#8b949e]">
               {MONTH_NAMES[activeMonth - 1]} {activeYear}
             </span>
-            <span className="text-xs text-[#8b949e]">· {activeBattles.length} battles</span>
+            <span className="text-xs text-[#8b949e]">· {activeBattles.length} event{activeBattles.length !== 1 ? 's' : ''}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -309,7 +311,44 @@ function ConflictMap({
 
       {/* ── Legend (adapts for deep-dive) ── */}
       <div className="absolute bottom-4 right-4 glass-panel rounded-lg p-3 space-y-1.5">
-        {isDeepDive ? (
+        {isWeeklyDeepDive ? (
+          <>
+            <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium mb-2">Events</p>
+            {[
+              { label: 'Ukraine / West', color: '#58a6ff' },
+              { label: 'Russia / Axis',  color: '#e05252' },
+              { label: 'Israel / USA',   color: '#3fb950' },
+              { label: 'Iran / Houthi',  color: '#f0a500' },
+              { label: 'Pakistan',       color: '#a371f7' },
+              { label: 'Contested',      color: '#8b949e' },
+            ].map(({ label, color }) => (
+              <div key={label} className="flex items-center gap-2">
+                <svg width="16" height="16">
+                  <polygon points="8,2 14,8 8,14 2,8" fill={color} fillOpacity={0.9} />
+                </svg>
+                <span className="text-xs text-[#e6edf3]">{label}</span>
+              </div>
+            ))}
+            <div className="border-t border-[#30363d] my-1.5" />
+            <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium mb-1">Significance</p>
+            {[
+              { label: 'Turning Point', size: 11 },
+              { label: 'Pivotal',       size: 8  },
+              { label: 'Major',         size: 6  },
+            ].map(({ label, size }) => (
+              <div key={label} className="flex items-center gap-2">
+                <svg width="16" height="16">
+                  <polygon
+                    points={`8,${8-size} ${8+size},8 8,${8+size} ${8-size},8`}
+                    fill="#8b949e"
+                    fillOpacity={0.6}
+                  />
+                </svg>
+                <span className="text-xs text-[#e6edf3]">{label}</span>
+              </div>
+            ))}
+          </>
+        ) : isDeepDive ? (
           <>
             <p className="text-xs text-[#8b949e] uppercase tracking-wider font-medium mb-2">Battles</p>
             {[

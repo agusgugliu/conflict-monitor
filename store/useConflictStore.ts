@@ -6,21 +6,42 @@ import type { Battle, TheaterLabel } from '@/types/battles';
 import { getConflictsForYear, MIN_YEAR, MAX_YEAR } from '@/lib/conflicts';
 import {
   getBattlesForYearMonth,
+  getBattlesForYearMonthWeek,
   getTheaterLabelsForYearMonth,
   isDeepDiveYear,
+  isWeeklyDiveYear,
   getWarIdForYear,
 } from '@/lib/battles';
 import { ww1Battles, ww1TheaterLabels } from '@/data/ww1-battles';
 import { ww2Battles, ww2TheaterLabels } from '@/data/ww2-battles';
+import { ukraineEvents, ukraineTheaterLabels } from '@/data/ukraine-events';
+import { iranAxisEvents, iranAxisTheaterLabels } from '@/data/iran-axis-events';
+import { afghPakEvents, afghPakTheaterLabels } from '@/data/afgh-pak-events';
+import { venezuelaEvents, venezuelaTheaterLabels } from '@/data/venezuela-events';
 
-const ALL_BATTLES = [...ww1Battles, ...ww2Battles];
-const ALL_THEATER_LABELS: TheaterLabel[] = [...ww1TheaterLabels, ...ww2TheaterLabels];
+const ALL_BATTLES = [
+  ...ww1Battles,
+  ...ww2Battles,
+  ...ukraineEvents,
+  ...iranAxisEvents,
+  ...afghPakEvents,
+  ...venezuelaEvents,
+];
+const ALL_THEATER_LABELS: TheaterLabel[] = [
+  ...ww1TheaterLabels,
+  ...ww2TheaterLabels,
+  ...ukraineTheaterLabels,
+  ...iranAxisTheaterLabels,
+  ...afghPakTheaterLabels,
+  ...venezuelaTheaterLabels,
+];
 
 const DEFAULT_FILTERS: FilterState = { types: [], impacts: [], regions: [] };
 
 export function useConflictStore() {
   const [activeYear, setActiveYear] = useState(MIN_YEAR);
   const [activeMonth, setActiveMonth] = useState(9); // Sep 1939 – Invasion of Poland
+  const [activeWeek, setActiveWeek] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedConflict, setSelectedConflict] = useState<Conflict | null>(null);
   const [selectedBattle, setSelectedBattle] = useState<Battle | null>(null);
@@ -33,6 +54,7 @@ export function useConflictStore() {
   // ── Derived ──────────────────────────────────────────────────────────────
 
   const isDeepDive = isDeepDiveYear(activeYear);
+  const isWeeklyDeepDive = isWeeklyDiveYear(activeYear);
   const activeWarId = getWarIdForYear(activeYear);
 
   const activeConflicts = useMemo(
@@ -40,10 +62,13 @@ export function useConflictStore() {
     [activeYear, filters]
   );
 
-  const activeBattles = useMemo(
-    () => (isDeepDive ? getBattlesForYearMonth(ALL_BATTLES, activeYear, activeMonth) : []),
-    [activeYear, activeMonth, isDeepDive]
-  );
+  const activeBattles = useMemo(() => {
+    if (!isDeepDive) return [];
+    if (isWeeklyDeepDive) {
+      return getBattlesForYearMonthWeek(ALL_BATTLES, activeYear, activeMonth, activeWeek);
+    }
+    return getBattlesForYearMonth(ALL_BATTLES, activeYear, activeMonth);
+  }, [activeYear, activeMonth, activeWeek, isDeepDive, isWeeklyDeepDive]);
 
   const activeTheaterLabels = useMemo(
     () => (isDeepDive ? getTheaterLabelsForYearMonth(ALL_THEATER_LABELS, activeYear, activeMonth) : []),
@@ -58,20 +83,38 @@ export function useConflictStore() {
   }, []);
 
   // Keep a ref to current state so the interval tick always reads fresh values
-  const stateRef = useRef({ activeYear, activeMonth, playSpeed, viewMinYear, viewMaxYear });
-  stateRef.current = { activeYear, activeMonth, playSpeed, viewMinYear, viewMaxYear };
+  const stateRef = useRef({ activeYear, activeMonth, activeWeek, playSpeed, viewMinYear, viewMaxYear });
+  stateRef.current = { activeYear, activeMonth, activeWeek, playSpeed, viewMinYear, viewMaxYear };
 
   const tick = useCallback(() => {
-    const { activeYear: yr, activeMonth: mo, viewMaxYear: maxYr } = stateRef.current;
+    const { activeYear: yr, activeMonth: mo, activeWeek: wk, viewMaxYear: maxYr } = stateRef.current;
     if (isDeepDiveYear(yr)) {
-      // Month-by-month inside a deep-dive war
-      if (mo >= 12) {
-        const next = yr + 1;
-        if (next > maxYr) { stopPlay(); return; }
-        setActiveYear(next);
-        setActiveMonth(1);
+      if (isWeeklyDiveYear(yr)) {
+        // Modern conflicts: week-by-week
+        if (wk >= 5) {
+          if (mo >= 12) {
+            const next = yr + 1;
+            if (next > maxYr) { stopPlay(); return; }
+            setActiveYear(next);
+            setActiveMonth(1);
+            setActiveWeek(1);
+          } else {
+            setActiveMonth(mo + 1);
+            setActiveWeek(1);
+          }
+        } else {
+          setActiveWeek(wk + 1);
+        }
       } else {
-        setActiveMonth(mo + 1);
+        // Historical (WW1/WW2): month-by-month
+        if (mo >= 12) {
+          const next = yr + 1;
+          if (next > maxYr) { stopPlay(); return; }
+          setActiveYear(next);
+          setActiveMonth(1);
+        } else {
+          setActiveMonth(mo + 1);
+        }
       }
     } else {
       // Year-by-year everywhere else
@@ -108,12 +151,15 @@ export function useConflictStore() {
 
   useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
 
-  // Reset month to Jan when first entering a deep-dive year range
+  // Reset month+week when first entering a deep-dive year range
   const prevYearRef = useRef(activeYear);
   useEffect(() => {
     const wasDeep = isDeepDiveYear(prevYearRef.current);
     const nowDeep = isDeepDiveYear(activeYear);
-    if (!wasDeep && nowDeep) setActiveMonth(1);
+    if (!wasDeep && nowDeep) {
+      setActiveMonth(isWeeklyDiveYear(activeYear) ? 1 : 1);
+      setActiveWeek(1);
+    }
     prevYearRef.current = activeYear;
   }, [activeYear]);
 
@@ -122,7 +168,6 @@ export function useConflictStore() {
   const setViewRange = useCallback((min: number, max: number) => {
     setViewMinYearState(min);
     setViewMaxYearState(max);
-    // Clamp active year to the new range
     setActiveYear((prev) => Math.max(min, Math.min(max, prev)));
   }, []);
 
@@ -157,7 +202,8 @@ export function useConflictStore() {
   return {
     activeYear, setActiveYear,
     activeMonth, setActiveMonth,
-    isDeepDive, activeWarId,
+    activeWeek, setActiveWeek,
+    isDeepDive, isWeeklyDeepDive, activeWarId,
     isPlaying, togglePlay, stopPlay,
     playSpeed, setPlaySpeed,
     selectedConflict, setSelectedConflict,

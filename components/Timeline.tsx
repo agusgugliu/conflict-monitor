@@ -15,31 +15,50 @@ import {
 } from 'lucide-react';
 import { MIN_YEAR, MAX_YEAR } from '@/lib/conflicts';
 import { MONTH_NAMES } from '@/lib/battles';
+import type { WarId } from '@/types/battles';
 
 interface TimelineProps {
   activeYear: number;
   activeMonth: number;
+  activeWeek: number;
   isDeepDive: boolean;
-  activeWarId: 'ww1' | 'ww2' | null;
+  isWeeklyDeepDive: boolean;
+  activeWarId: WarId | null;
   isPlaying: boolean;
   playSpeed: number;
   viewMinYear: number;
   viewMaxYear: number;
   onYearChange: (year: number) => void;
   onMonthChange: (month: number) => void;
+  onWeekChange: (week: number) => void;
   onTogglePlay: () => void;
   onSpeedChange: (speed: number) => void;
   onViewRangeChange: (min: number, max: number) => void;
 }
 
 const SPEED_OPTIONS = [0.5, 1, 2, 5];
+const WEEK_LABELS = ['W1', 'W2', 'W3', 'W4', 'W5'];
 
 const WAR_BANDS = [
   { id: 'ww1', from: 1914, to: 1918, color: '#58a6ff', label: 'WWI' },
   { id: 'ww2', from: 1939, to: 1945, color: '#e05252', label: 'WWII' },
+  { id: 'modern', from: 2022, to: 2026, color: '#3fb950', label: 'Modern' },
 ];
 
-const WAR_COLORS: Record<string, string> = { ww1: '#58a6ff', ww2: '#e05252' };
+const WAR_COLORS: Record<string, string> = {
+  ww1: '#58a6ff',
+  ww2: '#e05252',
+  ukraine: '#3fb950',
+  'iran-axis': '#3fb950',
+  'afgh-pak': '#3fb950',
+  venezuela: '#3fb950',
+};
+
+const WAR_LABELS: Record<string, string> = {
+  ww1: 'World War I',
+  ww2: 'World War II',
+  ukraine: 'Modern Conflicts',
+};
 
 const PRESET_RANGES = [
   { label: 'All Time', min: MIN_YEAR, max: MAX_YEAR },
@@ -48,6 +67,7 @@ const PRESET_RANGES = [
   { label: '20th C', min: 1900, max: 1999 },
   { label: 'WWI Era', min: 1910, max: 1925 },
   { label: 'WWII Era', min: 1935, max: 1950 },
+  { label: 'Modern', min: 2020, max: MAX_YEAR },
 ];
 
 function formatYear(year: number): string {
@@ -57,7 +77,9 @@ function formatYear(year: number): string {
 function Timeline({
   activeYear,
   activeMonth,
+  activeWeek,
   isDeepDive,
+  isWeeklyDeepDive,
   activeWarId,
   isPlaying,
   playSpeed,
@@ -65,6 +87,7 @@ function Timeline({
   viewMaxYear,
   onYearChange,
   onMonthChange,
+  onWeekChange,
   onTogglePlay,
   onSpeedChange,
   onViewRangeChange,
@@ -78,7 +101,7 @@ function Timeline({
 
   const yearRange = viewMaxYear - viewMinYear;
   const progress = yearRange > 0 ? Math.max(0, Math.min(100, ((activeYear - viewMinYear) / yearRange) * 100)) : 0;
-  const warColor = activeWarId ? WAR_COLORS[activeWarId] : '#e05252';
+  const warColor = activeWarId ? (WAR_COLORS[activeWarId] ?? '#e05252') : '#e05252';
   const hasCustomRange = viewMinYear !== MIN_YEAR || viewMaxYear !== MAX_YEAR;
 
   const decadeMarkers = useMemo(() => {
@@ -124,6 +147,36 @@ function Timeline({
     [activeMonth, activeYear, viewMinYear, viewMaxYear, onYearChange, onMonthChange]
   );
 
+  const stepWeek = useCallback(
+    (delta: number) => {
+      const newWeek = activeWeek + delta;
+      if (newWeek < 1) {
+        // Go back a month, land on week 5
+        const newMonth = activeMonth - 1;
+        if (newMonth < 1) {
+          onYearChange(Math.max(viewMinYear, activeYear - 1));
+          onMonthChange(12);
+        } else {
+          onMonthChange(newMonth);
+        }
+        onWeekChange(5);
+      } else if (newWeek > 5) {
+        // Go forward a month, land on week 1
+        const newMonth = activeMonth + 1;
+        if (newMonth > 12) {
+          onYearChange(Math.min(viewMaxYear, activeYear + 1));
+          onMonthChange(1);
+        } else {
+          onMonthChange(newMonth);
+        }
+        onWeekChange(1);
+      } else {
+        onWeekChange(newWeek);
+      }
+    },
+    [activeWeek, activeMonth, activeYear, viewMinYear, viewMaxYear, onYearChange, onMonthChange, onWeekChange]
+  );
+
   const cycleSpeed = useCallback(() => {
     const idx = SPEED_OPTIONS.indexOf(playSpeed);
     onSpeedChange(SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length]);
@@ -143,6 +196,22 @@ function Timeline({
     (e: React.KeyboardEvent) => { if (e.key === 'Enter') commitRange(); },
     [commitRange]
   );
+
+  // In weekly mode, SkipBack/Forward navigate by week; otherwise by month (deep-dive) or year
+  const handleBack = useCallback(() => {
+    if (isWeeklyDeepDive) stepWeek(-1);
+    else if (isDeepDive) stepMonth(-1);
+    else stepYear(-10);
+  }, [isWeeklyDeepDive, isDeepDive, stepWeek, stepMonth, stepYear]);
+
+  const handleForward = useCallback(() => {
+    if (isWeeklyDeepDive) stepWeek(1);
+    else if (isDeepDive) stepMonth(1);
+    else stepYear(10);
+  }, [isWeeklyDeepDive, isDeepDive, stepWeek, stepMonth, stepYear]);
+
+  const backTitle = isWeeklyDeepDive ? 'Previous week' : isDeepDive ? 'Previous month' : 'Back 10 years';
+  const forwardTitle = isWeeklyDeepDive ? 'Next week' : isDeepDive ? 'Next month' : 'Forward 10 years';
 
   return (
     <div className="glass-panel border-t border-[#30363d] px-3 sm:px-6 py-2 sm:py-4 space-y-2 sm:space-y-3 relative">
@@ -228,9 +297,9 @@ function Timeline({
           </button>
 
           <button
-            onClick={() => (isDeepDive ? stepMonth(-1) : stepYear(-10))}
+            onClick={handleBack}
             className="p-1 sm:p-1.5 rounded-md text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
-            title={isDeepDive ? 'Previous month' : 'Back 10 years'}
+            title={backTitle}
           >
             <SkipBack size={15} />
           </button>
@@ -247,9 +316,9 @@ function Timeline({
           </motion.button>
 
           <button
-            onClick={() => (isDeepDive ? stepMonth(1) : stepYear(10))}
+            onClick={handleForward}
             className="p-1 sm:p-1.5 rounded-md text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
-            title={isDeepDive ? 'Next month' : 'Forward 10 years'}
+            title={forwardTitle}
           >
             <SkipForward size={15} />
           </button>
@@ -263,12 +332,12 @@ function Timeline({
           </button>
         </div>
 
-        {/* Year / Month display */}
+        {/* Year / Month / Week display */}
         <div className="flex-1 flex justify-center">
           <AnimatePresence mode="wait">
             {isDeepDive ? (
               <motion.div
-                key={`deep-${activeYear}-${activeMonth}`}
+                key={`deep-${activeYear}-${activeMonth}-${activeWeek}`}
                 className="text-center"
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -279,13 +348,13 @@ function Timeline({
                   className="text-xl sm:text-3xl font-bold tracking-tight tabular-nums"
                   style={{ color: warColor }}
                 >
-                  {MONTH_NAMES[activeMonth - 1]} {activeYear}
+                  {isWeeklyDeepDive ? `Wk ${activeWeek} · ` : ''}{MONTH_NAMES[activeMonth - 1]} {activeYear}
                 </span>
                 <p
                   className="hidden sm:block text-[10px] font-bold uppercase tracking-widest mt-0.5"
                   style={{ color: warColor, opacity: 0.7 }}
                 >
-                  {activeWarId === 'ww1' ? 'World War I' : 'World War II'} · Deep Dive
+                  {WAR_LABELS[activeWarId ?? ''] ?? 'Deep Dive'} · Deep Dive
                 </p>
               </motion.div>
             ) : (
@@ -352,7 +421,7 @@ function Timeline({
         </div>
       </div>
 
-      {/* Month scrubber (deep-dive only) */}
+      {/* Month scrubber (all deep-dive modes) */}
       <AnimatePresence>
         {isDeepDive && (
           <motion.div
@@ -381,6 +450,42 @@ function Timeline({
                   </button>
                 );
               })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Week scrubber (modern deep-dive only) */}
+      <AnimatePresence>
+        {isWeeklyDeepDive && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="flex items-center gap-1">
+              <span className="text-[10px] text-[#8b949e] uppercase tracking-wider flex-shrink-0">Week</span>
+              <div className="flex gap-1 flex-1">
+                {WEEK_LABELS.map((label, i) => {
+                  const week = i + 1;
+                  const isActive = week === activeWeek;
+                  return (
+                    <button
+                      key={label}
+                      onClick={() => onWeekChange(week)}
+                      className={`flex-1 py-0.5 rounded text-[11px] font-medium border transition-all ${
+                        isActive
+                          ? 'text-white border-transparent'
+                          : 'text-[#8b949e] border-[#30363d] hover:text-white hover:border-[#8b949e]'
+                      }`}
+                      style={isActive ? { backgroundColor: warColor, borderColor: warColor } : undefined}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         )}

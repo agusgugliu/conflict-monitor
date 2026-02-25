@@ -1,14 +1,9 @@
-export type WarId = 'ww1' | 'ww2';
+export type WarId = 'ww1' | 'ww2' | 'ukraine' | 'iran-axis' | 'afgh-pak' | 'venezuela';
 
 /**
- * Which side won the battle.
- * 'entente'  = WWI Allied side (France, UK, Russia, USA…)
- * 'central'  = WWI Central Powers (Germany, Austria-Hungary, Ottoman Empire)
- * 'allied'   = WWII Allied side (UK, USA, USSR, France…)
- * 'axis'     = WWII Axis (Germany, Italy, Japan)
- * 'soviet'   = Soviet-specific victory (for battles where USSR acted alone)
- * 'japan'    = Japanese victory
- * 'inconclusive' = No clear winner
+ * Which side won / initiated the event.
+ * Historical: entente/central (WWI), allied/axis/soviet/japan (WWII)
+ * Modern: russia/ukraine, israel/hamas/houthi/iran/usa, pakistan/ttp, contested/ongoing
  */
 export type VictorSide =
   | 'entente'
@@ -17,10 +12,36 @@ export type VictorSide =
   | 'axis'
   | 'soviet'
   | 'japan'
-  | 'inconclusive';
+  | 'russia'
+  | 'ukraine'
+  | 'israel'
+  | 'iran'
+  | 'usa'
+  | 'hamas'
+  | 'houthi'
+  | 'pakistan'
+  | 'ttp'
+  | 'inconclusive'
+  | 'contested'
+  | 'ongoing';
 
 /** Visual importance weight — affects marker size and label visibility. */
 export type BattleSignificance = 'major' | 'pivotal' | 'turning-point';
+
+/**
+ * For modern conflicts — describes the nature of the event beyond just "battle".
+ */
+export type EventType =
+  | 'battle'
+  | 'advance'
+  | 'retreat'
+  | 'airstrike'
+  | 'missile'
+  | 'ceasefire'
+  | 'diplomatic'
+  | 'assassination'
+  | 'arrest'
+  | 'protest';
 
 export type TheaterName =
   | 'Western Front'
@@ -35,7 +56,21 @@ export type TheaterName =
   | 'Pacific'
   | 'Atlantic'
   | 'Mediterranean'
-  | 'Northern Europe';
+  | 'Northern Europe'
+  // Modern theaters
+  | 'Eastern Ukraine'
+  | 'Southern Ukraine'
+  | 'Kharkiv Region'
+  | 'Kursk Region'
+  | 'Crimea'
+  | 'Gaza Strip'
+  | 'Southern Lebanon'
+  | 'Red Sea'
+  | 'Yemen'
+  | 'Syria / Iraq'
+  | 'Iran'
+  | 'Pakistan-Afghanistan Border'
+  | 'Venezuela';
 
 export interface Battle {
   id: string;
@@ -47,14 +82,16 @@ export interface Battle {
   /** ISO date of battle end — omit for single-day events */
   endDate?: string;
   coordinates: { lat: number; lng: number };
-  /** Faction names on the attacking side */
+  /** Faction names on the attacking / initiating side */
   attackers: string[];
-  /** Faction names on the defending side */
+  /** Faction names on the defending / responding side */
   defenders: string[];
   victorSide: VictorSide;
   casualties?: string;
   significance: BattleSignificance;
   summary: string;
+  /** For modern conflicts: the nature of the event */
+  eventType?: EventType;
 }
 
 /** A named front / theater rendered as a label on the map. */

@@ -32,7 +32,10 @@ export default function HomePage() {
     setActiveYear,
     activeMonth,
     setActiveMonth,
+    activeWeek,
+    setActiveWeek,
     isDeepDive,
+    isWeeklyDeepDive,
     activeWarId,
     isPlaying,
     togglePlay,
@@ -99,6 +102,7 @@ export default function HomePage() {
           onSelectConflict={setSelectedConflict}
           activeYear={activeYear}
           isDeepDive={isDeepDive}
+          isWeeklyDeepDive={isWeeklyDeepDive}
           activeMonth={activeMonth}
           activeBattles={activeBattles}
           selectedBattle={selectedBattle}
@@ -140,7 +144,9 @@ export default function HomePage() {
         <Timeline
           activeYear={activeYear}
           activeMonth={activeMonth}
+          activeWeek={activeWeek}
           isDeepDive={isDeepDive}
+          isWeeklyDeepDive={isWeeklyDeepDive}
           activeWarId={activeWarId}
           isPlaying={isPlaying}
           playSpeed={playSpeed}
@@ -148,6 +154,7 @@ export default function HomePage() {
           viewMaxYear={viewMaxYear}
           onYearChange={setActiveYear}
           onMonthChange={setActiveMonth}
+          onWeekChange={setActiveWeek}
           onTogglePlay={togglePlay}
           onSpeedChange={setPlaySpeed}
           onViewRangeChange={setViewRange}
