@@ -112,27 +112,60 @@ function ConflictMap({
 
           {/* ── Theater labels ── */}
           <AnimatePresence>
-            {activeTheaterLabels.map((label) => (
-              <Marker
-                key={`theater-${label.label}`}
-                coordinates={[label.coordinates.lng, label.coordinates.lat]}
-              >
-                <motion.text
-                  textAnchor="middle"
-                  fill={label.color}
-                  fontSize={7}
-                  fontWeight="bold"
-                  letterSpacing={1.5}
-                  fillOpacity={0.7}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  style={{ pointerEvents: 'none', userSelect: 'none' }}
+            {activeTheaterLabels.map((label) => {
+              // Estimate pill width: ~5.8 px per character + padding + dot
+              const pillW = Math.max(label.label.length * 5.8 + 22, 40);
+              const pillH = 13;
+              const halfW = pillW / 2;
+              return (
+                <Marker
+                  key={`theater-${label.label}`}
+                  coordinates={[label.coordinates.lng, label.coordinates.lat]}
                 >
-                  {label.label}
-                </motion.text>
-              </Marker>
-            ))}
+                  <motion.g
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    style={{ pointerEvents: 'none', userSelect: 'none' }}
+                  >
+                    {/* Dark pill background */}
+                    <rect
+                      x={-halfW}
+                      y={-pillH / 2}
+                      width={pillW}
+                      height={pillH}
+                      rx={pillH / 2}
+                      fill="rgba(13,17,23,0.78)"
+                      stroke={label.color}
+                      strokeWidth={0.8}
+                      strokeOpacity={0.7}
+                    />
+                    {/* Colored dot */}
+                    <circle
+                      cx={-halfW + 7}
+                      cy={0}
+                      r={2.2}
+                      fill={label.color}
+                      opacity={0.9}
+                    />
+                    {/* Label text */}
+                    <text
+                      textAnchor="middle"
+                      x={5}
+                      y={0.5}
+                      fill="white"
+                      fontSize={5.5}
+                      fontWeight="700"
+                      letterSpacing={0.6}
+                      dominantBaseline="middle"
+                      fillOpacity={0.95}
+                    >
+                      {label.label}
+                    </text>
+                  </motion.g>
+                </Marker>
+              );
+            })}
           </AnimatePresence>
 
           {/* ── War-level conflict markers (dimmed in deep-dive) ── */}
