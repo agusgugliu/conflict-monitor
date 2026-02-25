@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 
@@ -12,6 +12,7 @@ export interface NewsItem {
   sourceColor: string;
   publishedAt: string; // ISO string
   category?: string;
+  conflictTag?: string; // e.g. 'ukraine', 'gaza', 'houthi', 'general'
 }
 
 // ── Sources ────────────────────────────────────────────────────────────────────
@@ -31,11 +32,80 @@ const SOURCES = [
     color: '#005689',
     url: 'https://www.theguardian.com/world/rss',
   },
+  {
+    name: 'Reuters',
+    color: '#ff8000',
+    url: 'https://feeds.reuters.com/reuters/worldNews',
+  },
+  {
+    name: 'Radio Free Europe',
+    color: '#1a73e8',
+    url: 'https://www.rferl.org/api/zbkqkpeqepxt',
+  },
 ];
 
-// ── In-memory cache (5 min TTL) ────────────────────────────────────────────────
-let cache: { items: NewsItem[]; fetchedAt: number } | null = null;
-const CACHE_TTL_MS = 5 * 60 * 1000;
+// ── Conflict keyword matching ──────────────────────────────────────────────────
+const CONFLICT_KEYWORDS = [
+  'war', 'conflict', 'military', 'attack', 'offensive', 'troops',
+  'ceasefire', 'missile', 'airstrike', 'drone', 'bomb', 'explosion',
+  'battle', 'fighting', 'forces', 'soldiers', 'army', 'navy', 'airforce',
+  'invasion', 'occupation', 'territory', 'front line', 'frontline',
+  'casualties', 'killed', 'wounded', 'siege', 'shelling', 'artillery',
+  'sanctions', 'nato', 'nuclear', 'weapons', 'arms', 'defense',
+  'ukraine', 'russia', 'gaza', 'israel', 'hamas', 'hezbollah', 'houthi',
+  'iran', 'syria', 'sudan', 'myanmar', 'taiwan', 'north korea',
+  'coup', 'uprising', 'rebellion', 'insurgency', 'terror', 'hostage',
+  'peace talks', 'negotiation', 'diplomat', 'geopolit',
+];
+
+// Conflict tag patterns — ordered most-specific first
+const CONFLICT_TAG_PATTERNS: Array<{ tag: string; keywords: string[] }> = [
+  {
+    tag: 'ukraine',
+    keywords: ['ukraine', 'ukrainian', 'zelensky', 'kyiv', 'donbas', 'kharkiv', 'kursk', 'russo-ukrainian', 'mariupol'],
+  },
+  {
+    tag: 'gaza',
+    keywords: ['gaza', 'hamas', 'rafah', 'west bank', 'palestinian', 'idf', 'hostage', 'ceasefire'],
+  },
+  {
+    tag: 'iran-axis',
+    keywords: ['hezbollah', 'houthi', 'red sea', 'iran', 'tehran', 'nasrallah', 'lebanese', 'beirut'],
+  },
+  {
+    tag: 'russia',
+    keywords: ['kremlin', 'putin', 'moscow', 'russian army', 'wagner'],
+  },
+  {
+    tag: 'taiwan',
+    keywords: ['taiwan', 'strait', 'pla', 'taipei', 'china military'],
+  },
+  {
+    tag: 'sudan',
+    keywords: ['sudan', 'rsf', 'rapid support forces', 'khartoum', 'darfur'],
+  },
+  {
+    tag: 'myanmar',
+    keywords: ['myanmar', 'burma', 'junta', 'shan', 'arakan'],
+  },
+];
+
+function detectConflictTag(text: string): string | undefined {
+  const lower = text.toLowerCase();
+  for (const { tag, keywords } of CONFLICT_TAG_PATTERNS) {
+    if (keywords.some((kw) => lower.includes(kw))) return tag;
+  }
+  return undefined;
+}
+
+function isConflictRelated(title: string, description: string): boolean {
+  const combined = (title + ' ' + description).toLowerCase();
+  return CONFLICT_KEYWORDS.some((kw) => combined.includes(kw));
+}
+
+// ── In-memory cache (15 min TTL) ───────────────────────────────────────────────
+let cache: { all: NewsItem[]; conflict: NewsItem[]; fetchedAt: number } | null = null;
+const CACHE_TTL_MS = 15 * 60 * 1000;
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 function extractTag(xml: string, tag: string): string {
@@ -72,6 +142,7 @@ function parseItems(xml: string, sourceName: string, sourceColor: string): NewsI
 
     const publishedAt = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
     const id = `${sourceName}-${Buffer.from(link).toString('base64').slice(0, 16)}`;
+    const conflictTag = detectConflictTag(title + ' ' + description);
 
     items.push({
       id,
@@ -82,6 +153,7 @@ function parseItems(xml: string, sourceName: string, sourceColor: string): NewsI
       sourceColor,
       publishedAt,
       category: category || undefined,
+      conflictTag,
     });
   }
 
@@ -102,11 +174,24 @@ async function fetchSource(source: typeof SOURCES[0]): Promise<NewsItem[]> {
   }
 }
 
+function deduplicate(items: NewsItem[]): NewsItem[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const key = item.title.toLowerCase().slice(0, 60);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 // ── Route handler ──────────────────────────────────────────────────────────────
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const conflictOnly = req.nextUrl.searchParams.get('conflict') === '1';
+
   // Serve from cache if fresh
   if (cache && Date.now() - cache.fetchedAt < CACHE_TTL_MS) {
-    return NextResponse.json({ items: cache.items, fetchedAt: cache.fetchedAt, cached: true });
+    const items = conflictOnly ? cache.conflict : cache.all;
+    return NextResponse.json({ items, fetchedAt: cache.fetchedAt, cached: true });
   }
 
   // Fetch all sources concurrently
@@ -115,19 +200,16 @@ export async function GET() {
     r.status === 'fulfilled' ? r.value : [],
   );
 
-  // Sort by newest first, deduplicate by title similarity
-  const seen = new Set<string>();
-  const deduped = allItems
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-    .filter((item) => {
-      const key = item.title.toLowerCase().slice(0, 60);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    })
-    .slice(0, 50);
+  // Sort by newest first
+  allItems.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-  cache = { items: deduped, fetchedAt: Date.now() };
+  const all     = deduplicate(allItems).slice(0, 75);
+  const conflict = deduplicate(
+    allItems.filter((i) => isConflictRelated(i.title, i.description)),
+  ).slice(0, 50);
 
-  return NextResponse.json({ items: deduped, fetchedAt: cache.fetchedAt, cached: false });
+  cache = { all, conflict, fetchedAt: Date.now() };
+
+  const items = conflictOnly ? conflict : all;
+  return NextResponse.json({ items, fetchedAt: cache.fetchedAt, cached: false });
 }
