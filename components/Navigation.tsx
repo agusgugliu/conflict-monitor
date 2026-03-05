@@ -2,21 +2,27 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Globe, Radio } from 'lucide-react';
+import { Globe, Radio, Shield } from 'lucide-react';
 
 const NAV_LINKS = [
   {
     href: '/',
     label: 'Historical Map',
     icon: Globe,
-    description: '1800–2026',
+    description: '1500 BC – Present',
   },
   {
-    href: '/monitor',
+    href: '/live',
     label: 'Conflict Monitor',
     icon: Radio,
     description: 'Live',
     badge: 'LIVE',
+  },
+  {
+    href: '/osint',
+    label: 'GHOST Intel',
+    icon: Shield,
+    description: 'CRM',
   },
 ];
 
@@ -31,11 +37,10 @@ export default function Navigation() {
           <Link
             key={href}
             href={href}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all ${
-              isActive
-                ? 'bg-[#21262d] text-white border border-[#30363d]'
-                : 'text-[#8b949e] hover:text-white hover:bg-[#21262d]/60'
-            }`}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all ${isActive
+              ? 'bg-[#21262d] text-white border border-[#30363d]'
+              : 'text-[#8b949e] hover:text-white hover:bg-[#21262d]/60'
+              }`}
           >
             <Icon size={15} className={isActive ? 'text-[#e05252]' : 'text-current'} />
             <span className="hidden sm:inline font-medium">{label}</span>

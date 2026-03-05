@@ -70,7 +70,7 @@ export default function HomePage() {
               Historical Conflict Map
             </h1>
             <p className="text-[10px] text-[#8b949e] mt-0.5">
-              Interactive atlas of global conflicts 1800–2026
+              Interactive atlas of global conflicts 1500 BC – Present
             </p>
           </div>
         </div>
