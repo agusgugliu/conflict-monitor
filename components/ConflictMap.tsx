@@ -119,15 +119,18 @@ function ConflictMap({
               >
                 <motion.text
                   textAnchor="middle"
+                  dominantBaseline="middle"
                   fill={label.color}
+                  stroke="rgba(13,17,23,0.9)"
+                  strokeWidth={3}
+                  strokeLinejoin="round"
                   fontSize={7}
-                  fontWeight="bold"
-                  letterSpacing={1.5}
-                  fillOpacity={0.7}
+                  fontWeight="700"
+                  letterSpacing={1}
+                  style={{ paintOrder: 'stroke fill', pointerEvents: 'none', userSelect: 'none' }}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: 0.9 }}
                   exit={{ opacity: 0 }}
-                  style={{ pointerEvents: 'none', userSelect: 'none' }}
                 >
                   {label.label}
                 </motion.text>

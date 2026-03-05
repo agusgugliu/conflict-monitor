@@ -101,7 +101,7 @@ function FilterPanel({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-14 right-0 sm:left-0 sm:right-auto z-50 glass-panel rounded-xl p-4 w-72 max-w-[calc(100vw-2rem)] shadow-2xl"
+            className="absolute top-12 right-0 z-50 glass-panel rounded-xl p-4 w-72 max-w-[calc(100vw-1rem)] shadow-2xl"
             initial={{ opacity: 0, y: -10, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.97 }}
