@@ -2199,5 +2199,833 @@
       "Spain",
       "United States"
     ]
+  },
+  {
+    "id": "columbus-lands-americas",
+    "name": "Columbus Lands in the Americas",
+    "start_date": "1492-10-12",
+    "end_date": "1492-10-12",
+    "start_year": 1492,
+    "end_year": 1492,
+    "coordinates": {
+      "lat": 24.0434,
+      "lng": -74.5226
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "Christopher Columbus (Crown of Castile)",
+      "Taíno People"
+    ],
+    "casualties": "None (first contact)",
+    "summary": "On October 12, 1492, Christopher Columbus, sailing under Spanish sponsorship, made landfall on the island of Guanahani (San Salvador, Bahamas), making first contact between Europe and the Americas. The event opened an era of sustained transatlantic exchange — the Columbian Exchange — fundamentally reshaping the demographics, ecology, and cultures of both hemispheres.",
+    "affected_countries": [
+      "Bahamas",
+      "Spain",
+      "Cuba",
+      "Haiti",
+      "Dominican Republic"
+    ]
+  },
+  {
+    "id": "napoleon-death",
+    "name": "Death of Napoleon Bonaparte",
+    "start_date": "1821-05-05",
+    "end_date": "1821-05-05",
+    "start_year": 1821,
+    "end_year": 1821,
+    "coordinates": {
+      "lat": -15.9655,
+      "lng": -5.7089
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Africa",
+    "belligerents": [
+      "Napoleon Bonaparte"
+    ],
+    "casualties": "1 (Napoleon Bonaparte)",
+    "summary": "Napoleon Bonaparte died on May 5, 1821, in exile on the remote South Atlantic island of Saint Helena, six years after his defeat at Waterloo. He was 51. The cause of death remains debated — gastric cancer is the official verdict, though arsenic poisoning and other theories persist. His death marked the definitive end of the Napoleonic era and the triumph of the conservative European order established at the Congress of Vienna.",
+    "affected_countries": [
+      "United Kingdom",
+      "France"
+    ]
+  },
+  {
+    "id": "julius-caesar-assassination",
+    "name": "Assassination of Julius Caesar",
+    "start_date": "-000044-03-15",
+    "end_date": "-000044-03-15",
+    "start_year": -44,
+    "end_year": -44,
+    "coordinates": {
+      "lat": 41.8952,
+      "lng": 12.4822
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Julius Caesar",
+      "Senate Conspirators (Brutus, Cassius, et al.)"
+    ],
+    "casualties": "1 (Julius Caesar, 23 stab wounds)",
+    "summary": "On the Ides of March (March 15), 44 BC, Roman dictator perpetuo Julius Caesar was stabbed to death by a group of senators led by Marcus Junius Brutus and Gaius Cassius Longinus in the Theatre of Pompey, Rome. The conspirators, calling themselves the Liberatores, feared Caesar intended to make himself king. His assassination ignited a series of civil wars that ended the Roman Republic and gave rise to the Roman Empire under his heir Octavian (Augustus).",
+    "affected_countries": [
+      "Italy",
+      "France",
+      "Spain",
+      "Egypt",
+      "Greece",
+      "Turkey"
+    ]
+  },
+  {
+    "id": "fall-of-constantinople",
+    "name": "Fall of Constantinople",
+    "start_date": "1453-05-29",
+    "end_date": "1453-05-29",
+    "start_year": 1453,
+    "end_year": 1453,
+    "coordinates": {
+      "lat": 41.0082,
+      "lng": 28.9784
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Ottoman Empire (Mehmed II)",
+      "Byzantine Empire (Constantine XI)"
+    ],
+    "casualties": "Est. 4,000 defenders killed; thousands enslaved",
+    "summary": "On May 29, 1453, Ottoman Sultan Mehmed II captured Constantinople after a 53-day siege, ending the 1,500-year-old Byzantine (Eastern Roman) Empire. The fall sent shockwaves through Christendom, accelerated the flight of Greek scholars to Italy (boosting the Renaissance), and established the Ottoman Empire as the dominant power in the eastern Mediterranean for the next four centuries.",
+    "affected_countries": [
+      "Turkey",
+      "Greece",
+      "Bulgaria",
+      "Serbia",
+      "Romania"
+    ]
+  },
+  {
+    "id": "magna-carta-signing",
+    "name": "Signing of the Magna Carta",
+    "start_date": "1215-06-15",
+    "end_date": "1215-06-15",
+    "start_year": 1215,
+    "end_year": 1215,
+    "coordinates": {
+      "lat": 51.442,
+      "lng": -0.562
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "King John of England",
+      "Rebel Barons"
+    ],
+    "casualties": "None",
+    "summary": "On June 15, 1215, King John of England was compelled by rebellious barons to seal the Magna Carta at Runnymede. The charter limited royal authority and established that even the king was subject to the rule of law — a foundational principle of constitutional government, habeas corpus, and modern democracy. Though annulled weeks later, it was repeatedly reissued and became a cornerstone of English common law and the inspiration for constitutional documents worldwide.",
+    "affected_countries": [
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "black-death-europe",
+    "name": "Black Death Reaches Europe",
+    "start_date": "1347-10-01",
+    "end_date": "1353-01-01",
+    "start_year": 1347,
+    "end_year": 1353,
+    "coordinates": {
+      "lat": 38.1938,
+      "lng": 15.554
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Yersinia pestis (Bubonic Plague)"
+    ],
+    "casualties": "Est. 30–60% of Europe's population (25–50 million dead)",
+    "summary": "In October 1347, Genoese trading ships docked at Messina, Sicily, carrying sailors dead or dying from a mysterious illness — bubonic plague. Over the next six years, the Black Death swept across Europe, killing an estimated one-third to one-half of the continent's population. It upended feudal society, labor markets, and the Church's authority, indirectly accelerating the Renaissance and the early modern era.",
+    "affected_countries": [
+      "Italy",
+      "France",
+      "Spain",
+      "Germany",
+      "United Kingdom",
+      "Poland",
+      "Russia",
+      "Turkey",
+      "Egypt"
+    ]
+  },
+  {
+    "id": "gutenberg-bible",
+    "name": "Gutenberg Prints the Bible",
+    "start_date": "1455-02-23",
+    "end_date": "1455-02-23",
+    "start_year": 1455,
+    "end_year": 1455,
+    "coordinates": {
+      "lat": 50.001,
+      "lng": 8.275
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "Around 1455, Johannes Gutenberg completed the first substantial print run of the Bible using his revolutionary movable-type printing press in Mainz, Germany. The Gutenberg Bible is widely considered the first major book printed in the West using movable type. The press democratized knowledge, made books affordable, enabled the spread of the Renaissance and Reformation, and laid the groundwork for the Scientific Revolution and modern mass media.",
+    "affected_countries": [
+      "Germany",
+      "France",
+      "Italy",
+      "United Kingdom",
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "martin-luther-95-theses",
+    "name": "Martin Luther Posts the 95 Theses",
+    "start_date": "1517-10-31",
+    "end_date": "1517-10-31",
+    "start_year": 1517,
+    "end_year": 1517,
+    "coordinates": {
+      "lat": 51.8663,
+      "lng": 12.6492
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Martin Luther",
+      "Catholic Church"
+    ],
+    "casualties": "None (the document itself)",
+    "summary": "On October 31, 1517, the Augustinian monk Martin Luther reportedly nailed his Ninety-Five Theses to the door of the Castle Church in Wittenberg, Germany, challenging the Catholic Church's sale of indulgences and papal authority. Disseminated rapidly via the printing press, the act ignited the Protestant Reformation — one of the most consequential religious ruptures in Western history — fracturing the unified Western Church and triggering decades of religious wars.",
+    "affected_countries": [
+      "Germany",
+      "Switzerland",
+      "France",
+      "United Kingdom",
+      "Netherlands",
+      "Sweden",
+      "Denmark"
+    ]
+  },
+  {
+    "id": "storming-of-the-bastille",
+    "name": "Storming of the Bastille",
+    "start_date": "1789-07-14",
+    "end_date": "1789-07-14",
+    "start_year": 1789,
+    "end_year": 1789,
+    "coordinates": {
+      "lat": 48.8533,
+      "lng": 2.3692
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Parisian Revolutionaries",
+      "Royal Garrison of the Bastille"
+    ],
+    "casualties": "Est. 98 attackers killed; 1 defender killed",
+    "summary": "On July 14, 1789, Parisian crowds stormed the Bastille — a medieval fortress and state prison — in search of weapons and gunpowder. The fall of the Bastille became the defining symbol of the French Revolution, marking the collapse of royal absolutism and the birth of modern republican ideals of liberty, equality, and fraternity. July 14 (Bastille Day) remains France's national holiday.",
+    "affected_countries": [
+      "France",
+      "Belgium",
+      "Netherlands",
+      "Germany",
+      "Italy",
+      "Spain",
+      "Poland"
+    ]
+  },
+  {
+    "id": "napoleon-crowned-emperor",
+    "name": "Napoleon Crowned Emperor",
+    "start_date": "1804-12-02",
+    "end_date": "1804-12-02",
+    "start_year": 1804,
+    "end_year": 1804,
+    "coordinates": {
+      "lat": 48.853,
+      "lng": 2.3499
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Europe",
+    "belligerents": [
+      "Napoleon Bonaparte",
+      "Pope Pius VII"
+    ],
+    "casualties": "None",
+    "summary": "On December 2, 1804, Napoleon Bonaparte crowned himself Emperor of the French in Notre-Dame Cathedral in Paris, famously seizing the crown from Pope Pius VII and placing it on his own head. The act signaled that his authority derived not from the Church or hereditary right, but from his own military genius and the will of the French people — reshaping European concepts of sovereignty and nationalism.",
+    "affected_countries": [
+      "France",
+      "Italy",
+      "Spain",
+      "Germany",
+      "Poland",
+      "Netherlands",
+      "Belgium"
+    ]
+  },
+  {
+    "id": "battle-of-waterloo",
+    "name": "Battle of Waterloo",
+    "start_date": "1815-06-18",
+    "end_date": "1815-06-18",
+    "start_year": 1815,
+    "end_year": 1815,
+    "coordinates": {
+      "lat": 50.6824,
+      "lng": 4.4121
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "France (Napoleon Bonaparte)",
+      "Seventh Coalition (Wellington, Blücher)"
+    ],
+    "casualties": "Est. 47,000–57,000 total casualties",
+    "summary": "On June 18, 1815, Napoleon's army was decisively defeated by the Duke of Wellington's Anglo-allied forces and Gebhard von Blücher's Prussians near Waterloo in present-day Belgium. It was Napoleon's last battle, ending his Hundred Days comeback. He abdicated four days later and was exiled to Saint Helena, and the Congress of Vienna redrew the map of Europe — establishing a conservative order that largely held until World War I.",
+    "affected_countries": [
+      "France",
+      "Belgium",
+      "United Kingdom",
+      "Germany",
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "darwin-origin-of-species",
+    "name": "Darwin Publishes On the Origin of Species",
+    "start_date": "1859-11-24",
+    "end_date": "1859-11-24",
+    "start_year": 1859,
+    "end_year": 1859,
+    "coordinates": {
+      "lat": 51.5074,
+      "lng": -0.1278
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "On November 24, 1859, Charles Darwin published 'On the Origin of Species', presenting his theory of evolution by natural selection. The entire first edition of 1,250 copies sold out the same day. The work revolutionized biology, challenged religious accounts of creation, and profoundly influenced philosophy, anthropology, psychology, and political thought. It is arguably the most important scientific book ever published.",
+    "affected_countries": [
+      "United Kingdom",
+      "United States",
+      "Germany",
+      "France"
+    ]
+  },
+  {
+    "id": "lincoln-assassination",
+    "name": "Assassination of President Abraham Lincoln",
+    "start_date": "1865-04-14",
+    "end_date": "1865-04-15",
+    "start_year": 1865,
+    "end_year": 1865,
+    "coordinates": {
+      "lat": 38.8963,
+      "lng": -77.0262
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [
+      "John Wilkes Booth",
+      "President Abraham Lincoln"
+    ],
+    "casualties": "1 (Abraham Lincoln)",
+    "summary": "On the evening of April 14, 1865 — just five days after General Robert E. Lee's surrender at Appomattox — President Abraham Lincoln was shot in the back of the head by Confederate sympathizer John Wilkes Booth at Ford's Theatre in Washington, D.C. He died the following morning. Lincoln's assassination, coming at the moment of Union victory, derailed Reconstruction and left the question of Black civil rights unresolved for a century.",
+    "affected_countries": [
+      "United States"
+    ]
+  },
+  {
+    "id": "titanic-sinks",
+    "name": "RMS Titanic Sinks",
+    "start_date": "1912-04-15",
+    "end_date": "1912-04-15",
+    "start_year": 1912,
+    "end_year": 1912,
+    "coordinates": {
+      "lat": 41.7325,
+      "lng": -49.9469
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Americas",
+    "belligerents": [],
+    "casualties": "1,517 dead (of 2,224 aboard)",
+    "summary": "In the early hours of April 15, 1912, the RMS Titanic — the largest and most luxurious ocean liner of its time, widely considered unsinkable — sank in the North Atlantic after striking an iceberg on her maiden voyage from Southampton to New York. Over 1,500 people perished in the freezing ocean. The disaster prompted sweeping reforms in maritime safety standards, including mandatory lifeboat capacity and 24-hour radio watches.",
+    "affected_countries": [
+      "United Kingdom",
+      "United States",
+      "Canada",
+      "Ireland"
+    ]
+  },
+  {
+    "id": "wright-brothers-first-flight",
+    "name": "Wright Brothers' First Powered Flight",
+    "start_date": "1903-12-17",
+    "end_date": "1903-12-17",
+    "start_year": 1903,
+    "end_year": 1903,
+    "coordinates": {
+      "lat": 36.0174,
+      "lng": -75.668
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "On December 17, 1903, Orville and Wilbur Wright achieved the world's first sustained, controlled, powered heavier-than-air flight at Kill Devil Hills near Kitty Hawk, North Carolina. The Flyer I flew four times that day, the longest for 59 seconds covering 260 metres. The achievement launched the aviation age and within 66 years would lead to humans walking on the Moon.",
+    "affected_countries": [
+      "United States"
+    ]
+  },
+  {
+    "id": "atomic-bombing-nagasaki",
+    "name": "Atomic Bombing of Nagasaki",
+    "start_date": "1945-08-09",
+    "end_date": "1945-08-09",
+    "start_year": 1945,
+    "end_year": 1945,
+    "coordinates": {
+      "lat": 32.7503,
+      "lng": 129.8779
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "United States (509th Composite Group)",
+      "Japan (civilian population of Nagasaki)"
+    ],
+    "casualties": "Est. 60,000–80,000 killed immediately; tens of thousands more from radiation",
+    "summary": "On August 9, 1945, the United States dropped a plutonium implosion-type atomic bomb codenamed 'Fat Man' on the Japanese city of Nagasaki — the second nuclear weapon ever used in warfare, three days after the bombing of Hiroshima. Japan announced its surrender on August 15. The bombings remain the only use of nuclear weapons in armed conflict and continue to shape global debates on nuclear deterrence and disarmament.",
+    "affected_countries": [
+      "Japan",
+      "United States"
+    ]
+  },
+  {
+    "id": "sputnik-launch",
+    "name": "Launch of Sputnik 1",
+    "start_date": "1957-10-04",
+    "end_date": "1957-10-04",
+    "start_year": 1957,
+    "end_year": 1957,
+    "coordinates": {
+      "lat": 45.92,
+      "lng": 63.342
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "Soviet Union"
+    ],
+    "casualties": "None",
+    "summary": "On October 4, 1957, the Soviet Union launched Sputnik 1 from the Baikonur Cosmodrome in Kazakhstan — the world's first artificial satellite. The basketball-sized metal sphere orbited Earth every 96 minutes, transmitting a simple radio beep. The launch shocked the West, triggered the Space Race, led directly to the creation of NASA, and marked the dawn of the Space Age.",
+    "affected_countries": [
+      "Russia",
+      "United States"
+    ]
+  },
+  {
+    "id": "apollo-11-moon-landing",
+    "name": "Apollo 11 Moon Landing",
+    "start_date": "1969-07-20",
+    "end_date": "1969-07-20",
+    "start_year": 1969,
+    "end_year": 1969,
+    "coordinates": {
+      "lat": 28.5721,
+      "lng": -80.648
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "On July 20, 1969, NASA astronauts Neil Armstrong and Buzz Aldrin became the first humans to walk on the Moon as part of the Apollo 11 mission, while Michael Collins orbited above. Armstrong's words — 'one small step for man, one giant leap for mankind' — were broadcast to an estimated 600 million viewers worldwide. The achievement, accomplished within Kennedy's promised decade, represented the high point of the Space Race and remains humanity's most ambitious engineering feat.",
+    "affected_countries": [
+      "United States"
+    ]
+  },
+  {
+    "id": "great-depression-black-thursday",
+    "name": "Wall Street Crash — Great Depression Begins",
+    "start_date": "1929-10-24",
+    "end_date": "1929-10-29",
+    "start_year": 1929,
+    "end_year": 1929,
+    "coordinates": {
+      "lat": 40.7069,
+      "lng": -74.0089
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Americas",
+    "belligerents": [],
+    "casualties": "Hundreds of thousands from poverty-related causes; millions unemployed",
+    "summary": "On October 24, 1929 (Black Thursday), the New York Stock Exchange began a catastrophic collapse. By Black Tuesday (Oct 29), panic selling had erased billions of dollars of wealth. The crash triggered the Great Depression — the most severe global economic downturn in modern history — lasting until WWII. Unemployment in the US reached 25%; the political instability it created contributed directly to the rise of fascism in Europe.",
+    "affected_countries": [
+      "United States",
+      "Germany",
+      "United Kingdom",
+      "France",
+      "Canada",
+      "Australia",
+      "Japan"
+    ]
+  },
+  {
+    "id": "berlin-wall-built",
+    "name": "Berlin Wall Built",
+    "start_date": "1961-08-13",
+    "end_date": "1961-08-13",
+    "start_year": 1961,
+    "end_year": 1961,
+    "coordinates": {
+      "lat": 52.52,
+      "lng": 13.3887
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "East Germany (GDR)",
+      "West Berlin residents"
+    ],
+    "casualties": "At least 140 people killed trying to cross the Wall over its 28-year existence",
+    "summary": "In the early hours of August 13, 1961, East Germany began erecting a barbed-wire barrier — later replaced by a concrete wall — dividing Berlin into communist East and democratic West. Built to stop the mass exodus of East Germans (over 3.5 million had fled since 1949), the Berlin Wall became the defining symbol of the Iron Curtain and the Cold War. It stood for 28 years until its fall on November 9, 1989.",
+    "affected_countries": [
+      "Germany",
+      "Russia",
+      "United States",
+      "United Kingdom",
+      "France"
+    ]
+  },
+  {
+    "id": "vasco-da-gama-india",
+    "name": "Vasco da Gama Reaches India",
+    "start_date": "1498-05-20",
+    "end_date": "1498-05-20",
+    "start_year": 1498,
+    "end_year": 1498,
+    "coordinates": {
+      "lat": 11.2588,
+      "lng": 75.7804
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "Portuguese Expedition (Vasco da Gama)",
+      "Zamorin of Calicut"
+    ],
+    "casualties": "None (first contact)",
+    "summary": "On May 20, 1498, Portuguese navigator Vasco da Gama arrived at Calicut (Kozhikode) on the Malabar Coast of India — the first European to reach India by sea, completing a direct ocean route around Africa. The voyage broke the Arab monopoly on the spice trade, launched Portuguese dominance of the Indian Ocean, and inaugurated the era of European colonial empires in Asia.",
+    "affected_countries": [
+      "India",
+      "Portugal",
+      "Mozambique",
+      "Kenya",
+      "South Africa"
+    ]
+  },
+  {
+    "id": "magellan-killed-philippines",
+    "name": "Magellan Killed in the Philippines",
+    "start_date": "1521-04-27",
+    "end_date": "1521-04-27",
+    "start_year": 1521,
+    "end_year": 1521,
+    "coordinates": {
+      "lat": 10.3157,
+      "lng": 123.8854
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Asia",
+    "belligerents": [
+      "Ferdinand Magellan (Spain)",
+      "Lapu-Lapu (Mactan warriors)"
+    ],
+    "casualties": "Magellan and several crew killed",
+    "summary": "On April 27, 1521, Portuguese explorer Ferdinand Magellan, commanding a Spanish expedition attempting the first circumnavigation of the globe, was killed during the Battle of Mactan in the Philippines by indigenous warriors led by chieftain Lapu-Lapu. His crew completed the circumnavigation under Juan Sebastián Elcano — definitively proving the Earth was round and establishing Spain's claim to the Philippines.",
+    "affected_countries": [
+      "Philippines",
+      "Spain",
+      "Portugal"
+    ]
+  },
+  {
+    "id": "great-fire-of-london",
+    "name": "Great Fire of London",
+    "start_date": "1666-09-02",
+    "end_date": "1666-09-06",
+    "start_year": 1666,
+    "end_year": 1666,
+    "coordinates": {
+      "lat": 51.5085,
+      "lng": -0.0902
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Europe",
+    "belligerents": [],
+    "casualties": "Est. 6 confirmed dead (many more suspected); 70,000 of 80,000 homes destroyed",
+    "summary": "The Great Fire of London broke out in a bakery on Pudding Lane on September 2, 1666, and burned for four days, consuming 373 acres of the medieval City of London — including 87 churches, St. Paul's Cathedral, and 13,200 houses. Though deaths were remarkably few, the fire prompted the rebuilding of London in brick and stone (designed largely by Christopher Wren) and led to the birth of fire insurance.",
+    "affected_countries": [
+      "United Kingdom"
+    ]
+  },
+  {
+    "id": "first-crusade",
+    "name": "First Crusade Reaches Jerusalem",
+    "start_date": "1099-07-15",
+    "end_date": "1099-07-15",
+    "start_year": 1099,
+    "end_year": 1099,
+    "coordinates": {
+      "lat": 31.7683,
+      "lng": 35.2137
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Middle East",
+    "belligerents": [
+      "Crusader Forces (Western European)",
+      "Fatimid Caliphate"
+    ],
+    "casualties": "Est. 70,000 Muslims and Jews massacred in the city",
+    "summary": "On July 15, 1099, Crusader forces captured Jerusalem after a five-week siege, culminating the First Crusade launched by Pope Urban II in 1095. The city's fall was followed by a brutal massacre of its Muslim and Jewish inhabitants. The Crusaders established the Kingdom of Jerusalem, and the event set in motion nearly two centuries of Christian-Muslim holy wars that continue to shape Middle Eastern politics and interfaith relations today.",
+    "affected_countries": [
+      "Israel",
+      "Palestine",
+      "Jordan",
+      "Lebanon",
+      "Syria",
+      "Turkey",
+      "France",
+      "Germany",
+      "United Kingdom",
+      "Italy"
+    ]
+  },
+  {
+    "id": "death-of-alexander-the-great",
+    "name": "Death of Alexander the Great",
+    "start_date": "-000323-06-10",
+    "end_date": "-000323-06-10",
+    "start_year": -323,
+    "end_year": -323,
+    "coordinates": {
+      "lat": 32.5425,
+      "lng": 44.421
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Middle East",
+    "belligerents": [],
+    "casualties": "1 (Alexander the Great)",
+    "summary": "Alexander III of Macedon — Alexander the Great — died in the palace of Nebuchadnezzar II in Babylon on June 10 or 11, 323 BC, aged 32. The cause of death remains debated: typhoid fever, alcohol poisoning, and assassination have all been proposed. In little over a decade, he had conquered an empire stretching from Greece to northwestern India. His death triggered the Wars of the Diadochi, fragmenting his empire among his generals and spreading Greek culture (Hellenism) across the ancient world.",
+    "affected_countries": [
+      "Iraq",
+      "Iran",
+      "Afghanistan",
+      "Pakistan",
+      "India",
+      "Egypt",
+      "Turkey",
+      "Greece",
+      "Syria"
+    ]
+  },
+  {
+    "id": "newton-principia",
+    "name": "Newton Publishes Principia Mathematica",
+    "start_date": "1687-07-05",
+    "end_date": "1687-07-05",
+    "start_year": 1687,
+    "end_year": 1687,
+    "coordinates": {
+      "lat": 51.5074,
+      "lng": -0.1278
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "On July 5, 1687, Isaac Newton published 'Philosophiæ Naturalis Principia Mathematica' — setting out the laws of motion and universal gravitation. The Principia unified terrestrial and celestial mechanics, explained planetary orbits, tides, and the motion of comets, and established the mathematical framework that governed physics for the next two centuries. It is widely regarded as the greatest scientific work ever written and the foundation of the Scientific Revolution.",
+    "affected_countries": [
+      "United Kingdom",
+      "France",
+      "Germany",
+      "Netherlands"
+    ]
+  },
+  {
+    "id": "covid19-pandemic-declared",
+    "name": "WHO Declares COVID-19 a Pandemic",
+    "start_date": "2020-03-11",
+    "end_date": "2023-05-05",
+    "start_year": 2020,
+    "end_year": 2023,
+    "coordinates": {
+      "lat": 30.5928,
+      "lng": 114.3055
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Asia",
+    "belligerents": [
+      "SARS-CoV-2 (COVID-19 virus)"
+    ],
+    "casualties": "Official: 7+ million deaths; excess mortality estimates: 15–20 million",
+    "summary": "On March 11, 2020, the World Health Organization declared COVID-19 a pandemic — the first global pandemic in over a century. The disease, caused by the SARS-CoV-2 coronavirus first identified in Wuhan, China in late 2019, spread to every country on Earth, killing millions and triggering the largest coordinated global lockdown in history. The pandemic accelerated remote work, strained healthcare systems worldwide, and exposed deep inequalities in global health infrastructure.",
+    "affected_countries": [
+      "China",
+      "United States",
+      "Italy",
+      "India",
+      "Brazil",
+      "Russia",
+      "United Kingdom",
+      "France",
+      "Germany",
+      "Spain"
+    ]
+  },
+  {
+    "id": "ww1-armistice",
+    "name": "Armistice of World War I",
+    "start_date": "1918-11-11",
+    "end_date": "1918-11-11",
+    "start_year": 1918,
+    "end_year": 1918,
+    "coordinates": {
+      "lat": 49.4174,
+      "lng": 2.9014
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Allied Powers",
+      "German Empire"
+    ],
+    "casualties": "None on Nov 11 itself; total war: 17–20 million dead",
+    "summary": "At the 11th hour of the 11th day of the 11th month of 1918, fighting ceased on the Western Front as Germany signed the Armistice in a railway carriage in the Forest of Compiègne, France. World War I — the 'war to end all wars' — officially ended after four years of industrialized slaughter that killed an estimated 17–20 million people. The armistice set the stage for the punitive Treaty of Versailles, which many historians argue planted the seeds of World War II.",
+    "affected_countries": [
+      "Germany",
+      "France",
+      "United Kingdom",
+      "Austria",
+      "Hungary",
+      "Belgium",
+      "Italy",
+      "Russia",
+      "United States",
+      "Ottoman Empire"
+    ]
+  },
+  {
+    "id": "nelson-mandela-elected",
+    "name": "Nelson Mandela Elected President of South Africa",
+    "start_date": "1994-04-27",
+    "end_date": "1994-04-27",
+    "start_year": 1994,
+    "end_year": 1994,
+    "coordinates": {
+      "lat": -25.7461,
+      "lng": 28.1881
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Africa",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "On April 27, 1994, South Africa held its first fully democratic, non-racial elections. Nelson Mandela — who had spent 27 years imprisoned on Robben Island — was elected President with 62% of the vote. The election marked the end of apartheid and the birth of a democratic, non-racial South Africa. Mandela's presidency became a global symbol of reconciliation, forgiveness, and the triumph of human dignity over institutionalized racism.",
+    "affected_countries": [
+      "South Africa"
+    ]
+  },
+  {
+    "id": "marco-polo-china",
+    "name": "Marco Polo Arrives at Kublai Khan's Court",
+    "start_date": "1275-05-01",
+    "end_date": "1275-05-01",
+    "start_year": 1275,
+    "end_year": 1275,
+    "coordinates": {
+      "lat": 39.9042,
+      "lng": 116.4074
+    },
+    "type": "Event",
+    "impact": "medium",
+    "region": "Asia",
+    "belligerents": [],
+    "casualties": "None",
+    "summary": "Around 1275, Venetian merchant and explorer Marco Polo arrived at the court of Kublai Khan in Khanbaliq (present-day Beijing) after a three-and-a-half-year overland journey via the Silk Road. He spent 17 years in China serving the Mongol emperor. His subsequent account, 'The Travels of Marco Polo', introduced Europeans to the wealth and sophistication of East Asia, inspiring future explorers including Christopher Columbus.",
+    "affected_countries": [
+      "China",
+      "Italy",
+      "Mongolia",
+      "Iran",
+      "Afghanistan",
+      "India"
+    ]
+  },
+  {
+    "id": "d-day-normandy",
+    "name": "D-Day — Normandy Landings",
+    "start_date": "1944-06-06",
+    "end_date": "1944-06-06",
+    "start_year": 1944,
+    "end_year": 1944,
+    "coordinates": {
+      "lat": 49.3697,
+      "lng": -0.8583
+    },
+    "type": "Event",
+    "impact": "high",
+    "region": "Europe",
+    "belligerents": [
+      "Allied Forces (US, UK, Canada, Free France, others)",
+      "Nazi Germany"
+    ],
+    "casualties": "Est. 10,000–12,000 Allied casualties; 4,000–9,000 German casualties",
+    "summary": "On June 6, 1944, Allied forces launched Operation Overlord — the largest seaborne invasion in history — storming five beaches along a 50-mile stretch of the Normandy coast in German-occupied France. Over 156,000 troops crossed the English Channel. D-Day opened the Western Front in Europe, began the liberation of Western Europe from Nazi occupation, and is widely seen as the decisive turning point leading to Germany's defeat eleven months later.",
+    "affected_countries": [
+      "France",
+      "Germany",
+      "United Kingdom",
+      "United States",
+      "Canada",
+      "Belgium",
+      "Netherlands"
+    ]
   }
 ]
