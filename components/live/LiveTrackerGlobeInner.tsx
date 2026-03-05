@@ -38,6 +38,16 @@ const FAKE_ALERTS: Record<string, Alert[]> = {
     ]
 };
 
+const AIRCRAFT_MAP: Record<string, string> = {
+    'A318': 'Airbus A318', 'A319': 'Airbus A319', 'A320': 'Airbus A320', 'A321': 'Airbus A321', 'A20N': 'Airbus A320neo', 'A21N': 'Airbus A321neo', 'A332': 'Airbus A330-200', 'A333': 'Airbus A330-300', 'A338': 'Airbus A330-800neo', 'A339': 'Airbus A330-900neo', 'A343': 'Airbus A340-300', 'A346': 'Airbus A340-600', 'A359': 'Airbus A350-900', 'A35K': 'Airbus A350-1000', 'A388': 'Airbus A380',
+    'B737': 'Boeing 737-700', 'B738': 'Boeing 737-800', 'B739': 'Boeing 737-900', 'B38M': 'Boeing 737 MAX 8', 'B39M': 'Boeing 737 MAX 9', 'B744': 'Boeing 747-400', 'B748': 'Boeing 747-8', 'B763': 'Boeing 767-300', 'B764': 'Boeing 767-400', 'B772': 'Boeing 777-200', 'B77W': 'Boeing 777-300ER', 'B77L': 'Boeing 777-200LR', 'B788': 'Boeing 787-8', 'B789': 'Boeing 787-9', 'B78X': 'Boeing 787-10',
+    'E170': 'Embraer E170', 'E175': 'Embraer E175', 'E190': 'Embraer E190', 'E195': 'Embraer E195', 'E290': 'Embraer E190-E2', 'E295': 'Embraer E195-E2', 'CRJ7': 'Bombardier CRJ-700', 'CRJ9': 'Bombardier CRJ-900', 'CRJX': 'Bombardier CRJ-1000', 'BCS1': 'Airbus A220-100', 'BCS3': 'Airbus A220-300', 'AT75': 'ATR 72-500', 'AT76': 'ATR 72-600', 'Q400': 'Dash 8-400'
+};
+
+const AIRLINE_MAP: Record<string, string> = {
+    'UAE': 'Emirates', 'QTR': 'Qatar Airways', 'ETD': 'Etihad Airways', 'SVA': 'Saudia', 'OMA': 'Oman Air', 'MEB': 'Middle East Airlines', 'RJA': 'Royal Jordanian', 'MSR': 'EgyptAir', 'RAM': 'Royal Air Maroc', 'THY': 'Turkish Airlines', 'PGT': 'Pegasus Airlines', 'ELY': 'El Al Israel Airlines', 'IGO': 'IndiGo', 'AIC': 'Air India', 'SIA': 'Singapore Airlines', 'CPA': 'Cathay Pacific', 'JAL': 'Japan Airlines', 'ANA': 'All Nippon Airways', 'KAL': 'Korean Air', 'BAW': 'British Airways', 'AFR': 'Air France', 'DLH': 'Lufthansa', 'KLM': 'KLM Royal Dutch Airlines', 'RYR': 'Ryanair', 'EZY': 'easyJet', 'WZZ': 'Wizz Air', 'SWR': 'Swiss International Air Lines', 'AUA': 'Austrian Airlines', 'IBE': 'Iberia', 'AEA': 'Air Europa', 'VLG': 'Vueling', 'AAL': 'American Airlines', 'DAL': 'Delta Air Lines', 'UAL': 'United Airlines', 'SWA': 'Southwest Airlines', 'JBU': 'JetBlue Airways', 'ACA': 'Air Canada', 'AMX': 'Aeromexico', 'TAM': 'LATAM', 'AEE': 'Aegean Airlines', 'NAX': 'Norwegian Air Shuttle', 'FIN': 'Finnair', 'SAS': 'SAS Scandinavian Airlines', 'TAP': 'TAP Air Portugal', 'SNC': 'Brussels Airlines', 'EIN': 'Aer Lingus', 'LOT': 'LOT Polish Airlines', 'CSN': 'China Southern Airlines', 'CCA': 'Air China', 'CES': 'China Eastern Airlines', 'QFA': 'Qantas', 'ANZ': 'Air New Zealand', 'VOZ': 'Virgin Australia', 'VTI': 'Vistara', 'GWT': 'Gulf Air', 'KAC': 'Kuwait Airways', 'ABY': 'Air Arabia', 'FDB': 'flydubai', 'MSC': 'Air Cairo', 'IZG': 'Arkia', 'LZB': 'Bulgaria Air', 'SXR': 'Sky Express', 'TVS': 'Smartwings', 'TAR': 'Tunisair', 'AHY': 'Azerbaijan Airlines', 'UZB': 'Uzbekistan Airways', 'KZR': 'Air Astana'
+};
+
 export default function GlobeInner({ activeConflict }: { activeConflict: string }) {
     const globeRef = useRef<any>(null);
     const [activeAlerts, setActiveAlerts] = useState<Alert[]>([]);
@@ -48,6 +58,8 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     const [showPlanes, setShowPlanes] = useState(true);
     const [showVessels, setShowVessels] = useState(true);
     const [showMissiles, setShowMissiles] = useState(true);
+    const [showAlerts, setShowAlerts] = useState(true);
+    const [showControls, setShowControls] = useState(true);
     const [missileArcs, setMissileArcs] = useState<any[]>([]);
     const [explosions, setExplosions] = useState<any[]>([]);
     const [trails, setTrails] = useState<any[]>([]);
@@ -58,6 +70,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
 
     const [flightData, setFlightData] = useState<any[]>([]);
     const [mockTraffic, setMockTraffic] = useState<{ planes: any[], vessels: any[] }>({ planes: [], vessels: [] });
+    const [isFetchingFlights, setIsFetchingFlights] = useState(false);
 
     // Update mock traffic when conflict changes
     useEffect(() => {
@@ -70,6 +83,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             { id: `US-P8-MED`, label: 'USN P-8A Poseidon', lat: 33.5, lng: 31.0, type: 'plane', alt: 0.08, header: 90, speed: 0.035, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'NAS Sigonella (Italy)', destination: 'Eastern Med Patrol', airframe: 'Boeing P-8A Poseidon' },
             { id: `US-E3-MED`, label: 'NATO E-3 Sentry', lat: 34.5, lng: 20.0, type: 'plane', alt: 0.15, header: 90, speed: 0.045, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'Geilenkirchen (Germany)', destination: 'Mediterranean Sea', airframe: 'Boeing E-3 Sentry AWACS' },
             { id: `US-MQ9-RED`, label: 'USAF MQ-9 Reaper', lat: 18.5, lng: 40.2, type: 'plane', alt: 0.05, header: 150, speed: 0.025, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'Camp Lemonnier (Djibouti)', destination: 'Red Sea Patrol', airframe: 'General Atomics MQ-9' },
+            { id: `US-KC135-MED`, label: 'USAF KC-135 Stratotanker', lat: 34.0, lng: 32.5, type: 'plane', alt: 0.1, header: 120, speed: 0.04, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'RAF Mildenhall (UK)', destination: 'Eastern Med Refueling Track', airframe: 'Boeing KC-135R Stratotanker' },
             { id: `US-F35-ME`, label: 'USAF F-35A Lightning II', lat: 28.5, lng: 49.2, type: 'plane', alt: 0.09, header: 210, speed: 0.08, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'Al Dhafra Air Base (UAE)', destination: 'Classified (AOR)', airframe: 'Lockheed Martin F-35A' },
 
             // Israel
@@ -85,7 +99,6 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             // Russia (if Ukraine involved, or globally just in case)
             { id: 'RU-A50-BLR', label: 'RuAF A-50U', lat: 53.8, lng: 27.5, type: 'plane', alt: 0.12, header: 80, speed: 0.04, countryCode: 'ru', datasource: 'LIVE ELINT (SAT)', departure: 'Machulishchy Base (Belarus)', destination: 'Belarus Airspace', airframe: 'Beriev A-50U Mainstay' },
             { id: 'RU-TU95-PAC', label: 'RuAF Tu-95MS', lat: 55.4, lng: 150.2, type: 'plane', alt: 0.11, header: 240, speed: 0.042, countryCode: 'ru', datasource: 'LIVE ELINT (SAT)', departure: 'Engels-2 Air Base (Russia)', destination: 'North Pacific Patrol', airframe: 'Tupolev Tu-95MS Bear' },
-            { id: 'RU-SU35-SYR', label: 'RuAF Su-35S', lat: 35.1, lng: 36.2, type: 'plane', alt: 0.09, header: 160, speed: 0.06, countryCode: 'ru', datasource: 'LIVE ADS-B', departure: 'Khmeimim Air Base (Syria)', destination: 'Eastern Mediterranean', airframe: 'Sukhoi Su-35S Flanker-E' },
 
             // Iran
             { id: 'IR-F14-THR', label: 'IRIAF F-14 Tomcat', lat: 35.6, lng: 51.4, type: 'plane', alt: 0.07, header: 260, speed: 0.05, countryCode: 'ir', datasource: 'LIVE ADS-B', departure: 'Mehrabad Airbase (Iran)', destination: 'Tehran CAP', airframe: 'Grumman F-14 Tomcat' },
@@ -94,6 +107,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
 
         const globalVessels = [
             // US Carrier Strike Groups & Global presence
+            { id: 'CVN-78-MED', label: 'USS Gerald R. Ford (CVN-78)', lat: 34.0, lng: 26.0, type: 'vessel', alt: 0, header: 135, speed: 0.003, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
             { id: 'CVN-72-PAC', label: 'USS Abraham Lincoln (CVN-72)', lat: 16.82, lng: 61.35, type: 'vessel', alt: 0, header: 145, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
             { id: 'DDG-111-SPR', label: 'USS Spruance (DDG 111)', lat: 16.55, lng: 61.12, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
             { id: 'DDG-71-BLK', label: 'USS Ross (DDG-71)', lat: 44.8, lng: 33.1, type: 'vessel', alt: 0, header: 45, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
@@ -128,9 +142,24 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             { id: 'MV-T-CONF', label: 'MV True Confidence', lat: 12.05, lng: 44.85, type: 'vessel', alt: 0, header: 195, speed: 0.003, countryCode: 'unknown', datasource: 'LIVE AIS (OSINT)' }
         ];
 
+        const generateRandomVessels = (count: number) => {
+            return Array.from({ length: count }).map((_, i) => ({
+                id: `GLOBAL-AIS-${i}`,
+                label: `Commercial Vessel ${i + 1}`,
+                lat: (Math.random() - 0.5) * 120, // Broad latitude, avoiding extreme poles
+                lng: (Math.random() - 0.5) * 360,
+                type: 'vessel',
+                alt: 0,
+                header: Math.random() * 360,
+                speed: 0.002 + (Math.random() * 0.004),
+                countryCode: 'unknown',
+                datasource: 'LIVE AIS (OSINT)'
+            }));
+        };
+
         setMockTraffic({
             planes: globalPlanes,
-            vessels: globalVessels
+            vessels: [...globalVessels, ...generateRandomVessels(60)]
         });
     }, [activeConflict, config]);
 
@@ -292,48 +321,65 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
         setTrails(newTrails);
     }, [mockTraffic.planes, mockTraffic.vessels, flightData]);
 
-    // Fetch real API data
-    useEffect(() => {
-        const fetchTraffic = async () => {
-            try {
-                // increase bounding box to roughly 30 degrees around the config center
-                const lamin = Math.max(-90, config.lat - 30);
-                const lomin = Math.max(-180, config.lng - 35);
-                const lamax = Math.min(90, config.lat + 30);
-                const lomax = Math.min(180, config.lng + 35);
-                const res = await fetch(`/api/traffic?lamin=${lamin}&lomin=${lomin}&lamax=${lamax}&lomax=${lomax}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && data.states) {
-                        // Get a much larger subset of real flights (e.g. up to 250 for performance reasons)
-                        const subset = data.states.slice(0, 250).map((s: any) => {
-                            const id = s[0];
-                            const existing = flightData.find(f => f.id === id);
-                            return {
-                                id,
-                                label: (s[1] || '').trim() || 'Unknown Flight',
-                                lng: s[5],
-                                lat: s[6],
-                                alt: Math.min((s[7] || 10000) / 100000, 0.4),
-                                type: 'plane',
-                                header: s[10] || 0,
-                                speed: s[9] || 250,
-                                countryCode: COUNTRY_MAP[s[2]] || 'unknown',
-                                datasource: 'LIVE ADS-B',
-                                departure: 'Unknown (ADS-B Feed)',
-                                destination: 'Unknown',
-                                airframe: 'Civilian / Commercial Aircraft',
-                                history: existing ? existing.history : [[s[5], s[6]]]
-                            };
-                        });
-                        setFlightData(subset);
-                    }
+    const fetchLiveTrafficData = async () => {
+        setIsFetchingFlights(true);
+        try {
+            let currentLat = config.lat;
+            let currentLng = config.lng;
+
+            // Sync API requests to exactly where the user is looking rather than statically bounds
+            if (globeRef.current) {
+                const pov = globeRef.current.pointOfView();
+                if (pov && pov.lat !== undefined && pov.lng !== undefined) {
+                    currentLat = pov.lat;
+                    currentLng = pov.lng;
                 }
-            } catch (e) { }
-        };
-        fetchTraffic();
-        const poll = setInterval(fetchTraffic, 15000);
-        return () => clearInterval(poll);
+            }
+
+            // Increase tracking envelope to broadly 60 degrees around the dynamic center!
+            const lamin = Math.max(-90, currentLat - 30);
+            const lomin = Math.max(-180, currentLng - 35);
+            const lamax = Math.min(90, currentLat + 30);
+            const lomax = Math.min(180, currentLng + 35);
+
+            const res = await fetch(`/api/traffic?lamin=${lamin}&lomin=${lomin}&lamax=${lamax}&lomax=${lomax}&_t=${Date.now()}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (data && data.states) {
+                    // Gather a much denser realistic subset of up to 60 real-live airborne planes bounding the viewport
+                    setFlightData(prevData => data.states.slice(0, 60).map((s: any) => {
+                        const id = s[0];
+                        const existing = prevData.find(f => f.id === id);
+                        return {
+                            id,
+                            label: String(s[1] || 'Unknown').trim() || 'Unknown Flight',
+                            lng: s[5],
+                            lat: s[6],
+                            alt: Math.min((s[7] || 10000) / 100000, 0.4),
+                            type: 'plane',
+                            header: s[10] || 0,
+                            speed: (s[9] || 250) / 1000, // Normalized for interpolator multiplier (*1000)
+                            countryCode: COUNTRY_MAP[s[2]] || 'unknown',
+                            operator: AIRLINE_MAP[s[2]] || (s[2] && s[2] !== 'unknown' ? s[2] : 'Unknown Operator'),
+                            datasource: 'LIVE ADS-B',
+                            departure: s[12] || 'Unknown Origin',
+                            destination: s[13] || 'Unknown Destination',
+                            airframe: AIRCRAFT_MAP[s[11]] || s[11] || 'Civilian / Commercial Aircraft',
+                            history: existing ? existing.history : [[s[5], s[6]]]
+                        };
+                    }));
+                }
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsFetchingFlights(false);
+        }
+    };
+
+    // Fetch real API data initially on mount or config change
+    useEffect(() => {
+        fetchLiveTrafficData();
     }, [config.lat, config.lng]);
 
     // Fetch Countries for Political style
@@ -350,6 +396,9 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             const controls = globeRef.current.controls();
             controls.autoRotateSpeed = 0.5;
             controls.autoRotate = true;
+
+            // Allow zooming in much closer. Globe base radius is ~100.
+            controls.minDistance = 100.5;
 
             // Ensure the globe rotates into position
             setTimeout(() => {
@@ -391,9 +440,9 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
         onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'alert', label: '${d.label}', impact: '${d.impact}', status: 'ACTIVE' } }); window.dispatchEvent(e);"
     >
       ${isHit ? `
-        <div style="font-size: 24px; text-shadow: 0 0 15px #ff4d4d; animation: fire-flicker 0.4s infinite alternate; display: flex; align-items: center; justify-content: center;">🔥</div>
+        <div style="width: 14px; height: 14px; border-radius: 50%; background-color: #ff4d4d; box-shadow: 0 0 8px rgba(255, 77, 77, 0.8); border: 2px solid white; animation: pulse-ring 1.5s infinite;"></div>
       ` : `
-        <div style="width: 24px; height: 24px; border-radius: 50%; opacity: 0;"></div>
+        <div style="width: 14px; height: 14px; border-radius: 50%; background-color: ${getImpactColor(d.impact)}; opacity: 0.8; border: 1.5px solid white;"></div>
       `}
       <div class="alert-text" style="
         background: rgba(13, 17, 23, 0.8);
@@ -415,9 +464,10 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
         ${d.label}
       </div>
       <style>
-        @keyframes fire-flicker {
-          0% { opacity: 0.8; transform: scale(0.9); filter: brightness(0.8); }
-          100% { opacity: 1; transform: scale(1.2); filter: brightness(1.2); }
+        @keyframes pulse-ring {
+          0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+          70% { box-shadow: 0 0 0 8px rgba(255, 77, 77, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
         }
       </style>
     </div>
@@ -425,21 +475,28 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     };
 
     // HTML for planes and vessels
-    const planeHtml = (d: any) => `
+    const planeHtml = (d: any) => {
+        const isMilitary = d.id && (d.id.startsWith('US-') || d.id.startsWith('IL-') || d.id.startsWith('UK-') || d.id.startsWith('RU-') || d.id.startsWith('IR-'));
+        const color = isMilitary ? '#a371f7' : '#8b949e';
+        const size = isMilitary ? 24 : 14;
+        const iconSize = isMilitary ? 14 : 10;
+
+        return `
       <div 
-        style="color: #a371f7; background: rgba(0,0,0,0.6); border-radius: 50%; border: 1px solid #a371f740; cursor: pointer; pointer-events: auto; transform: translate(-50%, -50%) rotate(${d.header || 0}deg); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; box-shadow: 0 0 8px rgba(163, 113, 247, 0.4); transition: width 0.2s, height 0.2s; position: relative;"
-        onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'plane', label: '${d.label}', countryCode: '${d.countryCode || ''}', datasource: '${d.datasource || ''}', departure: '${d.departure || 'Classified'}', destination: '${d.destination || 'Classified'}', airframe: '${d.airframe || 'Classified'}' } }); window.dispatchEvent(e);"
-        onmouseover="this.style.width='32px'; this.style.height='32px';"
-        onmouseout="this.style.width='24px'; this.style.height='24px';"
+        style="color: ${color}; background: rgba(0,0,0,0.6); border-radius: 50%; border: 1px solid ${color}40; cursor: pointer; pointer-events: auto; transform: translate(-50%, -50%) rotate(${d.header || 0}deg); display: flex; align-items: center; justify-content: center; width: ${size}px; height: ${size}px; box-shadow: 0 0 8px ${color}40; transition: width 0.2s, height 0.2s; position: relative;"
+        onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'plane', label: '${d.label}', operator: '${d.operator || ''}', countryCode: '${d.countryCode || ''}', datasource: '${d.datasource || ''}', departure: '${d.departure || 'Classified'}', destination: '${d.destination || 'Classified'}', airframe: '${d.airframe || 'Classified'}' } }); window.dispatchEvent(e);"
+        onmouseover="this.style.width='${size + 8}px'; this.style.height='${size + 8}px';"
+        onmouseout="this.style.width='${size}px'; this.style.height='${size}px';"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3.5 3.5L3 16l-1 1 5 1 1 5 1-1-1-2.5L12 16l5 6 1.2-1.2c.4-.2.7-.6.6-1Z"/></svg>
-        ${d.countryCode && d.countryCode !== 'unknown' ? `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3.5 3.5L3 16l-1 1 5 1 1 5 1-1-1-2.5L12 16l5 6 1.2-1.2c.4-.2.7-.6.6-1Z"/></svg>
+        ${d.countryCode && d.countryCode !== 'unknown' && isMilitary ? `
           <div class="flag-tag" style="position: absolute; bottom: -8px; right: -8px; transform: rotate(${- (d.header || 0)}deg); opacity: 1; background: #000; border: 1px solid #fff3; padding: 1px; border-radius: 2px; z-index: 10;">
             <img src="https://flagcdn.com/w20/${d.countryCode}.png" width="12" height="9" alt="${d.countryCode}" style="display: block;">
           </div>
         ` : ''}
       </div>
     `;
+    };
 
     const explosionHtml = (d: any) => {
         const isInterception = d.type === 'interception';
@@ -476,7 +533,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     `;
 
     const overlayData = useMemo(() => {
-        let items: any[] = [...activeAlerts];
+        let items: any[] = showAlerts ? [...activeAlerts] : [];
         if (showPlanes) {
             items = [...items, ...(flightData.length > 0 ? flightData : mockTraffic.planes)];
         }
@@ -487,7 +544,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
         const recentFX = explosions.filter(e => Date.now() - e.timestamp < 1500);
         items = [...items, ...recentFX.map(e => ({ ...e, type: 'explosion_fx' }))];
         return items;
-    }, [activeAlerts, showPlanes, flightData, mockTraffic.planes, showVessels, mockTraffic.vessels, explosions]);
+    }, [showAlerts, activeAlerts, showPlanes, flightData, mockTraffic.planes, showVessels, mockTraffic.vessels, explosions]);
 
     const [trackedEntity, setTrackedEntity] = useState<any>(null);
 
@@ -580,7 +637,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                         else el.innerHTML = labelHtml(d);
                         return el;
                     }}
-                    customLayerData={activeAlerts}
+                    customLayerData={showAlerts ? activeAlerts : []}
                     customThreeObject={(d: any) => {
                         const color = getImpactColor(d.impact);
                         const group = new THREE.Group();
@@ -595,7 +652,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                     }}
 
                     // Impacts & Interceptions (stale points removed after 30s)
-                    pointsData={[...activeAlerts, ...explosions.filter(e => Date.now() - e.timestamp < 30000)]}
+                    pointsData={[...(showAlerts ? activeAlerts : []), ...explosions.filter(e => Date.now() - e.timestamp < 30000)]}
                     pointLat="lat"
                     pointLng="lng"
                     pointColor={(d: any) => d.type === 'interception' ? 'rgba(88, 166, 255, 0.4)' : (d.type === 'impact' ? 'rgba(255, 61, 61, 0.4)' : getImpactColor(d.impact))}
@@ -603,7 +660,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                     pointRadius={(d: any) => d.type === 'impact' || d.type === 'interception' ? 0.2 : 0.3}
 
                     // Active Rings for Impacts & Alerts
-                    ringsData={[...activeAlerts, ...explosions.filter(e => Date.now() - e.timestamp < 10000)]}
+                    ringsData={[...(showAlerts ? activeAlerts : []), ...explosions.filter(e => Date.now() - e.timestamp < 10000)]}
                     ringLat="lat"
                     ringLng="lng"
                     ringColor={(d: any) => d.type === 'interception' ? 'rgba(88, 166, 255, 0.6)' : (d.timestamp ? 'rgba(255, 62, 62, 0.6)' : getImpactColor(d.impact))}
@@ -615,76 +672,108 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             )}
 
             {/* Controls and Legend inside map view */}
-            <div className="absolute bottom-4 left-4 glass-panel p-3 rounded-lg flex flex-col gap-3 z-10 pointer-events-auto">
-                <div>
-                    <h3 className="text-[10px] text-[#8b949e] font-bold tracking-wider uppercase mb-2">Live Activity</h3>
-                    <div className="flex items-center gap-2 mb-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#e05252]" />
-                        <span className="text-[11px] text-[#e6edf3]">High Intensity Engagement</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#ff8c00aa]" />
-                        <span className="text-[11px] text-[#e6edf3]">Missile Launch (Adversary)</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#00bffffa]" />
-                        <span className="text-[11px] text-[#e6edf3]">Air Defense / Interception</span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                        <span className="w-2.5 h-0.5 bg-[#a371f780]" />
-                        <span className="text-[11px] text-[#e6edf3]">Reconnaissance Trail</span>
-                    </div>
-                </div>
+            <div className="absolute bottom-4 left-4 z-10 pointer-events-auto flex flex-col gap-2">
+                <button
+                    onClick={() => setShowControls(!showControls)}
+                    className="glass-panel px-3 py-1.5 rounded-lg text-[10px] font-bold text-[#8b949e] hover:text-white transition-colors self-start flex items-center gap-1.5"
+                >
+                    {showControls ? (
+                        <>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                            Hide Controls
+                        </>
+                    ) : (
+                        <>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            Show Controls
+                        </>
+                    )}
+                </button>
 
-                <div className="h-px w-full bg-[#30363d]" />
+                {showControls && (
+                    <div className="glass-panel p-3 rounded-lg flex flex-col gap-3">
+                        <div>
+                            <h3 className="text-[10px] text-[#8b949e] font-bold tracking-wider uppercase mb-2">Live Activity</h3>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#e05252]" />
+                                <span className="text-[11px] text-[#e6edf3]">High Intensity Engagement</span>
+                            </div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#ff8c00aa]" />
+                                <span className="text-[11px] text-[#e6edf3]">Missile Launch (Adversary)</span>
+                            </div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#00bffffa]" />
+                                <span className="text-[11px] text-[#e6edf3]">Air Defense / Interception</span>
+                            </div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                                <span className="w-2.5 h-0.5 bg-[#a371f780]" />
+                                <span className="text-[11px] text-[#e6edf3]">Reconnaissance Trail</span>
+                            </div>
+                        </div>
 
-                <div className="flex flex-col gap-1.5">
-                    <h3 className="text-[10px] text-[#8b949e] font-bold tracking-wider uppercase mb-1">Globe Style</h3>
-                    <div className="flex flex-wrap gap-1.5">
-                        <button
-                            onClick={() => setGlobeStyle('satellite')}
-                            className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'satellite' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
-                        >
-                            Satellite
-                        </button>
-                        <button
-                            onClick={() => setGlobeStyle('dark')}
-                            className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'dark' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
-                        >
-                            Dark
-                        </button>
-                        <button
-                            onClick={() => setGlobeStyle('night')}
-                            className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'night' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
-                        >
-                            Night
-                        </button>
-                        <button
-                            onClick={() => setGlobeStyle('light')}
-                            className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'light' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
-                        >
-                            Political (Light)
-                        </button>
+                        <div className="h-px w-full bg-[#30363d]" />
+
+                        <div className="flex flex-col gap-1.5">
+                            <h3 className="text-[10px] text-[#8b949e] font-bold tracking-wider uppercase mb-1">Globe Style</h3>
+                            <div className="flex flex-wrap gap-1.5">
+                                <button
+                                    onClick={() => setGlobeStyle('satellite')}
+                                    className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'satellite' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
+                                >
+                                    Satellite
+                                </button>
+                                <button
+                                    onClick={() => setGlobeStyle('dark')}
+                                    className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'dark' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
+                                >
+                                    Dark
+                                </button>
+                                <button
+                                    onClick={() => setGlobeStyle('night')}
+                                    className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'night' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
+                                >
+                                    Night
+                                </button>
+                                <button
+                                    onClick={() => setGlobeStyle('light')}
+                                    className={`text-[9px] px-2 py-1 rounded transition border ${globeStyle === 'light' ? 'bg-[#58a6ff] border-[#58a6ff] text-white' : 'bg-[#21262d] border-[#30363d] text-[#8b949e] hover:border-[#8b949e]'}`}
+                                >
+                                    Political (Light)
+                                </button>
+                            </div>
+                            <div className="flex flex-wrap gap-2 mt-1.5 items-center">
+                                <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                                    <input type="checkbox" checked={showPlanes} onChange={(e) => setShowPlanes(e.target.checked)} className="accent-[#58a6ff]" />
+                                    ✈️ Air
+                                </label>
+                                <button
+                                    onClick={fetchLiveTrafficData}
+                                    disabled={isFetchingFlights}
+                                    className="text-[9px] bg-[#21262d] border border-[#30363d] text-[#8b949e] px-1.5 py-0.5 rounded hover:border-[#8b949e] hover:text-white transition-colors flex items-center gap-1 ml-[-4px] mr-1"
+                                >
+                                    {isFetchingFlights ? '⏳ Syncing...' : '↻ Refresh'}
+                                </button>
+                                <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                                    <input type="checkbox" checked={showVessels} onChange={(e) => setShowVessels(e.target.checked)} className="accent-[#58a6ff]" />
+                                    🚢 Naval
+                                </label>
+                                <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                                    <input type="checkbox" checked={showMissiles} onChange={(e) => setShowMissiles(e.target.checked)} className="accent-[#58a6ff]" />
+                                    🚀 Missiles
+                                </label>
+                                <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                                    <input type="checkbox" checked={showPolitical} onChange={(e) => setShowPolitical(e.target.checked)} className="accent-[#58a6ff]" />
+                                    🗺️ Borders
+                                </label>
+                                <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                                    <input type="checkbox" checked={showAlerts} onChange={(e) => setShowAlerts(e.target.checked)} className="accent-[#58a6ff]" />
+                                    🚨 Alerts
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex flex-wrap gap-2 mt-1.5">
-                        <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
-                            <input type="checkbox" checked={showPlanes} onChange={(e) => setShowPlanes(e.target.checked)} className="accent-[#58a6ff]" />
-                            ✈️ Air
-                        </label>
-                        <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
-                            <input type="checkbox" checked={showVessels} onChange={(e) => setShowVessels(e.target.checked)} className="accent-[#58a6ff]" />
-                            🚢 Naval
-                        </label>
-                        <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
-                            <input type="checkbox" checked={showMissiles} onChange={(e) => setShowMissiles(e.target.checked)} className="accent-[#58a6ff]" />
-                            🚀 Missiles
-                        </label>
-                        <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
-                            <input type="checkbox" checked={showPolitical} onChange={(e) => setShowPolitical(e.target.checked)} className="accent-[#58a6ff]" />
-                            🗺️ Borders
-                        </label>
-                    </div>
-                </div>
+                )}
             </div>
 
             {/* Tracked Entity Overlay */}
@@ -702,13 +791,28 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                     <div className="space-y-2">
                         <p className="text-sm font-semibold text-[#58a6ff] mb-2">{trackedEntity.label}</p>
 
+                        {(trackedEntity.type === 'plane' || trackedEntity.type === 'vessel') && (
+                            <div className="w-full h-32 rounded-lg bg-[#21262d] mb-3 overflow-hidden border border-[#30363d] relative">
+                                <img
+                                    src={trackedEntity.type === 'plane'
+                                        ? (trackedEntity.id && (trackedEntity.id.startsWith('US-') || trackedEntity.id.startsWith('IL-') || trackedEntity.id.startsWith('UK-') || trackedEntity.id.startsWith('RU-') || trackedEntity.id.startsWith('IR-'))
+                                            ? 'https://images.unsplash.com/photo-1559682181-eeb43bd33e5c?w=400&q=80' // Military Jet
+                                            : 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=400&q=80') // Commercial Jet
+                                        : 'https://images.unsplash.com/photo-1588656111100-30b6ea26fba4?w=400&q=80'} // Warship 
+                                    className="w-full h-full object-cover opacity-80"
+                                    alt={trackedEntity.label}
+                                />
+                                <div className="absolute bottom-1 right-2 text-[8px] text-white/50">Representative Image</div>
+                            </div>
+                        )}
+
                         {trackedEntity.type === 'plane' && (
                             <div className="mb-3 p-2 bg-[#0d1117] rounded border border-[#30363d] space-y-1.5">
                                 <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#30363d]">
                                     {trackedEntity.countryCode && trackedEntity.countryCode !== 'unknown' && (
                                         <img src={`https://flagcdn.com/w40/${trackedEntity.countryCode}.png`} width="20" height="15" alt={trackedEntity.countryCode} className="border border-[#30363d] rounded-sm" />
                                     )}
-                                    <span className="text-[12px] font-bold text-white uppercase">{trackedEntity.countryCode === 'unknown' ? 'Unknown Origin' : trackedEntity.countryCode}</span>
+                                    <span className="text-[12px] font-bold text-white uppercase">{trackedEntity.operator ? trackedEntity.operator : (trackedEntity.countryCode === 'unknown' ? 'Unknown Origin' : trackedEntity.countryCode)}</span>
                                 </div>
                                 <div className="flex justify-between items-center text-[10px]">
                                     <span className="text-[#8b949e]">Type:</span>

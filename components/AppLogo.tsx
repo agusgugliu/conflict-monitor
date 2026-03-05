@@ -15,11 +15,12 @@ function AppLogo({ size = 24, className }: AppLogoProps) {
       height={size}
       className={className}
       aria-hidden="true"
+      suppressHydrationWarning
     >
       <defs>
         <radialGradient id="cg" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#e05252" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#e05252" stopOpacity="0" />
+          <stop offset="0%" stopColor="#e05252" stopOpacity="0.25" suppressHydrationWarning />
+          <stop offset="100%" stopColor="#e05252" stopOpacity="0" suppressHydrationWarning />
         </radialGradient>
       </defs>
 
