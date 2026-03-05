@@ -16,6 +16,10 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="antialiased bg-[#0d1117] text-[#e6edf3]">
         {children}
+        <div className="fixed top-2 left-1/2 -translate-x-1/2 z-[9999] pointer-events-none opacity-80 mix-blend-screen mix-blend-plus-lighter">
+          {/* Default to signature.gif as requested by the user */}
+          <img src="/assets/signature.gif" alt="Developed by" className="h-16 w-auto object-contain brightness-0 invert drop-shadow-lg" />
+        </div>
       </body>
     </html>
   );

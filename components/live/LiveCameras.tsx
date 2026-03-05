@@ -16,6 +16,7 @@ export default function LiveCameras({ activeConflict, gridCols = 1 }: { activeCo
 
     const [editingId, setEditingId] = useState<string | null>(null);
     const [newYtId, setNewYtId] = useState('');
+    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     useEffect(() => {
         // Persistence Check
@@ -141,9 +142,51 @@ export default function LiveCameras({ activeConflict, gridCols = 1 }: { activeCo
                 </div>
             )}
 
+            {expandedId && (
+                <div className="absolute inset-0 z-[200] bg-[#0d1117]/95 backdrop-blur-md flex flex-col p-3 border border-[#30363d] rounded-sm shadow-2xl">
+                    <div className="flex justify-between items-center border-b border-[#30363d] pb-3 mb-3 shrink-0">
+                        <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                            {cameras.find(c => c.id === expandedId)?.status === 'LIVE' ? (
+                                <Radio size={16} className="text-[#ff3e3e] animate-pulse" />
+                            ) : (
+                                <Radio size={16} className="text-[#8b949e]" />
+                            )}
+                            {cameras.find(c => c.id === expandedId)?.label || 'Unknown Camera'}
+                        </h3>
+                        <button onClick={() => setExpandedId(null)} className="text-[#8b949e] hover:text-white p-1 transition-colors bg-white/5 rounded-sm hover:bg-white/10">
+                            <X size={18} />
+                        </button>
+                    </div>
+                    <div className="flex-1 relative rounded-sm bg-[#000] border border-[#30363d] overflow-hidden">
+                        {cameras.find(c => c.id === expandedId)?.status === 'LIVE' ? (
+                            <iframe
+                                className="absolute inset-0 w-full h-full"
+                                src={`https://www.youtube.com/embed/${cameras.find(c => c.id === expandedId)?.ytId}?autoplay=1&mute=0&controls=1&modestbranding=1&loop=1&playlist=${cameras.find(c => c.id === expandedId)?.ytId}&showinfo=1&rel=0`}
+                                allow="autoplay; encrypted-media"
+                                allowFullScreen
+                                title={cameras.find(c => c.id === expandedId)?.label}
+                            />
+                        ) : (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#0d1117] gap-2">
+                                <Radio size={32} className="opacity-20 text-white" />
+                                <span className="text-sm text-[#8b949e] font-mono tracking-widest uppercase">CONNECTION FAILED</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            )}
+
             <div className={`grid gap-2 h-full ${gridCols === 2 ? 'grid-cols-2 grid-rows-2' : 'grid-cols-1'}`}>
                 {cameras.slice(0, 4).map((cam) => (
-                    <div key={cam.id} className="relative aspect-video rounded-sm bg-[#000] border border-[#30363d] overflow-hidden group cursor-crosshair">
+                    <div
+                        key={cam.id}
+                        className="relative aspect-video rounded-sm bg-[#000] border border-[#30363d] overflow-hidden group cursor-pointer hover:border-[#58a6ff] transition-colors"
+                        onClick={() => {
+                            if (!isAdmin && !editingId) {
+                                setExpandedId(cam.id);
+                            }
+                        }}
+                    >
                         {/* Stream Background */}
                         {cam.status === 'LIVE' && cam.ytId ? (
                             <div className="absolute inset-0 overflow-hidden flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity">
@@ -186,7 +229,7 @@ export default function LiveCameras({ activeConflict, gridCols = 1 }: { activeCo
                                     </div>
                                 ) : (
                                     <button
-                                        onClick={() => { setEditingId(cam.id); setNewYtId(cam.ytId || ''); }}
+                                        onClick={(e) => { e.stopPropagation(); setEditingId(cam.id); setNewYtId(cam.ytId || ''); }}
                                         className="bg-white/10 hover:bg-white/20 border border-white/20 text-white text-[9px] px-3 py-1.5 rounded font-black flex items-center gap-2 backdrop-blur-md"
                                     >
                                         <Settings size={12} />

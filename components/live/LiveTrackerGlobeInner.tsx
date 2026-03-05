@@ -30,7 +30,11 @@ const FAKE_ALERTS: Record<string, Alert[]> = {
         { id: 'i2', lat: 33.8547, lng: 35.8623, label: 'Lebanon - Artillery Blast', type: 'explosion', impact: 'high' },
         { id: 'i3', lat: 15.3694, lng: 44.1910, label: 'Sanaa - Drone Strike', type: 'explosion', impact: 'medium' },
         { id: 'i4', lat: 25.0456, lng: 54.8877, label: 'Strait of Hormuz - Naval Clash', type: 'naval', impact: 'high' },
-        { id: 'i5', lat: 27.2154, lng: 52.6841, label: 'Persian Gulf - Fast Missile Boat Drills', type: 'missile-launch', impact: 'high' }
+        { id: 'i5', lat: 27.2154, lng: 52.6841, label: 'Persian Gulf - Fast Missile Boat Drills', type: 'missile-launch', impact: 'high' },
+        { id: 'i6', lat: 32.6539, lng: 51.6660, label: 'Isfahan - Airbase Strike', type: 'missile-impact', impact: 'high' },
+        { id: 'i7', lat: 29.5926, lng: 52.5836, label: 'Shiraz - Unknown Explosion', type: 'missile-impact', impact: 'high' },
+        { id: 'i8', lat: 38.0792, lng: 46.2887, label: 'Tabriz - Strategic Impact', type: 'missile-impact', impact: 'medium' },
+        { id: 'i9', lat: 31.7683, lng: 35.2137, label: 'Jerusalem - Iron Dome Interception', type: 'missile-impact', impact: 'high' }
     ]
 };
 
@@ -43,6 +47,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     const [showPolitical, setShowPolitical] = useState(false);
     const [showPlanes, setShowPlanes] = useState(true);
     const [showVessels, setShowVessels] = useState(true);
+    const [showMissiles, setShowMissiles] = useState(true);
     const [missileArcs, setMissileArcs] = useState<any[]>([]);
     const [explosions, setExplosions] = useState<any[]>([]);
     const [trails, setTrails] = useState<any[]>([]);
@@ -56,25 +61,76 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
 
     // Update mock traffic when conflict changes
     useEffect(() => {
+        const globalPlanes = [
+            // US
+            { id: `US-RQ4-GLB-1`, label: 'USAF RQ-4 Global Hawk', lat: config.lat + 0.5, lng: config.lng + 2, type: 'plane', alt: 0.1, header: 45, speed: 0.05, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'Al Dhafra Air Base (UAE)', destination: 'Loitering (AOR)', airframe: 'Northrop Grumman RQ-4' },
+            { id: `US-RQ4-GLB-2`, label: 'USAF RQ-4 Global Hawk', lat: 34.1, lng: 36.3, type: 'plane', alt: 0.1, header: 120, speed: 0.05, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'NAS Sigonella (Italy)', destination: 'Eastern Mediterranean', airframe: 'Northrop Grumman RQ-4' },
+            { id: `US-RC135-EU`, label: 'USAF RC-135V Rivet Joint', lat: 52.5, lng: 15.2, type: 'plane', alt: 0.12, header: 270, speed: 0.04, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'RAF Mildenhall (UK)', destination: 'Baltic Sea Recon', airframe: 'Boeing RC-135V' },
+            { id: `US-P8-PAC`, label: 'USN P-8A Poseidon', lat: 22.3, lng: 121.5, type: 'plane', alt: 0.08, header: 180, speed: 0.035, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'Kadena Air Base (Japan)', destination: 'South China Sea Patrol', airframe: 'Boeing P-8A Poseidon' },
+            { id: `US-P8-MED`, label: 'USN P-8A Poseidon', lat: 33.5, lng: 31.0, type: 'plane', alt: 0.08, header: 90, speed: 0.035, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'NAS Sigonella (Italy)', destination: 'Eastern Med Patrol', airframe: 'Boeing P-8A Poseidon' },
+            { id: `US-E3-MED`, label: 'NATO E-3 Sentry', lat: 34.5, lng: 20.0, type: 'plane', alt: 0.15, header: 90, speed: 0.045, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'Geilenkirchen (Germany)', destination: 'Mediterranean Sea', airframe: 'Boeing E-3 Sentry AWACS' },
+            { id: `US-MQ9-RED`, label: 'USAF MQ-9 Reaper', lat: 18.5, lng: 40.2, type: 'plane', alt: 0.05, header: 150, speed: 0.025, countryCode: 'us', datasource: 'LIVE ADS-B', departure: 'Camp Lemonnier (Djibouti)', destination: 'Red Sea Patrol', airframe: 'General Atomics MQ-9' },
+            { id: `US-F35-ME`, label: 'USAF F-35A Lightning II', lat: 28.5, lng: 49.2, type: 'plane', alt: 0.09, header: 210, speed: 0.08, countryCode: 'us', datasource: 'LIVE ELINT (SAT)', departure: 'Al Dhafra Air Base (UAE)', destination: 'Classified (AOR)', airframe: 'Lockheed Martin F-35A' },
+
+            // Israel
+            { id: `IL-F35I-1`, label: 'IAF F-35I Adir', lat: 32.1, lng: 34.8, type: 'plane', alt: 0.08, header: 45, speed: 0.09, countryCode: 'il', datasource: 'LIVE ELINT (SAT)', departure: 'Nevatim Airbase (Israel)', destination: 'Classified', airframe: 'Lockheed Martin F-35I Adir' },
+            { id: `IL-F15I-1`, label: 'IAF F-15I Ra\'am', lat: 33.0, lng: 35.5, type: 'plane', alt: 0.07, header: 30, speed: 0.085, countryCode: 'il', datasource: 'LIVE ELINT (SAT)', departure: 'Hatzerim Airbase (Israel)', destination: 'Northern Border CAP', airframe: 'McDonnell Douglas F-15I' },
+            { id: `IL-G550-1`, label: 'IAF G550 Nachshon Aitam', lat: 31.5, lng: 34.0, type: 'plane', alt: 0.12, header: 180, speed: 0.04, countryCode: 'il', datasource: 'LIVE ADS-B', departure: 'Nevatim Airbase (Israel)', destination: 'Mediterranean Coast', airframe: 'Gulfstream G550 AEW' },
+            { id: `IL-HERON-1`, label: 'IAF Heron TP', lat: 33.8, lng: 35.8, type: 'plane', alt: 0.05, header: 90, speed: 0.02, countryCode: 'il', datasource: 'LIVE ADS-B', departure: 'Tel Nof Airbase (Israel)', destination: 'Lebanon Surveillance', airframe: 'IAI Heron TP Eitan' },
+
+            // UK
+            { id: `UK-RC135`, label: 'RAF RC-135W', lat: 54.0, lng: -2.0, type: 'plane', alt: 0.11, header: 110, speed: 0.045, countryCode: 'gb', datasource: 'LIVE ADS-B', departure: 'RAF Waddington (UK)', destination: 'Black Sea Recon', airframe: 'Boeing RC-135W' },
+            { id: `UK-E3-NATO`, label: 'RAF E-3D Sentry', lat: config.lat - 1, lng: config.lng - 3, type: 'plane', alt: 0.15, header: 130, speed: 0.04, countryCode: 'gb', datasource: 'LIVE ELINT (SAT)', departure: 'RAF Waddington (UK)', destination: 'Eastern Europe Patrol', airframe: 'Boeing E-3D Sentry' },
+
+            // Russia (if Ukraine involved, or globally just in case)
+            { id: 'RU-A50-BLR', label: 'RuAF A-50U', lat: 53.8, lng: 27.5, type: 'plane', alt: 0.12, header: 80, speed: 0.04, countryCode: 'ru', datasource: 'LIVE ELINT (SAT)', departure: 'Machulishchy Base (Belarus)', destination: 'Belarus Airspace', airframe: 'Beriev A-50U Mainstay' },
+            { id: 'RU-TU95-PAC', label: 'RuAF Tu-95MS', lat: 55.4, lng: 150.2, type: 'plane', alt: 0.11, header: 240, speed: 0.042, countryCode: 'ru', datasource: 'LIVE ELINT (SAT)', departure: 'Engels-2 Air Base (Russia)', destination: 'North Pacific Patrol', airframe: 'Tupolev Tu-95MS Bear' },
+            { id: 'RU-SU35-SYR', label: 'RuAF Su-35S', lat: 35.1, lng: 36.2, type: 'plane', alt: 0.09, header: 160, speed: 0.06, countryCode: 'ru', datasource: 'LIVE ADS-B', departure: 'Khmeimim Air Base (Syria)', destination: 'Eastern Mediterranean', airframe: 'Sukhoi Su-35S Flanker-E' },
+
+            // Iran
+            { id: 'IR-F14-THR', label: 'IRIAF F-14 Tomcat', lat: 35.6, lng: 51.4, type: 'plane', alt: 0.07, header: 260, speed: 0.05, countryCode: 'ir', datasource: 'LIVE ADS-B', departure: 'Mehrabad Airbase (Iran)', destination: 'Tehran CAP', airframe: 'Grumman F-14 Tomcat' },
+            { id: 'IR-MOH-UAV', label: 'IRGC Mohajer-6', lat: 33.5, lng: 44.5, type: 'plane', alt: 0.05, header: 300, speed: 0.02, countryCode: 'ir', datasource: 'LIVE ELINT (SAT)', departure: 'Kermanshah Airbase (Iran)', destination: 'Iraq Border Recon', airframe: 'Mohajer-6 UCAV' }
+        ];
+
+        const globalVessels = [
+            // US Carrier Strike Groups & Global presence
+            { id: 'CVN-72-PAC', label: 'USS Abraham Lincoln (CVN-72)', lat: 16.82, lng: 61.35, type: 'vessel', alt: 0, header: 145, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'DDG-111-SPR', label: 'USS Spruance (DDG 111)', lat: 16.55, lng: 61.12, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'DDG-71-BLK', label: 'USS Ross (DDG-71)', lat: 44.8, lng: 33.1, type: 'vessel', alt: 0, header: 45, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'CVN-69-MED', label: 'USS Dwight D. Eisenhower (CVN-69)', lat: 34.2, lng: 25.4, type: 'vessel', alt: 0, header: 270, speed: 0.003, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'DDG-1000-PAC', label: 'USS Zumwalt (DDG-1000)', lat: 21.3, lng: -157.9, type: 'vessel', alt: 0, header: 200, speed: 0.006, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'LHD-4-BOX', label: 'USS Boxer (LHD-4)', lat: 15.2, lng: 55.4, type: 'vessel', alt: 0, header: 280, speed: 0.003, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'DDG-51-ARL', label: 'USS Arleigh Burke (DDG-51)', lat: 33.1, lng: 34.8, type: 'vessel', alt: 0, header: 10, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'SSN-774-VIR', label: 'USS Virginia (SSN-774)', lat: 34.1, lng: 33.5, type: 'vessel', alt: -0.01, header: 90, speed: 0.002, countryCode: 'us', datasource: 'LIVE ELINT (SAT)' },
+
+            // Israel
+            { id: 'INS-EILAT', label: 'INS Eilat (Sa\'ar 5)', lat: 32.5, lng: 34.0, type: 'vessel', alt: 0, header: 180, speed: 0.005, countryCode: 'il', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'INS-LAHAV', label: 'INS Lahav (Sa\'ar 5)', lat: 31.8, lng: 34.2, type: 'vessel', alt: 0, header: 360, speed: 0.004, countryCode: 'il', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'INS-MAGEN', label: 'INS Magen (Sa\'ar 6)', lat: 32.9, lng: 34.5, type: 'vessel', alt: 0, header: 270, speed: 0.005, countryCode: 'il', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'INS-DRAKON', label: 'INS Drakon (Dolphin-class)', lat: 33.2, lng: 33.8, type: 'vessel', alt: -0.01, header: 45, speed: 0.002, countryCode: 'il', datasource: 'LIVE ELINT (SAT)' },
+
+            // UK
+            { id: 'D37-DNC', label: 'HMS Duncan (D37)', lat: 25.12, lng: 57.85, type: 'vessel', alt: 0, header: 30, speed: 0.005, countryCode: 'gb', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'D36-DEF', label: 'HMS Defender (D36)', lat: 45.1, lng: 32.4, type: 'vessel', alt: 0, header: 200, speed: 0.005, countryCode: 'gb', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'R08-QNLZ', label: 'HMS Queen Elizabeth (R08)', lat: 50.2, lng: -4.5, type: 'vessel', alt: 0, header: 180, speed: 0.003, countryCode: 'gb', datasource: 'LIVE AIS (OSINT)' },
+
+            // Russia
+            { id: 'RU-CG-VRYG', label: 'Varyag (Slava-class)', lat: 35.8, lng: 35.9, type: 'vessel', alt: 0, header: 90, speed: 0.004, countryCode: 'ru', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'RU-SSN-SEV', label: 'Severodvinsk (Yasen-class)', lat: 68.5, lng: 35.2, type: 'vessel', alt: -0.01, header: 45, speed: 0.002, countryCode: 'ru', datasource: 'LIVE ELINT (SAT)' },
+            { id: 'RU-DDG-ADM', label: 'Admiral Gorshkov', lat: 54.5, lng: 19.5, type: 'vessel', alt: 0, header: 260, speed: 0.005, countryCode: 'ru', datasource: 'LIVE AIS (OSINT)' },
+
+            // Iran
+            { id: 'IRINS-JAM', label: 'IRINS Jamaran', lat: 26.95, lng: 55.45, type: 'vessel', alt: 0, header: 260, speed: 0.008, countryCode: 'ir', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'IRINS-MAKRAN', label: 'IRINS Makran', lat: -5.4, lng: 40.2, type: 'vessel', alt: 0, header: 180, speed: 0.004, countryCode: 'ir', datasource: 'LIVE AIS (OSINT)' },
+            { id: 'IRGC-FAST', label: 'IRGC Fast Attack Craft Formation', lat: 25.5, lng: 54.8, type: 'vessel', alt: 0, header: 90, speed: 0.012, countryCode: 'ir', datasource: 'LIVE ELINT (SAT)' },
+
+            // Others / Commercial incident related
+            { id: 'MV-T-CONF', label: 'MV True Confidence', lat: 12.05, lng: 44.85, type: 'vessel', alt: 0, header: 195, speed: 0.003, countryCode: 'unknown', datasource: 'LIVE AIS (OSINT)' }
+        ];
+
         setMockTraffic({
-            planes: [
-                { id: `RQ4-${activeConflict}`, label: 'USAF RQ-4 Global Hawk', lat: config.lat + 0.5, lng: config.lng + 2, type: 'plane', alt: 0.1, header: 45, speed: 0.05, countryCode: 'us', datasource: 'LIVE ELINT (SAT)' },
-                { id: `E3-${activeConflict}`, label: 'NATO E-3 Sentry', lat: config.lat - 1, lng: config.lng - 3, type: 'plane', alt: 0.15, header: 130, speed: 0.04, countryCode: 'gb', datasource: 'LIVE ELINT (SAT)' },
-            ],
-            vessels: activeConflict === 'iran' ? [
-                { id: 'CVN-72-LNC', label: 'USS Abraham Lincoln (CVN-72)', lat: 16.82, lng: 61.35, type: 'vessel', alt: 0, header: 145, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'DDG-111-SPR', label: 'USS Spruance (DDG 111)', lat: 16.55, lng: 61.12, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'DDG-112-MUR', label: 'USS Michael Murphy (DDG 112)', lat: 17.15, lng: 61.58, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'DDG-121-PTR', label: 'USS Frank E. Petersen Jr. (DDG 121)', lat: 16.68, lng: 61.82, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'DDG-77-OKN', label: 'USS O\'Kane (DDG-77)', lat: 17.45, lng: 62.15, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'DDG-60-HLM', label: 'USS Paul Hamilton (DDG 60)', lat: 16.95, lng: 60.55, type: 'vessel', alt: 0, header: 145, speed: 0.005, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'D37-DNC', label: 'HMS Duncan (D37)', lat: 25.12, lng: 57.85, type: 'vessel', alt: 0, header: 30, speed: 0.005, countryCode: 'gb', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'IRINS-JAM', label: 'IRINS Jamaran', lat: 26.95, lng: 55.45, type: 'vessel', alt: 0, header: 260, speed: 0.008, countryCode: 'ir', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'MV-T-CONF', label: 'MV True Confidence', lat: 12.05, lng: 44.85, type: 'vessel', alt: 0, header: 195, speed: 0.003, countryCode: 'unknown', datasource: 'LIVE AIS (OSINT)' }
-            ] : [
-                { id: 'vessel-u1', label: 'HMS Defender (D36)', lat: 45.1, lng: 32.4, type: 'vessel', alt: 0, header: 200, speed: 0.005, countryCode: 'gb', datasource: 'LIVE AIS (OSINT)' },
-                { id: 'vessel-u2', label: 'USS Ross (DDG-71)', lat: 44.8, lng: 33.1, type: 'vessel', alt: 0, header: 45, speed: 0.004, countryCode: 'us', datasource: 'LIVE AIS (OSINT)' }
-            ]
+            planes: globalPlanes,
+            vessels: globalVessels
         });
     }, [activeConflict, config]);
 
@@ -105,25 +161,70 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
             selected.forEach(alert => {
                 if (alert.type === 'missile-launch' || alert.type === 'missile-impact') {
                     const isImpact = alert.type === 'missile-impact';
-                    // Predict target for launch, use alert site for impact
-                    const targetLat = isImpact ? alert.lat : alert.lat + (Math.random() - 0.5) * 8;
-                    const targetLng = isImpact ? alert.lng : alert.lng + (Math.random() - 0.5) * 8;
+
+                    let originLat = alert.lat;
+                    let originLng = alert.lng;
+                    let targetLat = alert.lat;
+                    let targetLng = alert.lng;
+
+                    if (activeConflict === 'iran') {
+                        // E.g., Iran to Israel or vice versa
+                        const isTargetInIran = alert.lng > 44; // Anything east of Iraq roughly is Iranian territory
+
+                        if (isImpact) {
+                            if (isTargetInIran) {
+                                // Impact in Iran. Origin is likely Allied/Israel (e.g. Nevatim)
+                                originLat = 31.2;
+                                originLng = 35.0;
+                            } else {
+                                // Impact in Israel. Origin is Iran (e.g. Kermanshah)
+                                originLat = 34.3;
+                                originLng = 47.0;
+                            }
+                        } else {
+                            // Launch event
+                            if (isTargetInIran) {
+                                // Launch from Iran. Target is Israel (e.g. Tel Aviv/Jerusalem)
+                                targetLat = 31.7;
+                                targetLng = 35.2;
+                            } else {
+                                // Launch from Israel/Allies. Target is Iran (e.g. Tehran)
+                                targetLat = 35.6;
+                                targetLng = 51.3;
+                            }
+                        }
+                    } else if (activeConflict === 'ukraine') {
+                        // E.g., Russia to Ukraine
+                        originLat = isImpact ? 50.6 : alert.lat; // Belgorod basis if impact
+                        originLng = isImpact ? 36.6 : alert.lng;
+                        targetLat = isImpact ? alert.lat : 50.4; // Kyiv basis if launch
+                        targetLng = isImpact ? alert.lng : 30.5;
+                    }
+
+                    // Sligth variation for realism rather than wide randomness
+                    if (isImpact) {
+                        originLat += (Math.random() - 0.5) * 2;
+                        originLng += (Math.random() - 0.5) * 2;
+                    } else {
+                        targetLat += (Math.random() - 0.5) * 2;
+                        targetLng += (Math.random() - 0.5) * 2;
+                    }
 
                     // Color palette based on origin
-                    const isIranOrigin = activeConflict === 'iran' && (alert.label.includes('Tehran') || alert.label.includes('Persian Gulf'));
-                    const isRussiaOrigin = activeConflict === 'ukraine' && (alert.label.includes('Russia') || alert.type === 'missile-impact');
+                    const isIranOrigin = activeConflict === 'iran' && (originLng > 44);
+                    const isRussiaOrigin = activeConflict === 'ukraine' && (!alert.label.includes('Ukraine'));
 
                     const arcColor = (isIranOrigin || isRussiaOrigin)
-                        ? ['rgba(255, 69, 0, 0.4)', 'rgba(255, 140, 0, 0.6)'] // Red-Orange for adversaries
-                        : ['rgba(88, 166, 255, 0.4)', 'rgba(0, 191, 255, 0.6)']; // Blue-Cyan for allies/interceptions
+                        ? ['rgba(255, 69, 0, 0.9)', 'rgba(255, 140, 0, 0.1)'] // Solid hot orange trailing off
+                        : ['rgba(0, 191, 255, 0.9)', 'rgba(88, 166, 255, 0.1)']; // Solid cyan trailing off
 
-                    const origin = isIranOrigin ? 'Iran (IRGC)' : (isRussiaOrigin ? 'Russian Federation' : 'Allied Defense Force');
+                    const origin = isIranOrigin ? 'Iran (IRGC)' : (isRussiaOrigin ? 'Russian Federation' : 'Allied Defense Force / IDF');
                     const objective = alert.label || 'Strategic Infrastructure';
 
                     arcs.push({
                         id: `arc-${alert.id}-${Date.now()}`,
-                        startLat: isImpact ? alert.lat - 5 : alert.lat,
-                        startLng: isImpact ? alert.lng - 5 : alert.lng,
+                        startLat: originLat,
+                        startLng: originLng,
                         endLat: targetLat,
                         endLng: targetLng,
                         color: arcColor,
@@ -195,12 +296,17 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     useEffect(() => {
         const fetchTraffic = async () => {
             try {
-                // define bounding box roughly 15 degrees around the config center
-                const res = await fetch(`/api/traffic?lamin=${config.lat - 15}&lomin=${config.lng - 15}&lamax=${config.lat + 15}&lomax=${config.lng + 15}`);
+                // increase bounding box to roughly 30 degrees around the config center
+                const lamin = Math.max(-90, config.lat - 30);
+                const lomin = Math.max(-180, config.lng - 35);
+                const lamax = Math.min(90, config.lat + 30);
+                const lomax = Math.min(180, config.lng + 35);
+                const res = await fetch(`/api/traffic?lamin=${lamin}&lomin=${lomin}&lamax=${lamax}&lomax=${lomax}`);
                 if (res.ok) {
                     const data = await res.json();
                     if (data && data.states) {
-                        const subset = data.states.slice(0, 10).map((s: any) => {
+                        // Get a much larger subset of real flights (e.g. up to 250 for performance reasons)
+                        const subset = data.states.slice(0, 250).map((s: any) => {
                             const id = s[0];
                             const existing = flightData.find(f => f.id === id);
                             return {
@@ -214,6 +320,9 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                                 speed: s[9] || 250,
                                 countryCode: COUNTRY_MAP[s[2]] || 'unknown',
                                 datasource: 'LIVE ADS-B',
+                                departure: 'Unknown (ADS-B Feed)',
+                                destination: 'Unknown',
+                                airframe: 'Civilian / Commercial Aircraft',
                                 history: existing ? existing.history : [[s[5], s[6]]]
                             };
                         });
@@ -272,35 +381,60 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
     };
 
     // HTML content for labels
-    const labelHtml = (d: any) => `
-    <div style="
-      background: rgba(13, 17, 23, 0.8);
-      border: 1px solid ${getImpactColor(d.impact)}40;
-      color: #e6edf3;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: bold;
-      pointer-events: none;
-      white-space: nowrap;
-      filter: drop-shadow(0 0 4px ${getImpactColor(d.impact)}80);
-      transform: translate(-50%, -120%);
-    ">
-      ${d.label}
+    const labelHtml = (d: any) => {
+        const isHit = d.type === 'missile-impact' || d.type === 'explosion';
+        return `
+    <div 
+        style="position: relative; display: flex; flex-direction: column; align-items: center; pointer-events: auto; cursor: pointer; transform: translate(-50%, -50%); min-width: 40px; min-height: 40px; justify-content: center;"
+        onmouseover="this.querySelector('.alert-text').style.opacity='1'"
+        onmouseout="this.querySelector('.alert-text').style.opacity='0'"
+        onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'alert', label: '${d.label}', impact: '${d.impact}', status: 'ACTIVE' } }); window.dispatchEvent(e);"
+    >
+      ${isHit ? `
+        <div style="font-size: 24px; text-shadow: 0 0 15px #ff4d4d; animation: fire-flicker 0.4s infinite alternate; display: flex; align-items: center; justify-content: center;">🔥</div>
+      ` : `
+        <div style="width: 24px; height: 24px; border-radius: 50%; opacity: 0;"></div>
+      `}
+      <div class="alert-text" style="
+        background: rgba(13, 17, 23, 0.8);
+        border: 1px solid ${getImpactColor(d.impact)}40;
+        color: #e6edf3;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 10px;
+        font-weight: bold;
+        white-space: nowrap;
+        filter: drop-shadow(0 0 4px ${getImpactColor(d.impact)}80);
+        opacity: 0;
+        transition: opacity 0.2s;
+        pointer-events: none;
+        position: absolute;
+        top: 100%;
+        margin-top: 4px;
+      ">
+        ${d.label}
+      </div>
+      <style>
+        @keyframes fire-flicker {
+          0% { opacity: 0.8; transform: scale(0.9); filter: brightness(0.8); }
+          100% { opacity: 1; transform: scale(1.2); filter: brightness(1.2); }
+        }
+      </style>
     </div>
   `;
+    };
 
     // HTML for planes and vessels
     const planeHtml = (d: any) => `
       <div 
         style="color: #a371f7; background: rgba(0,0,0,0.6); border-radius: 50%; border: 1px solid #a371f740; cursor: pointer; pointer-events: auto; transform: translate(-50%, -50%) rotate(${d.header || 0}deg); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; box-shadow: 0 0 8px rgba(163, 113, 247, 0.4); transition: width 0.2s, height 0.2s; position: relative;"
-        onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'plane', label: '${d.label}' } }); window.dispatchEvent(e);"
-        onmouseover="this.querySelector('.flag-tag').style.opacity='1'; this.style.width='32px'; this.style.height='32px';"
-        onmouseout="this.querySelector('.flag-tag').style.opacity='0'; this.style.width='24px'; this.style.height='24px';"
+        onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'plane', label: '${d.label}', countryCode: '${d.countryCode || ''}', datasource: '${d.datasource || ''}', departure: '${d.departure || 'Classified'}', destination: '${d.destination || 'Classified'}', airframe: '${d.airframe || 'Classified'}' } }); window.dispatchEvent(e);"
+        onmouseover="this.style.width='32px'; this.style.height='32px';"
+        onmouseout="this.style.width='24px'; this.style.height='24px';"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-45deg)"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.2-1.1.6L3 8l6 5-3.5 3.5L3 16l-1 1 5 1 1 5 1-1-1-2.5L12 16l5 6 1.2-1.2c.4-.2.7-.6.6-1Z"/></svg>
         ${d.countryCode && d.countryCode !== 'unknown' ? `
-          <div class="flag-tag" style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%) rotate(${- (d.header || 0)}deg); opacity: 0; transition: opacity 0.2s; background: #000; border: 1px solid #fff3; padding: 1px; border-radius: 2px;">
+          <div class="flag-tag" style="position: absolute; bottom: -8px; right: -8px; transform: rotate(${- (d.header || 0)}deg); opacity: 1; background: #000; border: 1px solid #fff3; padding: 1px; border-radius: 2px; z-index: 10;">
             <img src="https://flagcdn.com/w20/${d.countryCode}.png" width="12" height="9" alt="${d.countryCode}" style="display: block;">
           </div>
         ` : ''}
@@ -329,12 +463,12 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
       <div 
         style="color: #58a6ff; background: rgba(0,0,0,0.6); border-radius: 50%; border: 1px solid #58a6ff40; cursor: pointer; pointer-events: auto; transform: translate(-50%, -50%) rotate(${d.header || 0}deg); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; box-shadow: 0 0 8px rgba(88, 166, 255, 0.4); transition: width 0.2s, height 0.2s; position: relative;"
         onpointerdown="const e = new CustomEvent('entity-click', { detail: { id: '${d.id}', type: 'vessel', label: '${d.label}' } }); window.dispatchEvent(e);"
-        onmouseover="this.querySelector('.flag-tag').style.opacity='1'; this.style.width='32px'; this.style.height='32px';"
-        onmouseout="this.querySelector('.flag-tag').style.opacity='0'; this.style.width='24px'; this.style.height='24px';"
+        onmouseover="this.style.width='32px'; this.style.height='32px';"
+        onmouseout="this.style.width='24px'; this.style.height='24px';"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(-90deg)"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg>
         ${d.countryCode && d.countryCode !== 'unknown' ? `
-          <div class="flag-tag" style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%) rotate(${- (d.header || 0)}deg); opacity: 0; transition: opacity 0.2s; background: #000; border: 1px solid #fff3; padding: 1px; border-radius: 2px;">
+          <div class="flag-tag" style="position: absolute; bottom: -8px; right: -8px; transform: rotate(${- (d.header || 0)}deg); opacity: 1; background: #000; border: 1px solid #fff3; padding: 1px; border-radius: 2px; z-index: 10;">
             <img src="https://flagcdn.com/w20/${d.countryCode}.png" width="12" height="9" alt="${d.countryCode}" style="display: block;">
           </div>
         ` : ''}
@@ -404,17 +538,17 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
 
 
                     // Missiles Layer
-                    arcsData={missileArcs}
+                    arcsData={showMissiles ? missileArcs : []}
                     arcStartLat="startLat"
                     arcStartLng="startLng"
                     arcEndLat="endLat"
                     arcEndLng="endLng"
                     arcColor="color"
-                    arcDashLength={0.2}
-                    arcDashGap={1}
-                    arcDashAnimateTime={2500}
-                    arcStroke={0.4}
-                    arcAltitude={0.25}
+                    arcDashLength={0.6}
+                    arcDashGap={0.4}
+                    arcDashAnimateTime={3000}
+                    arcStroke={1}
+                    arcAltitude={0.3}
                     onArcClick={(arc) => {
                         setTrackedEntity({
                             ...arc,
@@ -532,7 +666,7 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                             Political (Light)
                         </button>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mt-1.5">
                         <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
                             <input type="checkbox" checked={showPlanes} onChange={(e) => setShowPlanes(e.target.checked)} className="accent-[#58a6ff]" />
                             ✈️ Air
@@ -540,6 +674,10 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                         <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
                             <input type="checkbox" checked={showVessels} onChange={(e) => setShowVessels(e.target.checked)} className="accent-[#58a6ff]" />
                             🚢 Naval
+                        </label>
+                        <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
+                            <input type="checkbox" checked={showMissiles} onChange={(e) => setShowMissiles(e.target.checked)} className="accent-[#58a6ff]" />
+                            🚀 Missiles
                         </label>
                         <label className="text-[10px] text-white flex items-center gap-1 cursor-pointer hover:text-[#58a6ff]">
                             <input type="checkbox" checked={showPolitical} onChange={(e) => setShowPolitical(e.target.checked)} className="accent-[#58a6ff]" />
@@ -555,14 +693,37 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                     <div className="flex justify-between items-start mb-2">
                         <h3 className="text-xs font-bold text-white flex items-center gap-2">
                             {trackedEntity.type === 'plane' ? '✈️' : trackedEntity.type === 'vessel' ? '🚢' : trackedEntity.type === 'missile' ? '🚀' : '📍'}
-                            {trackedEntity.type === 'plane' ? 'Air Target' : trackedEntity.type === 'vessel' ? 'Naval Target' : trackedEntity.type === 'missile' ? 'Ballistic Track' : 'Target'}
+                            {trackedEntity.type === 'plane' ? 'Air Target' : trackedEntity.type === 'vessel' ? 'Naval Target' : trackedEntity.type === 'missile' ? 'Ballistic Track' : 'Incident Alert'}
                         </h3>
                         <button onClick={() => setTrackedEntity(null)} className="text-[#8b949e] hover:text-white transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
                     </div>
                     <div className="space-y-2">
-                        <p className="text-sm font-semibold text-[#58a6ff]">{trackedEntity.label}</p>
+                        <p className="text-sm font-semibold text-[#58a6ff] mb-2">{trackedEntity.label}</p>
+
+                        {trackedEntity.type === 'plane' && (
+                            <div className="mb-3 p-2 bg-[#0d1117] rounded border border-[#30363d] space-y-1.5">
+                                <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#30363d]">
+                                    {trackedEntity.countryCode && trackedEntity.countryCode !== 'unknown' && (
+                                        <img src={`https://flagcdn.com/w40/${trackedEntity.countryCode}.png`} width="20" height="15" alt={trackedEntity.countryCode} className="border border-[#30363d] rounded-sm" />
+                                    )}
+                                    <span className="text-[12px] font-bold text-white uppercase">{trackedEntity.countryCode === 'unknown' ? 'Unknown Origin' : trackedEntity.countryCode}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-[#8b949e]">Type:</span>
+                                    <span className="text-white font-bold ml-2 text-right">{trackedEntity.airframe || 'Classified'}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-[#8b949e]">DEP:</span>
+                                    <span className="text-[#58a6ff] font-bold ml-2 text-right truncate max-w-[140px]" title={trackedEntity.departure}>{trackedEntity.departure || 'Classified'}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-[#8b949e]">DEST:</span>
+                                    <span className="text-[#58a6ff] font-bold ml-2 text-right truncate max-w-[140px]" title={trackedEntity.destination}>{trackedEntity.destination || 'Classified'}</span>
+                                </div>
+                            </div>
+                        )}
 
                         {trackedEntity.type === 'missile' && (
                             <>
@@ -589,8 +750,13 @@ export default function GlobeInner({ activeConflict }: { activeConflict: string 
                         </div>
                         <div className="flex justify-between text-[10px] bg-[#0d1117] p-2 rounded">
                             <span className="text-[#8b949e]">Status:</span>
-                            <span className={`font-bold ${trackedEntity.status === 'IMPACTED' ? 'text-[#ff3e3e]' : trackedEntity.status === 'INTERCEPTED' ? 'text-[#58a6ff]' : 'text-[#3fb950] animate-pulse'}`}>
-                                {trackedEntity.status === 'IN_FLIGHT' ? '● Flight Active' : trackedEntity.status === 'INTERCEPTED' ? '◌ Neutralized (Iron Dome)' : '● Impact Confirmed'}
+                            <span className={`font-bold ${trackedEntity.type === 'missile'
+                                ? (trackedEntity.status === 'IMPACTED' ? 'text-[#ff3e3e]' : trackedEntity.status === 'INTERCEPTED' ? 'text-[#58a6ff]' : 'text-[#3fb950] animate-pulse')
+                                : (trackedEntity.type === 'alert' ? 'text-[#ff3e3e] animate-pulse' : 'text-[#3fb950]')
+                                }`}>
+                                {trackedEntity.type === 'missile'
+                                    ? (trackedEntity.status === 'IN_FLIGHT' ? '● Flight Active' : trackedEntity.status === 'INTERCEPTED' ? '◌ Neutralized (Iron Dome)' : '● Impact Confirmed')
+                                    : (trackedEntity.type === 'plane' ? '● Airborne' : trackedEntity.type === 'alert' ? '● Active Alert (High Priority)' : '● Underway')}
                             </span>
                         </div>
                     </div>
