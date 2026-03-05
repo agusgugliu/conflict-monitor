@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Navigation from '@/components/Navigation';
 import AppLogo from '@/components/AppLogo';
 import LiveTrackerGlobe from '@/components/live/LiveTrackerGlobe';
@@ -96,7 +96,9 @@ export default function LiveTrackerPage() {
                                 </a>
                             </div>
                             <div className="flex-1 p-2">
-                                <LiveCameras activeConflict={activeConflict} gridCols={2} />
+                                <Suspense fallback={<div className="p-4 text-[10px] text-[#8b949e] font-mono animate-pulse uppercase">Booting Surveillance Matrix...</div>}>
+                                    <LiveCameras activeConflict={activeConflict} gridCols={2} />
+                                </Suspense>
                             </div>
                         </div>
 

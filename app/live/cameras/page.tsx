@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { LayoutGrid, ChevronLeft, Maximize2, Monitor, Shield, Activity } from 'lucide-react';
 import LiveCameras from '@/components/live/LiveCameras';
@@ -83,7 +83,9 @@ export default function CamerasOnlyPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
                         {/* We reuse the LiveCameras component but we'll modify it to support grid better or wrap it */}
                         <div className="contents md:[&>div]:grid-cols-2">
-                            <LiveSurveillanceGrid activeConflict={activeConflict} />
+                            <Suspense fallback={<div className="p-4 text-[10px] text-[#8b949e] font-mono animate-pulse uppercase text-center">INITIALIZING SURVEILLANCE MATRIX...</div>}>
+                                <LiveSurveillanceGrid activeConflict={activeConflict} />
+                            </Suspense>
                         </div>
                     </div>
                 </div>
