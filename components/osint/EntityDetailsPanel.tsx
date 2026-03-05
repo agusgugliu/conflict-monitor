@@ -1,6 +1,7 @@
 'use client';
 
 import { ShieldCheck, Crosshair, AlertTriangle, Link2, Download, Copy, ExternalLink, X } from 'lucide-react';
+import { INTEL_ENTITIES } from '@/data/ghost-intel';
 
 interface PanelProps {
     entityId: string;
@@ -8,10 +9,13 @@ interface PanelProps {
 }
 
 export default function EntityDetailsPanel({ entityId, onClose }: PanelProps) {
-    // Mock data based on selection
-    const isPerson = entityId.startsWith('p_');
-    const isOrg = entityId.startsWith('org_');
-    const isInfra = entityId.startsWith('i_');
+    const entity = INTEL_ENTITIES.find(e => e.id === entityId);
+
+    if (!entity) return null;
+
+    const isPerson = entity.type === 'person';
+    const isOrg = entity.type === 'org';
+    const isInfra = entity.type === 'infra';
 
     return (
         <div className="h-full flex flex-col relative w-full overflow-hidden bg-[#0d1117] border-l border-[#30363d]">
@@ -36,16 +40,21 @@ export default function EntityDetailsPanel({ entityId, onClose }: PanelProps) {
                                 {isInfra && <><span className="w-1.5 h-1.5 rounded-full bg-[#58a6ff]" /> Infrastructure</>}
                             </p>
                             <h3 className="text-xl font-bold text-[#e6edf3]">
-                                {entityId === 'p_yevgeny' ? 'Identity 129' :
-                                    entityId === 'org_wagner' ? 'Wagner Group' :
-                                        entityId === 'i_domain' ? 'Dark Ops Portal' :
-                                            'Unknown Target'}
+                                {entity.name}
                             </h3>
-                            <p className="text-xs text-[#8b949e] mt-1 font-mono">ID: {entityId.toUpperCase()}</p>
+                            <p className="text-xs text-[#8b949e] mt-1 font-mono">ID: {entity.id.toUpperCase()}</p>
                         </div>
                         {isPerson && <ShieldCheck size={28} className="text-[#3fb950] opacity-80" />}
                         {isOrg && <AlertTriangle size={28} className="text-[#e05252] opacity-80" />}
                     </div>
+                </div>
+
+                {/* Summary */}
+                <div className="mb-6">
+                    <h4 className="text-[10px] text-[#8b949e] uppercase tracking-wider mb-2 font-bold border-b border-[#30363d] pb-2 text-left">Intelligence Summary</h4>
+                    <p className="text-xs text-[#e6edf3] leading-relaxed bg-[#161b22] p-3 rounded-lg border border-[#30363d]">
+                        {entity.summary}
+                    </p>
                 </div>
 
                 {/* Action Buttons */}
@@ -66,15 +75,15 @@ export default function EntityDetailsPanel({ entityId, onClose }: PanelProps) {
                             <div className="text-xs text-[#e6edf3] space-y-2">
                                 <div className="flex justify-between border-b border-[#30363d] pb-1.5">
                                     <span className="text-[#8b949e]">Status:</span>
-                                    <span className="text-[#e05252] font-bold">ACTIVE</span>
+                                    <span className={`${entity.status === 'ACTIVE' ? 'text-[#e05252]' : 'text-[#8b949e]'} font-bold`}>{entity.status}</span>
                                 </div>
                                 <div className="flex justify-between border-b border-[#30363d] pb-1.5">
                                     <span className="text-[#8b949e]">First Seen:</span>
-                                    <span>2023-01-14T10:43Z</span>
+                                    <span>{entity.lastSeen.split('T')[0]}</span>
                                 </div>
                                 <div className="flex justify-between pb-1.5">
                                     <span className="text-[#8b949e]">Confidence Score:</span>
-                                    <span className="text-[#3fb950] font-mono">94%</span>
+                                    <span className="text-[#3fb950] font-mono">{entity.confidence}%</span>
                                 </div>
                             </div>
                         </div>
@@ -85,20 +94,19 @@ export default function EntityDetailsPanel({ entityId, onClose }: PanelProps) {
                             <Link2 size={12} className="text-[#58a6ff]" /> Known Connections
                         </h4>
                         <div className="flex flex-col gap-2">
-                            <div className="p-2 gap-2 text-xs bg-[#010409] border border-[#30363d] rounded flex items-center justify-between group cursor-pointer hover:border-[#58a6ff]">
-                                <div className="flex items-center gap-2">
-                                    <span className="w-2 h-2 rounded-full bg-[#f0a500]" />
-                                    <span className="text-[#e6edf3]">Wagner Group</span>
-                                </div>
-                                <ExternalLink size={12} className="text-[#8b949e] opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </div>
-                            <div className="p-2 gap-2 text-xs bg-[#010409] border border-[#30363d] rounded flex items-center justify-between group cursor-pointer hover:border-[#58a6ff]">
-                                <div className="flex items-center gap-2">
-                                    <span className="w-2 h-2 rounded-full bg-[#58a6ff]" />
-                                    <span className="text-[#e6edf3] font-mono">192.168.1.100</span>
-                                </div>
-                                <ExternalLink size={12} className="text-[#8b949e] opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </div>
+                            {entity.connections.map(connId => {
+                                const conn = INTEL_ENTITIES.find(e => e.id === connId);
+                                if (!conn) return null;
+                                return (
+                                    <div key={connId} className="p-2 gap-2 text-xs bg-[#010409] border border-[#30363d] rounded flex items-center justify-between group cursor-pointer hover:border-[#58a6ff]">
+                                        <div className="flex items-center gap-2">
+                                            <span className={`w-2 h-2 rounded-full ${conn.type === 'org' ? 'bg-[#f0a500]' : conn.type === 'person' ? 'bg-[#a371f7]' : 'bg-[#58a6ff]'}`} />
+                                            <span className="text-[#e6edf3]">{conn.name}</span>
+                                        </div>
+                                        <ExternalLink size={12} className="text-[#8b949e] opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

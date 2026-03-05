@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3-force';
 import { motion } from 'framer-motion';
 
+import { INTEL_ENTITIES } from '@/data/ghost-intel';
+
 interface Node {
     id: string;
     name: string;
@@ -19,22 +21,26 @@ interface Link {
     target: string | Node;
 }
 
-const NODES: Node[] = [
-    { id: 'org_wagner', name: 'Wagner Group', type: 'org' },
-    { id: 'org_osint', name: 'OSINT Collective', type: 'org' },
-    { id: 'p_yevgeny', name: 'Identity 129', type: 'person' },
-    { id: 'p_john', name: 'John Doe', type: 'person' },
-    { id: 'i_svr', name: 'Command Server', type: 'infra' },
-    { id: 'i_domain', name: 'Dark Ops Portal', type: 'infra' },
-];
+const NODES: Node[] = INTEL_ENTITIES.map(e => ({
+    id: e.id,
+    name: e.name,
+    type: e.type
+}));
 
-const LINKS: Link[] = [
-    { source: 'org_wagner', target: 'p_yevgeny' },
-    { source: 'p_yevgeny', target: 'i_svr' },
-    { source: 'org_wagner', target: 'i_domain' },
-    { source: 'org_osint', target: 'p_john' },
-    { source: 'p_john', target: 'i_domain' },
-];
+// Create links from connections
+const LINKS: Link[] = [];
+INTEL_ENTITIES.forEach(entity => {
+    entity.connections.forEach(targetId => {
+        // Only add link once
+        const exists = LINKS.some(l =>
+            (l.source === entity.id && l.target === targetId) ||
+            (l.source === targetId && l.target === entity.id)
+        );
+        if (!exists) {
+            LINKS.push({ source: entity.id, target: targetId });
+        }
+    });
+});
 
 export default function EntityGraph({ selectedEntityId, onSelectEntity }: { selectedEntityId: string | null, onSelectEntity: (id: string) => void }) {
     const containerRef = useRef<HTMLDivElement>(null);
